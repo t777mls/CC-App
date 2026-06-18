@@ -182,7 +182,6 @@ body {
 .data-btns { display: flex; gap: 10px; margin-top: 36px; }
 .btn-data { flex: 1; padding: 14px; border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 600; color: var(--text-secondary); cursor: pointer; -webkit-tap-highlight-color: transparent; }
 
-/* BACKUP PAGE */
 .backup-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px; margin-bottom: 16px; }
 .backup-status { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
 .status-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-muted); flex-shrink: 0; }
@@ -203,9 +202,20 @@ body {
 .slider:before { position: absolute; content: ''; height: 22px; width: 22px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.2s; }
 .switch input:checked + .slider { background: var(--green); }
 .switch input:checked + .slider:before { transform: translateX(20px); }
-.btn-save-config { width: 100%; padding: 15px; background: var(--red); color: var(--white); border: none; border-radius: var(--radius-sm); font-size: 14px; font-family: inherit; font-weight: 700; cursor: pointer; margin-top: 8px; -webkit-tap-highlight-color: transparent; }
+.btn-test-conn { width: 100%; padding: 15px; background: var(--surface-raised); color: var(--gold); border: 1px solid rgba(251,225,34,0.3); border-radius: var(--radius-sm); font-size: 14px; font-family: inherit; font-weight: 700; cursor: pointer; margin-bottom: 10px; -webkit-tap-highlight-color: transparent; }
+.btn-save-config { width: 100%; padding: 15px; background: var(--red); color: var(--white); border: none; border-radius: var(--radius-sm); font-size: 14px; font-family: inherit; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .btn-clear-token { width: 100%; padding: 13px; background: none; color: var(--red); border: 1px solid rgba(218,41,28,0.3); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 600; cursor: pointer; margin-top: 10px; -webkit-tap-highlight-color: transparent; }
-.help-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-top: 8px; }
+.test-results { margin-top: 14px; border-radius: var(--radius-md); border: 1px solid var(--border); overflow: hidden; display: none; }
+.test-results.show { display: block; }
+.test-line { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); }
+.test-line:last-child { border-bottom: none; }
+.test-line .ico { flex-shrink: 0; font-size: 14px; line-height: 1.3; }
+.test-line.ok { color: var(--text-secondary); }
+.test-line.ok .ico { color: var(--green); }
+.test-line.bad { color: #FF8A80; background: rgba(218,41,28,0.08); }
+.test-line.bad .ico { color: var(--red); }
+.test-line.pending { color: var(--text-muted); }
+.help-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-top: 16px; }
 .help-box h4 { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
 .help-box ol { margin-left: 18px; }
 .help-box li { font-size: 12px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 6px; }
@@ -363,10 +373,12 @@ body {
   </div>
   <div class="form-group">
     <label class="form-label">Personal Access Token</label>
-    <input type="password" class="form-input" id="cfgToken" placeholder="ghp_..." autocomplete="off" autocapitalize="off" spellcheck="false">
-    <div class="form-hint">Stored only on this device, never committed to any repo. Needs <code>repo</code> scope (or <code>contents: read/write</code> on a fine-grained token).</div>
+    <input type="text" class="form-input" id="cfgToken" placeholder="ghp_..." autocomplete="off" autocapitalize="off" spellcheck="false" style="-webkit-text-security:disc;">
+    <div class="form-hint">Stored only on this device, never committed to any repo. Needs <code>repo</code> scope (classic) or <code>Contents: Read and write</code> (fine-grained).</div>
   </div>
+  <button class="btn-test-conn" id="btnTestConn">Test Connection</button>
   <button class="btn-save-config" id="btnSaveConfig">Save Configuration</button>
+  <div class="test-results" id="testResults"></div>
   <button class="btn-clear-token" id="btnClearToken">Clear Token &amp; Config</button>
 
   <div class="help-box">
@@ -374,10 +386,10 @@ body {
     <ol>
       <li>On GitHub, create a new <strong>private</strong> repo, e.g. <code>CC-App-Backup</code>. Tick "Add a README" so the branch exists.</li>
       <li>Go to GitHub <strong>Settings &rarr; Developer settings &rarr; Personal access tokens &rarr; Tokens (classic)</strong>.</li>
-      <li>Click <strong>Generate new token (classic)</strong>. Give it a name, set expiry, and tick the <code>repo</code> scope.</li>
+      <li>Click <strong>Generate new token (classic)</strong>. Name it, set expiry, and tick the <code>repo</code> scope.</li>
       <li>Generate, then copy the token (starts with <code>ghp_</code>). You only see it once.</li>
-      <li>Back here: enter your username, the backup repo name, branch (<code>main</code>), and paste the token.</li>
-      <li>Tap <strong>Save Configuration</strong>, then <strong>Back Up Now</strong> to test. Turn on Auto-backup to sync after every change.</li>
+      <li>Back here: enter username, backup repo name, branch (<code>main</code>), and paste the token.</li>
+      <li>Tap <strong>Test Connection</strong>. Fix anything it flags, then <strong>Save Configuration</strong> and turn on Auto-backup.</li>
     </ol>
   </div>
 </div>
@@ -1039,7 +1051,6 @@ function renderStats() {
   });
 }
 
-// === BUILD BACKUP PAYLOAD ===
 function buildPayload(cb) {
   getAllFolders(function(fl) {
     getAllFigures(function(figures) {
@@ -1058,7 +1069,6 @@ function buildPayload(cb) {
   });
 }
 
-// === MANUAL EXPORT / IMPORT (still available) ===
 document.getElementById('btnExport').addEventListener('click', function() {
   toast('Exporting...');
   buildPayload(function(payload) {
@@ -1079,7 +1089,6 @@ document.getElementById('importFile').addEventListener('change', function(e) {
   reader.readAsText(file); e.target.value = '';
 }, false);
 
-// Merge a JSON payload (string) into the DB
 function mergePayloadText(text, cb) {
   try {
     var parsed = JSON.parse(text);
@@ -1102,14 +1111,8 @@ function mergePayloadText(text, cb) {
   } catch(ex) { toast('Invalid backup file'); if (cb) cb(0); }
 }
 
-// === GITHUB BACKUP ===
-function b64EncodeUnicode(str) {
-  return btoa(unescape(encodeURIComponent(str)));
-}
-function b64DecodeUnicode(str) {
-  return decodeURIComponent(escape(atob(str)));
-}
-
+function b64EncodeUnicode(str) { return btoa(unescape(encodeURIComponent(str))); }
+function b64DecodeUnicode(str) { return decodeURIComponent(escape(atob(str))); }
 function ghApiBase() { return 'https://api.github.com/repos/' + backupConfig.owner + '/' + backupConfig.repo + '/contents/backup.json'; }
 
 function ghGetExistingSha(cb) {
@@ -1166,10 +1169,78 @@ var autoBackupTimer = null;
 function triggerAutoBackup() {
   if (!backupConfig.auto) return;
   if (!backupConfig.owner || !backupConfig.repo || !backupConfig.token) return;
-  // Debounce: wait 4s after last change to batch rapid edits
   if (autoBackupTimer) clearTimeout(autoBackupTimer);
   autoBackupTimer = setTimeout(function() { doGithubBackup(true); }, 4000);
 }
+
+// === TEST CONNECTION ===
+function readConfigFields() {
+  return {
+    owner: document.getElementById('cfgOwner').value.trim(),
+    repo: document.getElementById('cfgRepo').value.trim(),
+    branch: document.getElementById('cfgBranch').value.trim() || 'main',
+    token: document.getElementById('cfgToken').value.trim()
+  };
+}
+
+function renderTestResults(lines) {
+  var box = document.getElementById('testResults');
+  var html = '';
+  for (var i = 0; i < lines.length; i++) {
+    var cls = lines[i].status;
+    var ico = cls === 'ok' ? '&#10003;' : (cls === 'bad' ? '&#10007;' : '&#8230;');
+    html += '<div class="test-line ' + cls + '"><span class="ico">' + ico + '</span><span>' + lines[i].text + '</span></div>';
+  }
+  box.innerHTML = html;
+  box.className = 'test-results show';
+}
+
+document.getElementById('btnTestConn').addEventListener('click', function() {
+  var c = readConfigFields();
+  var lines = [];
+  lines.push({ status: c.owner ? 'ok' : 'bad', text: c.owner ? 'Username: ' + c.owner : 'Username is empty' });
+  lines.push({ status: c.repo ? 'ok' : 'bad', text: c.repo ? 'Repo: ' + c.repo : 'Repo name is empty' });
+  lines.push({ status: c.branch ? 'ok' : 'bad', text: 'Branch: ' + c.branch });
+  if (!c.token) lines.push({ status: 'bad', text: 'Token is empty (paste it again, then tap somewhere blank before testing)' });
+  else if (c.token.indexOf('ghp_') !== 0 && c.token.indexOf('github_pat_') !== 0) lines.push({ status: 'bad', text: 'Token format looks off (should start with ghp_ or github_pat_)' });
+  else lines.push({ status: 'ok', text: 'Token present (' + c.token.length + ' chars)' });
+
+  // If any local check failed, stop here
+  var anyBad = false;
+  for (var i = 0; i < lines.length; i++) { if (lines[i].status === 'bad') anyBad = true; }
+  if (anyBad || !c.owner || !c.repo || !c.token) { renderTestResults(lines); toast('Fix the flagged items'); return; }
+
+  // Live check against GitHub
+  lines.push({ status: 'pending', text: 'Checking GitHub connection...' });
+  renderTestResults(lines);
+  lines.pop();
+
+  var repoUrl = 'https://api.github.com/repos/' + c.owner + '/' + c.repo + '?t=' + Date.now();
+  fetch(repoUrl, { headers: { 'Authorization': 'token ' + c.token, 'Accept': 'application/vnd.github+json' } })
+    .then(function(res) {
+      if (res.status === 401) { lines.push({ status: 'bad', text: 'Token rejected (401). It may be wrong, expired, or missing the repo scope.' }); renderTestResults(lines); return null; }
+      if (res.status === 404) { lines.push({ status: 'bad', text: 'Repo not found (404). Check the owner/repo names, and that the token can access this private repo.' }); renderTestResults(lines); return null; }
+      if (res.status !== 200) { lines.push({ status: 'bad', text: 'GitHub returned ' + res.status }); renderTestResults(lines); return null; }
+      return res.json();
+    })
+    .then(function(repo) {
+      if (!repo) return;
+      lines.push({ status: 'ok', text: 'Repo found' + (repo['private'] ? ' (private)' : ' (PUBLIC: consider making it private)') });
+      if (repo.permissions && !repo.permissions.push) {
+        lines.push({ status: 'bad', text: 'Token cannot write to this repo. Needs repo scope (classic) or Contents: Read and write (fine-grained).' });
+        renderTestResults(lines); return;
+      }
+      lines.push({ status: 'ok', text: 'Write access confirmed' });
+      // Check branch exists
+      var brUrl = 'https://api.github.com/repos/' + c.owner + '/' + c.repo + '/branches/' + encodeURIComponent(c.branch) + '?t=' + Date.now();
+      return fetch(brUrl, { headers: { 'Authorization': 'token ' + c.token, 'Accept': 'application/vnd.github+json' } }).then(function(br) {
+        if (br.status === 200) lines.push({ status: 'ok', text: 'Branch "' + c.branch + '" exists. All good, save and back up.' });
+        else lines.push({ status: 'bad', text: 'Branch "' + c.branch + '" not found. Create it or add a README so it exists.' });
+        renderTestResults(lines);
+      });
+    })
+    .catch(function() { lines.push({ status: 'bad', text: 'Network error reaching GitHub. Check your connection.' }); renderTestResults(lines); });
+}, false);
 
 // === BACKUP PAGE UI ===
 function renderBackupStatus() {
@@ -1195,14 +1266,16 @@ function renderBackupPage() {
   document.getElementById('cfgBranch').value = backupConfig.branch || 'main';
   document.getElementById('cfgToken').value = backupConfig.token || '';
   document.getElementById('autoToggle').checked = !!backupConfig.auto;
+  document.getElementById('testResults').className = 'test-results';
   renderBackupStatus();
 }
 
 document.getElementById('btnSaveConfig').addEventListener('click', function() {
-  backupConfig.owner = document.getElementById('cfgOwner').value.trim();
-  backupConfig.repo = document.getElementById('cfgRepo').value.trim();
-  backupConfig.branch = document.getElementById('cfgBranch').value.trim() || 'main';
-  backupConfig.token = document.getElementById('cfgToken').value.trim();
+  var c = readConfigFields();
+  backupConfig.owner = c.owner;
+  backupConfig.repo = c.repo;
+  backupConfig.branch = c.branch;
+  backupConfig.token = c.token;
   saveSetting('backupConfig', backupConfig, function() { toast('Configuration saved'); renderBackupStatus(); });
 }, false);
 
@@ -1212,9 +1285,16 @@ document.getElementById('autoToggle').addEventListener('change', function() {
   if (backupConfig.auto) toast('Auto-backup enabled'); else toast('Auto-backup disabled');
 }, false);
 
-document.getElementById('btnBackupNow').addEventListener('click', function() { doGithubBackup(false); }, false);
+document.getElementById('btnBackupNow').addEventListener('click', function() {
+  // Pull latest from fields in case user hasn't saved yet
+  var c = readConfigFields();
+  backupConfig.owner = c.owner; backupConfig.repo = c.repo; backupConfig.branch = c.branch; backupConfig.token = c.token;
+  doGithubBackup(false);
+}, false);
 
 document.getElementById('btnRestore').addEventListener('click', function() {
+  var c = readConfigFields();
+  backupConfig.owner = c.owner; backupConfig.repo = c.repo; backupConfig.branch = c.branch; backupConfig.token = c.token;
   document.getElementById('restoreOverlay').className = 'confirm-overlay open';
 }, false);
 
@@ -1229,12 +1309,10 @@ document.getElementById('btnClearToken').addEventListener('click', function() {
   saveSetting('backupConfig', backupConfig, function() { renderBackupPage(); toast('Cleared'); });
 }, false);
 
-// === INIT ===
 openDB(function() {
   getSetting('backupConfig', function(cfg) {
     if (cfg) { backupConfig = cfg; if (!backupConfig.branch) backupConfig.branch = 'main'; }
     renderGallery();
-    // Backup on app open (silent) if auto is on
     setTimeout(function() { if (backupConfig.auto) doGithubBackup(true); }, 2500);
   });
 });
