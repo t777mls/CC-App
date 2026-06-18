@@ -137,6 +137,25 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
 .fp-filter-chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:16px;-webkit-overflow-scrolling:touch}.fp-filter-chips::-webkit-scrollbar{display:none}
 .edit-folder-field{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--black);color:var(--text-primary);font-size:15px;font-family:inherit;margin-bottom:12px;outline:none}.edit-folder-field:focus{border-color:var(--red)}
 .btn-danger-sm{width:100%;padding:10px;background:none;color:var(--red);border:1px solid rgba(218,41,28,0.3);border-radius:var(--radius-sm);font-size:12px;font-family:inherit;font-weight:600;cursor:pointer;margin-top:8px;-webkit-tap-highlight-color:transparent}
+.wip-toolbar{display:flex;gap:10px;margin-bottom:16px}.wip-toolbar button{flex:1;padding:12px;border-radius:var(--radius-sm);font-size:13px;font-family:inherit;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.btn-wip-add{background:var(--red);color:var(--white);border:none}.btn-wip-add:active{background:var(--red-dark)}
+.wip-list{list-style:none}.wip-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}.wip-item:last-child{border-bottom:none}
+.wip-check{width:24px;height:24px;flex-shrink:0;border-radius:6px;border:2px solid var(--border);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}.wip-check.done{background:var(--green);border-color:var(--green)}.wip-check svg{width:14px;height:14px;color:var(--white);display:none}.wip-check.done svg{display:block}
+.wip-name{flex:1;font-size:14px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent}.wip-name:active{color:var(--gold)}.wip-item.completed .wip-name{color:var(--text-muted);text-decoration:line-through}
+.wip-empty{text-align:center;padding:40px;color:var(--text-muted);font-size:14px}
+.wip-filter-bar{display:flex;gap:8px;margin-bottom:16px}.wip-filter-bar .chip{font-size:11px;padding:6px 12px}
+.wip-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:250;display:none;align-items:flex-end;justify-content:center}.wip-modal.open{display:flex}
+.wip-panel{background:var(--surface);border-radius:var(--radius-lg) var(--radius-lg) 0 0;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;border:1px solid var(--border);border-bottom:none;padding:24px 20px 40px}.wip-panel h2{font-size:18px;font-weight:800;margin-bottom:16px}.wip-panel .form-group{margin-bottom:16px}
+.wip-photos{margin-bottom:20px}.wip-photos-label{font-size:11px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.wip-photos-grid{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch}.wip-photos-grid::-webkit-scrollbar{display:none}
+.wip-photo-thumb{width:80px;height:80px;flex-shrink:0;border-radius:8px;overflow:hidden;border:1px solid var(--border);position:relative;cursor:pointer}.wip-photo-thumb img{width:100%;height:100%;object-fit:cover}.wip-photo-thumb .wpt-remove{position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:var(--red);border:none;color:white;font-size:12px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.wip-photo-add{width:80px;height:80px;flex-shrink:0;border-radius:8px;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-muted);font-size:24px;-webkit-tap-highlight-color:transparent}.wip-photo-add:active{border-color:var(--gold);color:var(--gold)}
+.wip-checklist{margin-bottom:20px}.wip-cl-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}.wip-cl-item:last-child{border-bottom:none}
+.wip-cl-check{width:22px;height:22px;flex-shrink:0;border-radius:5px;border:2px solid var(--border);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center}.wip-cl-check.done{background:var(--green);border-color:var(--green)}.wip-cl-check svg{width:12px;height:12px;color:var(--white);display:none}.wip-cl-check.done svg{display:block}
+.wip-cl-text{flex:1;font-size:13px;font-weight:500}.wip-cl-text.done{color:var(--text-muted);text-decoration:line-through}
+.wip-cl-add{display:flex;gap:8px;margin-top:10px}.wip-cl-add input{flex:1;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--black);color:var(--text-primary);font-size:13px;font-family:inherit;outline:none}.wip-cl-add input:focus{border-color:var(--red)}.wip-cl-add button{padding:10px 14px;background:var(--gold);color:var(--black);border:none;border-radius:var(--radius-sm);font-size:12px;font-weight:700;font-family:inherit;cursor:pointer}
+.wip-panel-btns{display:flex;gap:10px;margin-top:20px}.wip-panel-btns button{flex:1;padding:14px;border-radius:var(--radius-sm);font-size:13px;font-family:inherit;font-weight:700;cursor:pointer;border:none}
+.wip-btn-close{background:var(--surface-raised);color:var(--text-secondary);border:1px solid var(--border) !important}.wip-btn-save{background:var(--red);color:var(--white)}.wip-btn-delete{background:rgba(218,41,28,0.15);color:var(--red);border:1px solid rgba(218,41,28,0.3) !important}
 </style>
 </head>
 <body>
@@ -356,7 +375,55 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   </ol>
  </div>
 </div>
+<div id="pg-wip" class="page">
+ <div class="page-header">
+  <h1>Work in Progress</h1>
+  <div class="accent-bar"></div>
+  <p>Custom figures being repainted or modified</p>
+ </div>
+ <div class="wip-toolbar">
+  <button class="btn-wip-add" id="btnWipAdd">+ Add WIP</button>
+ </div>
+ <div class="wip-filter-bar" id="wipFilterBar">
+  <button class="chip active" data-wip-filter="all">All</button>
+  <button class="chip" data-wip-filter="active">In Progress</button>
+  <button class="chip" data-wip-filter="done">Completed</button>
+ </div>
+ <ul class="wip-list" id="wipList"></ul>
+ <div class="wip-empty" id="wipEmpty" style="display:none;">No work in progress items yet</div>
+</div>
 
+
+/* Also add the WIP modal and overlay. Find this line in Part 2:
+     <div class="confirm-overlay" id="editFolderOverlay">
+   Paste this BEFORE it:
+*/
+
+<div class="wip-modal" id="wipModal">
+ <div class="wip-panel" id="wipPanel"></div>
+</div>
+<div class="confirm-overlay" id="wipAddOverlay">
+ <div class="confirm-box">
+  <h3>Add WIP</h3>
+  <input type="text" id="wipAddName" placeholder="Figure name" autocomplete="off">
+  <div class="confirm-btns">
+   <button class="btn-keep" id="wipAddCancel">Cancel</button>
+   <button class="btn-gold" id="wipAddConfirm">Add</button>
+  </div>
+ </div>
+</div>
+<input type="file" id="wipPhotoInput" accept="image/*" style="display:none">
+
+
+/* Also add the WIP nav button. Find this line in Part 2:
+     <button class="nav-btn" data-page="pg-folders">
+   Paste this BEFORE it:
+*/
+
+ <button class="nav-btn" data-page="pg-wip">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/></svg>
+  <span>WIP</span>
+ </button>
 <div id="pg-folders" class="page">
  <div class="page-header">
   <h1>Folders</h1>
@@ -864,7 +931,155 @@ document.getElementById('btnRefreshVersions').addEventListener('click',function(
 document.getElementById('versionList').addEventListener('click',function(e){var btn=e.target.closest('.btn-vr-restore');if(!btn)return;pendingVersionPath=btn.getAttribute('data-path');document.getElementById('versionRestoreMsg').textContent='Restore from '+btn.getAttribute('data-label')+'?';document.getElementById('versionRestoreOverlay').className='confirm-overlay open';},false);
 document.getElementById('versionRestoreOverlay').addEventListener('click',function(e){if(e.target.id==='versionRestoreCancel'||e.target===this){this.className='confirm-overlay';pendingVersionPath=null;}if(e.target.id==='versionRestoreConfirm'){this.className='confirm-overlay';if(pendingVersionPath){toast('Restoring...');fetchFileContent(pendingVersionPath,function(text){mergePayloadText(text,function(n){toast('Restored '+n);renderGallery();});});pendingVersionPath=null;}}},false);
 document.getElementById('btnClearToken').addEventListener('click',function(){if(!confirm('Clear all backup settings?'))return;backupConfig={owner:'',repo:'',branch:'main',token:'',auto:false,autoRestore:false,backupOnClose:false,lastBackup:''};saveSetting('backupConfig',backupConfig,function(){renderBackupPage();toast('Cleared');});},false);
+/* --- WIP PAGE --- */
+var wipItems=[];
+var wipFilter='all';
+var wipCurrentId=null;
+var wipPhotoTarget=null;
+var defaultChecklist=['Strip paint','Prime','Base coat','Detail paint','Seal/varnish','Photograph'];
 
+function loadWipItems(cb){getSetting('wipItems',function(val){wipItems=val||[];if(cb)cb();});}
+function saveWipItems(cb){saveSetting('wipItems',wipItems,cb);}
+
+function renderWipPage(){
+ loadWipItems(function(){
+  var list=document.getElementById('wipList'),empty=document.getElementById('wipEmpty');
+  var filtered=wipItems.filter(function(w){
+   if(wipFilter==='active')return!w.done;
+   if(wipFilter==='done')return w.done;
+   return true;
+  });
+  if(!filtered.length){list.innerHTML='';empty.style.display='block';empty.textContent=wipItems.length?'No matches':'No work in progress items yet';return;}
+  empty.style.display='none';
+  var html='';
+  for(var i=0;i<filtered.length;i++){
+   var w=filtered[i];
+   var progress=0,total=0;
+   if(w.checklist&&w.checklist.length){total=w.checklist.length;for(var c=0;c<w.checklist.length;c++){if(w.checklist[c].done)progress++;}}
+   var pctText=total?(progress+'/'+total):'';
+   html+='<li class="wip-item'+(w.done?' completed':'')+'" data-wip-id="'+w.id+'"><button class="wip-check'+(w.done?' done':'')+'" data-wip-toggle="'+w.id+'"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></button><span class="wip-name" data-wip-open="'+w.id+'">'+esc(w.name)+(pctText?' <span style="color:var(--text-muted);font-size:11px;font-weight:500;">('+pctText+')</span>':'')+'</span></li>';
+  }
+  list.innerHTML=html;
+ });
+}
+
+document.getElementById('wipFilterBar').addEventListener('click',function(e){
+ var btn=e.target.closest('.chip');if(!btn)return;
+ wipFilter=btn.getAttribute('data-wip-filter');
+ var chips=document.getElementById('wipFilterBar').querySelectorAll('.chip');
+ for(var i=0;i<chips.length;i++)chips[i].className='chip';
+ btn.className='chip active';
+ renderWipPage();
+},false);
+
+document.getElementById('wipList').addEventListener('click',function(e){
+ var toggle=e.target.closest('[data-wip-toggle]');
+ if(toggle){
+  var id=toggle.getAttribute('data-wip-toggle');
+  for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===id){wipItems[i].done=!wipItems[i].done;break;}}
+  saveWipItems(function(){renderWipPage();triggerAutoBackup();});
+  return;
+ }
+ var open=e.target.closest('[data-wip-open]');
+ if(open){openWipDetail(open.getAttribute('data-wip-open'));}
+},false);
+
+document.getElementById('btnWipAdd').addEventListener('click',function(){
+ document.getElementById('wipAddName').value='';
+ document.getElementById('wipAddOverlay').className='confirm-overlay open';
+ setTimeout(function(){document.getElementById('wipAddName').focus();},100);
+},false);
+
+document.getElementById('wipAddOverlay').addEventListener('click',function(e){
+ if(e.target.id==='wipAddCancel'||e.target===this){this.className='confirm-overlay';}
+ if(e.target.id==='wipAddConfirm'){
+  var name=document.getElementById('wipAddName').value.trim();
+  if(!name){toast('Enter a name');return;}
+  var checklist=[];
+  for(var i=0;i<defaultChecklist.length;i++){checklist.push({text:defaultChecklist[i],done:false});}
+  wipItems.push({id:genId(),name:name,done:false,notes:'',photos:[],checklist:checklist,createdAt:new Date().toISOString()});
+  saveWipItems(function(){document.getElementById('wipAddOverlay').className='confirm-overlay';toast(name+' added');renderWipPage();triggerAutoBackup();});
+ }
+},false);
+document.getElementById('wipAddName').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();document.getElementById('wipAddConfirm').click();}},false);
+
+function openWipDetail(id){
+ wipCurrentId=id;
+ var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===id){w=wipItems[i];break;}}
+ if(!w)return;
+ var panel=document.getElementById('wipPanel');
+ var photosHtml='<div class="wip-photos"><div class="wip-photos-label">Photos</div><div class="wip-photos-grid" id="wipPhotosGrid">';
+ if(w.photos){for(var p=0;p<w.photos.length;p++){photosHtml+='<div class="wip-photo-thumb" data-photo-idx="'+p+'"><img src="'+w.photos[p]+'" alt=""><button class="wpt-remove" data-remove-photo="'+p+'">&times;</button></div>';}}
+ photosHtml+='<div class="wip-photo-add" id="wipPhotoAdd">+</div></div></div>';
+ var clHtml='<div class="wip-checklist"><div class="wip-photos-label">Checklist</div>';
+ if(w.checklist){for(var c=0;c<w.checklist.length;c++){clHtml+='<div class="wip-cl-item" data-cl-idx="'+c+'"><button class="wip-cl-check'+(w.checklist[c].done?' done':'')+'" data-cl-toggle="'+c+'"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></button><span class="wip-cl-text'+(w.checklist[c].done?' done':'')+'">'+esc(w.checklist[c].text)+'</span></div>';}}
+ clHtml+='<div class="wip-cl-add"><input type="text" id="wipClInput" placeholder="Add step"><button id="wipClAddBtn">Add</button></div></div>';
+ panel.innerHTML='<h2>'+esc(w.name)+'</h2>'+photosHtml+'<div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="wipNotes" placeholder="Progress notes...">'+esc(w.notes||'')+'</textarea></div>'+clHtml+'<div class="wip-panel-btns"><button class="wip-btn-close" id="wipClose">Close</button><button class="wip-btn-save" id="wipSave">Save</button><button class="wip-btn-delete" id="wipDeleteBtn">Delete</button></div>';
+ document.getElementById('wipModal').className='wip-modal open';
+}
+
+document.getElementById('wipModal').addEventListener('click',function(e){
+ if(e.target.id==='wipClose'||e.target===document.getElementById('wipModal')){this.className='wip-modal';wipCurrentId=null;return;}
+ if(e.target.id==='wipSave'){
+  var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}
+  if(w){w.notes=document.getElementById('wipNotes').value.trim();}
+  saveWipItems(function(){document.getElementById('wipModal').className='wip-modal';toast('Saved');renderWipPage();triggerAutoBackup();wipCurrentId=null;});
+  return;
+ }
+ if(e.target.id==='wipDeleteBtn'){
+  if(!confirm('Delete this WIP item?'))return;
+  for(var i=wipItems.length-1;i>=0;i--){if(wipItems[i].id===wipCurrentId){wipItems.splice(i,1);break;}}
+  saveWipItems(function(){document.getElementById('wipModal').className='wip-modal';toast('Deleted');renderWipPage();triggerAutoBackup();wipCurrentId=null;});
+  return;
+ }
+ var clToggle=e.target.closest('[data-cl-toggle]');
+ if(clToggle){
+  var idx=parseInt(clToggle.getAttribute('data-cl-toggle'),10);
+  var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}
+  if(w&&w.checklist[idx]){w.checklist[idx].done=!w.checklist[idx].done;saveWipItems(function(){openWipDetail(wipCurrentId);});}
+  return;
+ }
+ if(e.target.id==='wipClAddBtn'){
+  var input=document.getElementById('wipClInput');var text=input.value.trim();if(!text)return;
+  var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}
+  if(w){if(!w.checklist)w.checklist=[];w.checklist.push({text:text,done:false});saveWipItems(function(){openWipDetail(wipCurrentId);});}
+  return;
+ }
+ var removePhoto=e.target.closest('[data-remove-photo]');
+ if(removePhoto){
+  var pidx=parseInt(removePhoto.getAttribute('data-remove-photo'),10);
+  var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}
+  if(w&&w.photos){w.photos.splice(pidx,1);saveWipItems(function(){openWipDetail(wipCurrentId);});}
+  return;
+ }
+ if(e.target.id==='wipPhotoAdd'||e.target.closest('#wipPhotoAdd')){
+  document.getElementById('wipPhotoInput').click();
+  return;
+ }
+},false);
+
+document.getElementById('wipPhotoInput').addEventListener('change',function(){
+ var file=this.files&&this.files[0];if(!file||!file.type.match('image.*'))return;
+ var reader=new FileReader();
+ reader.onload=function(){
+  var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}
+  if(w){if(!w.photos)w.photos=[];w.photos.push(reader.result);saveWipItems(function(){openWipDetail(wipCurrentId);});}
+ };
+ reader.readAsDataURL(file);
+ this.value='';
+},false);
+
+document.getElementById('wipClInput')&&document.addEventListener('keydown',function(e){
+ if(e.target&&e.target.id==='wipClInput'&&e.key==='Enter'){e.preventDefault();var btn=document.getElementById('wipClAddBtn');if(btn)btn.click();}
+},false);
+
+
+/* Also add to switchPage. Find this line in Part 3:
+     if(pageId==='pg-folders')renderFoldersPage();
+   Paste this AFTER it:
+*/
+
+ if(pageId==='pg-wip')renderWipPage();
 /* --- INIT --- */
 openDB(function(){
  getSetting('backupConfig',function(cfg){
