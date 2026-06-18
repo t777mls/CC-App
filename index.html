@@ -261,6 +261,64 @@ a:active { color: var(--white); }
 .fp-count { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
 .fp-search { margin-bottom: 16px; }
 .fp-set-cover { width: 100%; padding: 12px; margin-top: 12px; background: rgba(251,225,34,0.1); color: var(--gold); border: 1px solid rgba(251,225,34,0.25); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.quick-toggle { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
+.quick-toggle .qt-text { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+.quick-toggle .qt-text small { display: block; font-size: 11px; font-weight: 500; color: var(--text-muted); margin-top: 2px; }
+.batch-bar { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-bottom: 24px; }
+.batch-bar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.batch-bar-header span { font-size: 13px; font-weight: 700; color: var(--gold); }
+.batch-bar-header button { background: none; border: none; color: var(--text-muted); font-size: 12px; font-family: inherit; font-weight: 600; cursor: pointer; }
+.batch-thumbs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+.batch-thumbs::-webkit-scrollbar { display: none; }
+.batch-thumb { width: 56px; height: 56px; flex-shrink: 0; border-radius: 8px; overflow: hidden; border: 2px solid var(--border); cursor: pointer; position: relative; }
+.batch-thumb.active { border-color: var(--gold); }
+.batch-thumb.done { opacity: 0.4; }
+.batch-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.batch-thumb .bt-num { position: absolute; bottom: 2px; right: 2px; background: var(--black); color: var(--gold); font-size: 9px; font-weight: 700; padding: 1px 4px; border-radius: 3px; }
+.btn-batch { width: 100%; padding: 14px; background: var(--surface); border: 1px solid var(--gold); border-radius: var(--radius-sm); font-size: 14px; font-family: inherit; font-weight: 700; color: var(--gold); cursor: pointer; margin-bottom: 20px; -webkit-tap-highlight-color: transparent; }
+.btn-batch:active { background: rgba(251,225,34,0.1); }
+.batch-status { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 8px; }
+.bulk-bar { position: fixed; bottom: 60px; left: 0; right: 0; background: var(--black-light); border-top: 1px solid var(--border); padding: 12px 16px calc(env(safe-area-inset-bottom, 0px) + 12px); z-index: 99; display: none; }
+.bulk-bar.open { display: block; }
+.bulk-bar-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.bulk-count { font-size: 13px; font-weight: 700; color: var(--gold); }
+.bulk-cancel { background: none; border: none; color: var(--text-muted); font-size: 12px; font-family: inherit; font-weight: 600; cursor: pointer; }
+.bulk-actions { display: flex; gap: 8px; }
+.bulk-btn { flex: 1; padding: 11px 8px; border-radius: var(--radius-sm); font-size: 12px; font-family: inherit; font-weight: 700; cursor: pointer; text-align: center; -webkit-tap-highlight-color: transparent; border: none; }
+.bulk-btn.move { background: rgba(251,225,34,0.12); color: var(--gold); }
+.bulk-btn.tag { background: rgba(78,161,255,0.12); color: var(--blue); }
+.bulk-btn.del { background: rgba(218,41,28,0.12); color: var(--red); }
+.btn-bulk-mode { padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 700; color: var(--text-secondary); cursor: pointer; -webkit-tap-highlight-color: transparent; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.btn-bulk-mode:active { background: var(--surface-raised); }
+.btn-bulk-mode svg { width: 16px; height: 16px; pointer-events: none; }
+.card.selected { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold); }
+.card .card-check { position: absolute; top: 8px; left: 8px; width: 22px; height: 22px; border-radius: 50%; background: rgba(0,0,0,0.5); border: 2px solid var(--white); display: none; align-items: center; justify-content: center; pointer-events: none; z-index: 2; }
+.card .card-check svg { width: 14px; height: 14px; color: var(--white); }
+.card.selected .card-check { display: flex; background: var(--gold); border-color: var(--gold); }
+.card.selected .card-check svg { color: var(--black); }
+.bulk-mode .card .card-check { display: flex; }
+.bulk-mode .card-folder-dot { display: none; }
+.spotlight { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; margin-bottom: 20px; display: none; }
+.spotlight.show { display: block; }
+.spotlight-inner { display: flex; gap: 14px; padding: 14px; align-items: center; }
+.spotlight-img { width: 70px; height: 90px; flex-shrink: 0; border-radius: 8px; overflow: hidden; background: var(--surface-raised); }
+.spotlight-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.spotlight-img .sp-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 10px; }
+.spotlight-text { flex: 1; min-width: 0; }
+.spotlight-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gold); margin-bottom: 4px; }
+.spotlight-name { font-size: 15px; font-weight: 700; color: var(--white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.spotlight-meta { font-size: 12px; color: var(--text-muted); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.spotlight-btn { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--surface-raised); border: 1px solid var(--border); color: var(--text-muted); display: flex; align-items: center; justify-content: center; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.spotlight-btn:active { background: var(--border); }
+.spotlight-btn svg { width: 16px; height: 16px; pointer-events: none; }
+.fp-toolbar { display: flex; gap: 10px; margin-bottom: 16px; }
+.fp-toolbar .btn-new-folder-page { flex: 1; padding: 12px; background: var(--red); color: var(--white); border: none; border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.fp-toolbar .btn-new-folder-page:active { background: var(--red-dark); }
+.fp-filter-chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 16px; -webkit-overflow-scrolling: touch; }
+.fp-filter-chips::-webkit-scrollbar { display: none; }
+.edit-folder-field { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--black); color: var(--text-primary); font-size: 15px; font-family: inherit; margin-bottom: 12px; outline: none; }
+.edit-folder-field:focus { border-color: var(--red); }
+.btn-danger-sm { width: 100%; padding: 10px; background: none; color: var(--red); border: 1px solid rgba(218,41,28,0.3); border-radius: var(--radius-sm); font-size: 12px; font-family: inherit; font-weight: 600; cursor: pointer; margin-top: 8px; -webkit-tap-highlight-color: transparent; }
 </style>
 </head>
 <body>
@@ -269,6 +327,19 @@ a:active { color: var(--white); }
  <h1>Collection</h1>
  <div class="accent-bar"></div>
  <div class="count-badge" id="count-badge">0 figures</div>
+ </div>
+  <div class="spotlight" id="spotlight">
+ <div class="spotlight-inner" id="spotlightInner">
+ <div class="spotlight-img" id="spotlightImg"></div>
+ <div class="spotlight-text">
+  <div class="spotlight-label">&#9733; Figure of the Day</div>
+  <div class="spotlight-name" id="spotlightName"></div>
+  <div class="spotlight-meta" id="spotlightMeta"></div>
+ </div>
+ <button class="spotlight-btn" id="spotlightShuffle" title="New random pick">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3"/></svg>
+ </button>
+ </div>
  </div>
  <div class="search-wrap">
  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.2-5.2m0 0A7.5 7.5 0 105.2 5.2a7.5 7.5 0 0010.6 10.6z"/></svg>
@@ -287,6 +358,12 @@ a:active { color: var(--white); }
  <button class="btn-pdf" id="btnPdf">
  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
  <span>Export PDF</span>
+ </button>
+ </div>
+  <div class="gallery-toolbar">
+ <button class="btn-bulk-mode" id="btnBulkMode">
+ <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+ Select Multiple
  </button>
  </div>
  <div class="filter-tabs" id="filterTabs">
@@ -309,6 +386,16 @@ a:active { color: var(--white); }
  <p id="formSubtitle">Add a new piece to your collection</p>
  </div>
  <form id="addForm">
+  <button type="button" class="btn-batch" id="btnBatchPhoto">&#128247; Batch Photo Queue</button>
+ <div class="batch-bar" id="batchBar" style="display:none;">
+ <div class="batch-bar-header">
+ <span id="batchCount">0 photos queued</span>
+ <button type="button" id="batchClear">Clear All</button>
+ </div>
+ <div class="batch-thumbs" id="batchThumbs"></div>
+ <div class="batch-status" id="batchStatus">Tap a thumbnail to fill in its details</div>
+ </div>
+ <input type="file" id="batchFileInput" accept="image/*" capture="environment" style="display:none" multiple>
  <div class="form-group">
  <label class="form-label">Figure Name *</label>
  <input type="text" class="form-input" id="fName" placeholder="e.g. Goku Super Saiyan" required>
@@ -363,6 +450,10 @@ a:active { color: var(--white); }
  <button type="button" class="preview-remove" id="removePhoto">&#10005;</button>
  </div>
  <input type="file" id="fileInput" accept="image/*" style="display:none">
+ </div>
+ <div class="quick-toggle" id="quickToggleWrap">
+ <div class="qt-text">Quick Add Mode<small>Keeps brand, folder, tags after saving</small></div>
+ <label class="switch"><input type="checkbox" id="quickAddToggle"><span class="slider"></span></label>
  </div>
  <button type="submit" class="btn-submit" id="submitBtn">Add to Collection</button>
  </form>
@@ -453,10 +544,14 @@ a:active { color: var(--white); }
  <div class="accent-bar"></div>
  <p>Browse your collection by folder</p>
  </div>
+ <div class="fp-toolbar">
+ <button class="btn-new-folder-page" id="btnNewFolderPage">+ New Folder</button>
+ </div>
  <div class="search-wrap fp-search">
  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.2-5.2m0 0A7.5 7.5 0 105.2 5.2a7.5 7.5 0 0010.6 10.6z"/></svg>
  <input type="text" class="search-input" id="folderSearchInput" placeholder="Search folders...">
  </div>
+ <div class="fp-filter-chips" id="fpFilterChips"></div>
  <div class="folders-page-grid" id="foldersPageGrid"></div>
 </div>
 <nav class="nav">
@@ -554,6 +649,18 @@ a:active { color: var(--white); }
  </div>
  </div>
 </div>
+<div class="confirm-overlay" id="editFolderOverlay">
+ <div class="confirm-box">
+ <h3 id="editFolderTitle">Edit Folder</h3>
+ <input type="text" class="edit-folder-field" id="editFolderName" placeholder="Folder name" autocomplete="off">
+ <div class="confirm-btns">
+ <button class="btn-keep" id="editFolderCancel">Cancel</button>
+ <button class="btn-gold" id="editFolderSave">Save</button>
+ </div>
+ <button type="button" class="btn-keep" id="editFolderCover" style="width:100%;margin-top:12px;">Change Cover Image</button>
+ <button type="button" class="btn-danger-sm" id="editFolderDelete">Delete Folder</button>
+ </div>
+</div>
 <div class="confirm-overlay" id="coverOverlay">
  <div class="confirm-box">
  <h3 id="coverTitle">Set Folder Cover</h3>
@@ -579,6 +686,37 @@ a:active { color: var(--white); }
  <button class="ss-ctrl" id="ssPrev"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg></button>
  <button class="ss-ctrl play" id="ssPlay"><svg id="ssPlayIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5"/></svg></button>
  <button class="ss-ctrl" id="ssNext"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></button>
+ </div>
+</div>
+<div class="bulk-bar" id="bulkBar">
+ <div class="bulk-bar-top">
+ <span class="bulk-count" id="bulkCount">0 selected</span>
+ <button class="bulk-cancel" id="bulkCancel">Cancel</button>
+ </div>
+ <div class="bulk-actions">
+ <button class="bulk-btn move" id="bulkMove">Move to Folder</button>
+ <button class="bulk-btn tag" id="bulkTag">Add Tag</button>
+ <button class="bulk-btn del" id="bulkDelete">Delete</button>
+ </div>
+</div>
+<div class="confirm-overlay" id="bulkMoveOverlay">
+ <div class="confirm-box">
+ <h3>Move Selected</h3>
+ <select id="bulkMoveFolder"></select>
+ <div class="confirm-btns">
+ <button class="btn-keep" id="bulkMoveCancel">Cancel</button>
+ <button class="btn-gold" id="bulkMoveConfirm">Move</button>
+ </div>
+ </div>
+</div>
+<div class="confirm-overlay" id="bulkTagOverlay">
+ <div class="confirm-box">
+ <h3>Add Tag to Selected</h3>
+ <input type="text" id="bulkTagInput" placeholder="Tag name" autocomplete="off">
+ <div class="confirm-btns">
+ <button class="btn-keep" id="bulkTagCancel">Cancel</button>
+ <button class="btn-gold" id="bulkTagConfirm">Add Tag</button>
+ </div>
  </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -650,6 +788,9 @@ function resetForm() {
  document.getElementById('uploadZone').style.display = 'block';
  document.getElementById('previewBox').style.display = 'none';
  document.getElementById('formTitle').textContent = 'Add Figure';
+  document.getElementById('btnBatchPhoto').style.display = 'block';
+ document.getElementById('quickToggleWrap').style.display = 'flex';
+ renderBatchBar();
  document.getElementById('formSubtitle').textContent = 'Add a new piece to your collection';
  document.getElementById('submitBtn').textContent = 'Add to Collection';
 }
@@ -834,6 +975,9 @@ function openEditForm(id) {
  renderTags();
  populateFolderSelect();
  document.getElementById('fFolder').value = f.folder || '';
+  document.getElementById('batchBar').style.display = 'none';
+ document.getElementById('btnBatchPhoto').style.display = 'none';
+ document.getElementById('quickToggleWrap').style.display = 'none';	
  document.getElementById('formTitle').textContent = 'Edit Figure';
  document.getElementById('formSubtitle').textContent = 'Update details for ' + f.name;
  document.getElementById('submitBtn').textContent = 'Save Changes';
@@ -896,10 +1040,30 @@ document.getElementById('addForm').addEventListener('submit', function(e) {
   var data = { id: genId(), name: name, year: document.getElementById('fYear').value.trim(), code: document.getElementById('fCode').value.trim(), brand: document.getElementById('fBrand').value.trim(), folder: document.getElementById('fFolder').value, condition: document.getElementById('fCondition').value, notes: document.getElementById('fNotes').value.trim(), tags: tags.slice(), hasPhoto: !!photoBlob, addedAt: new Date().toISOString() };
   saveFigure(data, photoBlob, function() {
    btn.disabled = false;
-   resetForm();
    toast(name + ' added!');
    triggerAutoBackup();
-   setTimeout(function() { switchPage('pg-gallery'); }, 500);
+   if (batchCurrentIdx >= 0) {
+    // Batch mode: mark saved, auto-advance
+    markBatchItemSaved();
+   } else if (quickAddMode) {
+    // Quick-add: keep brand/folder/tags, clear name/notes/photo
+    var keepBrand = document.getElementById('fBrand').value;
+    var keepFolder = document.getElementById('fFolder').value;
+    var keepCondition = document.getElementById('fCondition').value;
+    var keepTags = tags.slice();
+    resetForm();
+    document.getElementById('fBrand').value = keepBrand;
+    document.getElementById('fFolder').value = keepFolder;
+    document.getElementById('fCondition').value = keepCondition;
+    tags = keepTags;
+    renderTags();
+    document.getElementById('fName').focus();
+    document.getElementById('quickAddToggle').checked = true;
+    quickAddMode = true;
+   } else {
+    resetForm();
+    setTimeout(function() { switchPage('pg-gallery'); }, 500);
+   }
   });
  }
 }, false);
@@ -922,7 +1086,7 @@ document.getElementById('foldersBar').addEventListener('click', function(e) {
  var chip = e.target.closest('.folder-chip');
  if (!chip) return;
  activeFolder = chip.getAttribute('data-folder');
- renderFoldersBar(); renderFiltered(); updateSlideshowLabel();
+ renderFoldersBar(); renderFiltered(); updateSlideshowLabel();pickSpotlight(false);
 }, false);
 document.getElementById('btnNewFolder').addEventListener('click', function() {
  document.getElementById('folderNameInput').value = '';
@@ -1038,14 +1202,24 @@ function buildCards(figures, total) {
  (function(idx, f) {
   var div = document.createElement('div'); div.className = 'card'; div.setAttribute('data-id', f.id);
   var dot = f.folder ? '<span class="card-folder-dot"></span>' : '';
+var check = '<span class="card-check"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span>';
   function done() { cards[idx] = div; pending--; if (pending <= 0) appendCards(cards, total); }
-  if (f.hasPhoto) { getPhoto(f.id, function(blob) { if (blob) { var url = URL.createObjectURL(blob); urls.push(url); div.innerHTML = '<div class="card-img-wrap"><img class="card-img" src="' + url + '" alt=""></div>' + dot + (f.year ? '<span class="card-year">' + esc(f.year) + '</span>' : '') + '<div class="card-info"><div class="card-name">' + esc(f.name) + '</div><div class="card-meta">' + esc(f.brand || '') + '</div></div>'; } else { div.innerHTML = '<div class="card-placeholder"><span>No photo</span></div>' + dot + (f.year ? '<span class="card-year">' + esc(f.year) + '</span>' : '') + '<div class="card-info"><div class="card-name">' + esc(f.name) + '</div><div class="card-meta">' + esc(f.brand || '') + '</div></div>'; } done(); }); }
+  if (f.hasPhoto) { getPhoto(f.id, function(blob) { if (blob) { var url = URL.createObjectURL(blob); urls.push(url); div.innerHTML = '<div class="card-img-wrap"><img class="card-img" src="' + url + '" alt=""></div>' + dot + check + (f.year ? '<span class="card-year">' + esc(f.year) + '</span>' : '') + '<div class="card-info"><div class="card-name">' + esc(f.name) + '</div><div class="card-meta">' + esc(f.brand || '') + '</div></div>'; } else { div.innerHTML = '<div class="card-placeholder"><span>No photo</span></div>' + dot + check + (f.year ? '<span class="card-year">' + esc(f.year) + '</span>' : '') + '<div class="card-info"><div class="card-name">' + esc(f.name) + '</div><div class="card-meta">' + esc(f.brand || '') + '</div></div>'; } done(); }); }
   else { div.innerHTML = '<div class="card-placeholder"><span>No photo</span></div>' + dot + (f.year ? '<span class="card-year">' + esc(f.year) + '</span>' : '') + '<div class="card-info"><div class="card-name">' + esc(f.name) + '</div><div class="card-meta">' + esc(f.brand || '') + '</div></div>'; done(); }
  })(i, figures[i]);
  }
 }
 function appendCards(cards, total) { var grid = document.getElementById('galleryGrid'); grid.innerHTML = ''; for (var i = 0; i < cards.length; i++) { if (cards[i]) grid.appendChild(cards[i]); } if (shown < total) { var w = document.createElement('div'); w.className = 'load-more-wrap'; w.innerHTML = '<button class="btn-more">Load more (' + (total - shown) + ' remaining)</button>'; grid.appendChild(w); } }
-gallery.addEventListener('click', function(e) { if (dragState.active) return; var card = e.target.closest('.card'); if (card) { openDetail(card.getAttribute('data-id')); return; } var more = e.target.closest('.btn-more'); if (more) { var filtered = applyFilters(); shown = Math.min(shown + PAGE_SIZE, filtered.length); buildCards(filtered.slice(0, shown), filtered.length); } }, false);
+gallery.addEventListener('click', function(e) {
+ if (dragState.active) return;
+ var card = e.target.closest('.card');
+ if (card) {
+  if (bulkMode) { toggleBulkCard(card.getAttribute('data-id')); return; }
+  openDetail(card.getAttribute('data-id')); return;
+ }
+ var more = e.target.closest('.btn-more');
+ if (more) { var filtered = applyFilters(); shown = Math.min(shown + PAGE_SIZE, filtered.length); buildCards(filtered.slice(0, shown), filtered.length); }
+}, false);
 
 /* --- DETAIL MODAL (with clickable tags, brand, year) --- */
 function openDetail(id) {
@@ -1265,8 +1439,330 @@ document.getElementById('versionList').addEventListener('click', function(e) { v
 document.getElementById('versionRestoreOverlay').addEventListener('click', function(e) { if (e.target.id === 'versionRestoreCancel' || e.target === this) { this.className = 'confirm-overlay'; pendingVersionPath = null; } if (e.target.id === 'versionRestoreConfirm') { this.className = 'confirm-overlay'; if (pendingVersionPath) { toast('Restoring...'); fetchFileContent(pendingVersionPath, function(text) { mergePayloadText(text, function(n) { toast('Restored ' + n + ' figures'); renderGallery(); }); }); pendingVersionPath = null; } } }, false);
 document.getElementById('btnClearToken').addEventListener('click', function() { if (!confirm('Clear all backup settings?')) return; backupConfig = { owner: '', repo: '', branch: 'main', token: '', auto: false, autoRestore: false, backupOnClose: false, lastBackup: '' }; saveSetting('backupConfig', backupConfig, function() { renderBackupPage(); toast('Cleared'); }); }, false);
 
+/* --- RANDOM SPOTLIGHT --- */
+var spotlightId = null;
+
+function getTodaySeed() {
+ var d = new Date();
+ return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+}
+
+function pickSpotlight(force) {
+ if (!cached.length) { document.getElementById('spotlight').className = 'spotlight'; return; }
+ var today = getTodaySeed();
+ if (!force && spotlightId) {
+  // Check if saved pick is still valid
+  var valid = false;
+  for (var i = 0; i < cached.length; i++) { if (cached[i].id === spotlightId) { valid = true; break; } }
+  if (valid) { renderSpotlight(spotlightId); return; }
+ }
+ // Use today's date as a pseudo-random seed for consistency within the day
+ if (!force) {
+  var savedDay = null;
+  try { savedDay = localStorage.getItem('spotlight_day'); spotlightId = localStorage.getItem('spotlight_id'); } catch(e) {}
+  if (savedDay === today && spotlightId) {
+   var stillExists = false;
+   for (var i = 0; i < cached.length; i++) { if (cached[i].id === spotlightId) { stillExists = true; break; } }
+   if (stillExists) { renderSpotlight(spotlightId); return; }
+  }
+ }
+ // Pick a random figure
+ var idx = Math.floor(Math.random() * cached.length);
+ spotlightId = cached[idx].id;
+ try { localStorage.setItem('spotlight_day', today); localStorage.setItem('spotlight_id', spotlightId); } catch(e) {}
+ renderSpotlight(spotlightId);
+}
+
+function renderSpotlight(id) {
+ var f = null;
+ for (var i = 0; i < cached.length; i++) { if (cached[i].id === id) { f = cached[i]; break; } }
+ if (!f) { document.getElementById('spotlight').className = 'spotlight'; return; }
+ document.getElementById('spotlight').className = 'spotlight show';
+ document.getElementById('spotlightName').textContent = f.name;
+ var meta = [];
+ if (f.brand) meta.push(f.brand);
+ if (f.year) meta.push(f.year);
+ if (f.condition) meta.push(f.condition);
+ document.getElementById('spotlightMeta').textContent = meta.join(' \u00B7 ') || 'No details';
+ var imgWrap = document.getElementById('spotlightImg');
+ if (f.hasPhoto) {
+  getPhoto(f.id, function(blob) {
+   if (blob) {
+    var url = URL.createObjectURL(blob);
+    urls.push(url);
+    imgWrap.innerHTML = '<img src="' + url + '" alt="">';
+   } else {
+    imgWrap.innerHTML = '<span class="sp-ph">No img</span>';
+   }
+  });
+ } else {
+  imgWrap.innerHTML = '<span class="sp-ph">No img</span>';
+ }
+}
+
+// Tap spotlight to open detail
+document.getElementById('spotlightInner').addEventListener('click', function(e) {
+ if (e.target.closest('.spotlight-btn')) return;
+ if (spotlightId) openDetail(spotlightId);
+}, false);
+
+// Shuffle button picks a new random one
+document.getElementById('spotlightShuffle').addEventListener('click', function(e) {
+ e.stopPropagation();
+ pickSpotlight(true);
+}, false);
+
+/* --- BULK ACTIONS --- */
+var bulkMode = false;
+var bulkSelected = [];
+
+document.getElementById('btnBulkMode').addEventListener('click', function() {
+ if (bulkMode) { exitBulkMode(); } else { enterBulkMode(); }
+}, false);
+
+function enterBulkMode() {
+ bulkMode = true;
+ bulkSelected = [];
+ document.getElementById('galleryGrid').classList.add('bulk-mode');
+ document.getElementById('bulkBar').className = 'bulk-bar open';
+ document.getElementById('btnBulkMode').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg> Exit Select';
+ updateBulkCount();
+}
+
+function exitBulkMode() {
+ bulkMode = false;
+ bulkSelected = [];
+ document.getElementById('galleryGrid').classList.remove('bulk-mode');
+ document.getElementById('bulkBar').className = 'bulk-bar';
+ document.getElementById('btnBulkMode').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Select Multiple';
+ var cards = document.querySelectorAll('.card.selected');
+ for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
+}
+
+function updateBulkCount() {
+ document.getElementById('bulkCount').textContent = bulkSelected.length + ' selected';
+}
+
+function toggleBulkCard(id) {
+ var idx = bulkSelected.indexOf(id);
+ if (idx > -1) bulkSelected.splice(idx, 1);
+ else bulkSelected.push(id);
+ var card = document.querySelector('.card[data-id="' + id + '"]');
+ if (card) card.classList.toggle('selected', bulkSelected.indexOf(id) > -1);
+ updateBulkCount();
+}
+
+document.getElementById('bulkCancel').addEventListener('click', exitBulkMode, false);
+
+// Move
+document.getElementById('bulkMove').addEventListener('click', function() {
+ if (!bulkSelected.length) { toast('Select figures first'); return; }
+ var html = '<option value="">Unfiled</option>';
+ for (var i = 0; i < folders.length; i++) html += '<option value="' + folders[i].id + '">' + esc(folders[i].name) + '</option>';
+ document.getElementById('bulkMoveFolder').innerHTML = html;
+ document.getElementById('bulkMoveOverlay').className = 'confirm-overlay open';
+}, false);
+
+document.getElementById('bulkMoveOverlay').addEventListener('click', function(e) {
+ if (e.target.id === 'bulkMoveCancel' || e.target === this) { this.className = 'confirm-overlay'; }
+ if (e.target.id === 'bulkMoveConfirm') {
+  var folderId = document.getElementById('bulkMoveFolder').value;
+  var pending = bulkSelected.length;
+  for (var i = 0; i < bulkSelected.length; i++) {
+   (function(id) {
+    var f = null;
+    for (var j = 0; j < cached.length; j++) { if (cached[j].id === id) { f = cached[j]; break; } }
+    if (f) { f.folder = folderId; updateFigure(f, function() { pending--; if (!pending) done(); }); }
+    else { pending--; if (!pending) done(); }
+   })(bulkSelected[i]);
+  }
+  function done() {
+   document.getElementById('bulkMoveOverlay').className = 'confirm-overlay';
+   toast('Moved ' + bulkSelected.length + ' figures');
+   exitBulkMode();
+   renderGallery();
+   triggerAutoBackup();
+  }
+ }
+}, false);
+
+// Tag
+document.getElementById('bulkTag').addEventListener('click', function() {
+ if (!bulkSelected.length) { toast('Select figures first'); return; }
+ document.getElementById('bulkTagInput').value = '';
+ document.getElementById('bulkTagOverlay').className = 'confirm-overlay open';
+ setTimeout(function() { document.getElementById('bulkTagInput').focus(); }, 100);
+}, false);
+
+document.getElementById('bulkTagOverlay').addEventListener('click', function(e) {
+ if (e.target.id === 'bulkTagCancel' || e.target === this) { this.className = 'confirm-overlay'; }
+ if (e.target.id === 'bulkTagConfirm') {
+  var tag = document.getElementById('bulkTagInput').value.trim();
+  if (!tag) { toast('Enter a tag'); return; }
+  var pending = bulkSelected.length;
+  for (var i = 0; i < bulkSelected.length; i++) {
+   (function(id) {
+    var f = null;
+    for (var j = 0; j < cached.length; j++) { if (cached[j].id === id) { f = cached[j]; break; } }
+    if (f) {
+     if (!f.tags) f.tags = [];
+     if (f.tags.indexOf(tag) === -1) f.tags.push(tag);
+     updateFigure(f, function() { pending--; if (!pending) done(); });
+    } else { pending--; if (!pending) done(); }
+   })(bulkSelected[i]);
+  }
+  function done() {
+   document.getElementById('bulkTagOverlay').className = 'confirm-overlay';
+   toast('Tagged ' + bulkSelected.length + ' figures with "' + tag + '"');
+   exitBulkMode();
+   renderGallery();
+   triggerAutoBackup();
+  }
+ }
+}, false);
+
+document.getElementById('bulkTagInput').addEventListener('keydown', function(e) {
+ if (e.key === 'Enter') { e.preventDefault(); document.getElementById('bulkTagConfirm').click(); }
+}, false);
+
+// Delete
+document.getElementById('bulkDelete').addEventListener('click', function() {
+ if (!bulkSelected.length) { toast('Select figures first'); return; }
+ if (!confirm('Delete ' + bulkSelected.length + ' figure' + (bulkSelected.length > 1 ? 's' : '') + '? This cannot be undone.')) return;
+ var pending = bulkSelected.length;
+ for (var i = 0; i < bulkSelected.length; i++) {
+  (function(id) {
+   deleteFigure(id, function() { pending--; if (!pending) done(); });
+  })(bulkSelected[i]);
+ }
+ function done() {
+  toast('Deleted ' + bulkSelected.length + ' figures');
+  exitBulkMode();
+  renderGallery();
+  triggerAutoBackup();
+ }
+}, false);
+
+/* --- QUICK ADD MODE --- */
+var quickAddMode = false;
+document.getElementById('quickAddToggle').addEventListener('change', function() {
+ quickAddMode = this.checked;
+}, false);
+
+/* --- BATCH PHOTO QUEUE --- */
+var batchQueue = [];
+var batchCurrentIdx = -1;
+
+document.getElementById('btnBatchPhoto').addEventListener('click', function() {
+ document.getElementById('batchFileInput').click();
+}, false);
+
+document.getElementById('batchFileInput').addEventListener('change', function() {
+ var files = this.files;
+ if (!files || !files.length) return;
+ var toProcess = files.length;
+ for (var i = 0; i < files.length; i++) {
+  (function(file) {
+   if (!file.type.match('image.*')) { toProcess--; return; }
+   resizeImg(file, function(blob) {
+    batchQueue.push({ blob: blob, saved: false });
+    toProcess--;
+    if (toProcess <= 0) {
+     renderBatchBar();
+     toast(files.length + ' photo' + (files.length > 1 ? 's' : '') + ' added to queue');
+    }
+   });
+  })(files[i]);
+ }
+ this.value = '';
+}, false);
+
+function renderBatchBar() {
+ var bar = document.getElementById('batchBar');
+ var thumbs = document.getElementById('batchThumbs');
+ var countEl = document.getElementById('batchCount');
+ var statusEl = document.getElementById('batchStatus');
+ if (!batchQueue.length) {
+  bar.style.display = 'none';
+  return;
+ }
+ bar.style.display = 'block';
+ var unsaved = 0;
+ for (var i = 0; i < batchQueue.length; i++) { if (!batchQueue[i].saved) unsaved++; }
+ countEl.textContent = batchQueue.length + ' photo' + (batchQueue.length > 1 ? 's' : '') + ' queued';
+ statusEl.textContent = unsaved + ' remaining. Tap a thumbnail to fill in details.';
+ var html = '';
+ for (var i = 0; i < batchQueue.length; i++) {
+  var url = URL.createObjectURL(batchQueue[i].blob);
+  urls.push(url);
+  html += '<div class="batch-thumb' + (i === batchCurrentIdx ? ' active' : '') + (batchQueue[i].saved ? ' done' : '') + '" data-batch-idx="' + i + '"><img src="' + url + '"><span class="bt-num">' + (i + 1) + '</span></div>';
+ }
+ thumbs.innerHTML = html;
+}
+
+document.getElementById('batchThumbs').addEventListener('click', function(e) {
+ var thumb = e.target.closest('.batch-thumb');
+ if (!thumb) return;
+ var idx = parseInt(thumb.getAttribute('data-batch-idx'), 10);
+ if (batchQueue[idx].saved) { toast('Already saved'); return; }
+ loadBatchItem(idx);
+}, false);
+
+function loadBatchItem(idx) {
+ batchCurrentIdx = idx;
+ var item = batchQueue[idx];
+ // Set the photo in the form
+ photoBlob = item.blob;
+ document.getElementById('previewImg').src = URL.createObjectURL(item.blob);
+ document.getElementById('uploadZone').style.display = 'none';
+ document.getElementById('previewBox').style.display = 'block';
+ // Clear name and notes but keep brand/folder/tags if quick-add is on
+ document.getElementById('fName').value = '';
+ document.getElementById('fNotes').value = '';
+ if (!quickAddMode) {
+  document.getElementById('fYear').value = '';
+  document.getElementById('fCode').value = '';
+  document.getElementById('fBrand').value = '';
+  document.getElementById('fFolder').value = '';
+  document.getElementById('fCondition').value = '';
+  tags = [];
+  renderTags();
+ }
+ document.getElementById('fName').focus();
+ renderBatchBar();
+ window.scrollTo(0, 0);
+}
+
+document.getElementById('batchClear').addEventListener('click', function() {
+ if (!batchQueue.length) return;
+ if (!confirm('Clear all ' + batchQueue.length + ' queued photos?')) return;
+ batchQueue = [];
+ batchCurrentIdx = -1;
+ renderBatchBar();
+ toast('Queue cleared');
+}, false);
+
+function markBatchItemSaved() {
+ if (batchCurrentIdx >= 0 && batchCurrentIdx < batchQueue.length) {
+  batchQueue[batchCurrentIdx].saved = true;
+  // Auto-advance to next unsaved item
+  var nextIdx = -1;
+  for (var i = 0; i < batchQueue.length; i++) {
+   if (!batchQueue[i].saved) { nextIdx = i; break; }
+  }
+  if (nextIdx >= 0) {
+   loadBatchItem(nextIdx);
+  } else {
+   batchCurrentIdx = -1;
+   renderBatchBar();
+   toast('Batch complete!');
+  }
+ }
+}
 /* --- FOLDERS PAGE --- */
 var coverFolderId = null;
+var editingFolderId = null;
+var fpSort = 'alpha';
 
 function getFolderCover(folderId, cb) {
  var tx = db.transaction(['photos'], 'readonly');
@@ -1280,8 +1776,62 @@ function saveFolderCover(folderId, blob, cb) {
  else tx.objectStore('photos').delete('folder_' + folderId);
  tx.oncomplete = function() { if (cb) cb(); };
 }
+function deleteFolder(folderId, cb) {
+ // Unfile all figures in this folder
+ for (var i = 0; i < cached.length; i++) {
+  if (cached[i].folder === folderId) { cached[i].folder = ''; updateFigure(cached[i]); }
+ }
+ var tx = db.transaction(['folders', 'photos'], 'readwrite');
+ tx.objectStore('folders').delete(folderId);
+ tx.objectStore('photos').delete('folder_' + folderId);
+ tx.oncomplete = function() {
+  for (var i = folders.length - 1; i >= 0; i--) { if (folders[i].id === folderId) { folders.splice(i, 1); break; } }
+  if (cb) cb();
+ };
+}
+function renameFolder(folderId, newName, cb) {
+ for (var i = 0; i < folders.length; i++) {
+  if (folders[i].id === folderId) { folders[i].name = newName; break; }
+ }
+ var tx = db.transaction(['folders'], 'readwrite');
+ for (var i = 0; i < folders.length; i++) {
+  if (folders[i].id === folderId) { tx.objectStore('folders').put(folders[i]); break; }
+ }
+ tx.oncomplete = function() { if (cb) cb(); };
+}
+
+function renderFpFilterChips() {
+ var html = '';
+ var sorts = [['alpha', 'A-Z'], ['alpha-desc', 'Z-A'], ['count', 'Most figures'], ['count-asc', 'Fewest'], ['newest', 'Newest'], ['oldest', 'Oldest']];
+ for (var i = 0; i < sorts.length; i++) {
+  html += '<button class="chip' + (fpSort === sorts[i][0] ? ' active' : '') + '" data-fp-sort="' + sorts[i][0] + '">' + sorts[i][1] + '</button>';
+ }
+ document.getElementById('fpFilterChips').innerHTML = html;
+}
+
+document.getElementById('fpFilterChips').addEventListener('click', function(e) {
+ var btn = e.target.closest('.chip');
+ if (!btn) return;
+ fpSort = btn.getAttribute('data-fp-sort');
+ renderFpFilterChips();
+ renderFoldersPage();
+}, false);
+
+function sortFolders(list) {
+ return list.slice().sort(function(a, b) {
+  if (fpSort === 'alpha') return (a.name || '').toLowerCase() < (b.name || '').toLowerCase() ? -1 : 1;
+  if (fpSort === 'alpha-desc') return (a.name || '').toLowerCase() > (b.name || '').toLowerCase() ? -1 : 1;
+  if (fpSort === 'count') return folderCount(b.id) - folderCount(a.id);
+  if (fpSort === 'count-asc') return folderCount(a.id) - folderCount(b.id);
+  if (fpSort === 'newest') return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+  if (fpSort === 'oldest') return new Date(a.createdAt || 0) - new Date(b.createdAt || 0);
+  return 0;
+ });
+}
+
 function renderFoldersPage() {
  if (!db) return;
+ renderFpFilterChips();
  var search = document.getElementById('folderSearchInput').value.toLowerCase();
  var grid = document.getElementById('foldersPageGrid');
  var filtered = [];
@@ -1289,6 +1839,7 @@ function renderFoldersPage() {
   if (search && folders[i].name.toLowerCase().indexOf(search) === -1) continue;
   filtered.push(folders[i]);
  }
+ filtered = sortFolders(filtered);
  if (!filtered.length) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted);">' + (folders.length ? 'No matching folders' : 'No folders yet') + '</div>'; return; }
  var pending = filtered.length;
  var cards = new Array(filtered.length);
@@ -1319,6 +1870,7 @@ function renderFoldersPage() {
  }
 }
 
+// Tap folder card = navigate to gallery
 document.getElementById('foldersPageGrid').addEventListener('click', function(e) {
  var card = e.target.closest('.fp-card');
  if (!card) return;
@@ -1327,17 +1879,90 @@ document.getElementById('foldersPageGrid').addEventListener('click', function(e)
  switchPage('pg-gallery');
 }, false);
 
+// Long press = edit folder
 var fpHoldTimer = null;
 var fpHoldId = null;
+var fpTouchMoved = false;
 document.getElementById('foldersPageGrid').addEventListener('touchstart', function(e) {
  var card = e.target.closest('.fp-card');
  if (!card) return;
  fpHoldId = card.getAttribute('data-folder-id');
- fpHoldTimer = setTimeout(function() { openCoverUpload(fpHoldId); fpHoldId = null; }, 500);
+ fpTouchMoved = false;
+ fpHoldTimer = setTimeout(function() {
+  if (!fpTouchMoved) openEditFolder(fpHoldId);
+  fpHoldId = null;
+ }, 500);
 }, { passive: true });
-document.getElementById('foldersPageGrid').addEventListener('touchmove', function() { if (fpHoldTimer) { clearTimeout(fpHoldTimer); fpHoldTimer = null; } }, { passive: true });
-document.getElementById('foldersPageGrid').addEventListener('touchend', function() { if (fpHoldTimer) { clearTimeout(fpHoldTimer); fpHoldTimer = null; } }, false);
+document.getElementById('foldersPageGrid').addEventListener('touchmove', function() {
+ fpTouchMoved = true;
+ if (fpHoldTimer) { clearTimeout(fpHoldTimer); fpHoldTimer = null; }
+}, { passive: true });
+document.getElementById('foldersPageGrid').addEventListener('touchend', function() {
+ if (fpHoldTimer) { clearTimeout(fpHoldTimer); fpHoldTimer = null; }
+}, false);
 
+// New folder button on folders page
+document.getElementById('btnNewFolderPage').addEventListener('click', function() {
+ document.getElementById('folderNameInput').value = '';
+ document.getElementById('folderOverlay').className = 'confirm-overlay open';
+ setTimeout(function() { document.getElementById('folderNameInput').focus(); }, 100);
+}, false);
+
+// Edit folder overlay
+function openEditFolder(folderId) {
+ editingFolderId = folderId;
+ var name = folderName(folderId) || '';
+ document.getElementById('editFolderTitle').textContent = 'Edit: ' + name;
+ document.getElementById('editFolderName').value = name;
+ document.getElementById('editFolderOverlay').className = 'confirm-overlay open';
+ setTimeout(function() { document.getElementById('editFolderName').focus(); }, 100);
+}
+
+document.getElementById('editFolderOverlay').addEventListener('click', function(e) {
+ if (e.target.id === 'editFolderCancel' || e.target === this) {
+  this.className = 'confirm-overlay';
+  editingFolderId = null;
+ }
+ if (e.target.id === 'editFolderSave') {
+  var newName = document.getElementById('editFolderName').value.trim();
+  if (!newName) { toast('Enter a name'); return; }
+  renameFolder(editingFolderId, newName, function() {
+   document.getElementById('editFolderOverlay').className = 'confirm-overlay';
+   toast('Folder renamed');
+   renderFoldersPage();
+   renderFoldersBar();
+   populateFolderSelect();
+   triggerAutoBackup();
+   editingFolderId = null;
+  });
+ }
+ if (e.target.id === 'editFolderCover') {
+  document.getElementById('editFolderOverlay').className = 'confirm-overlay';
+  openCoverUpload(editingFolderId);
+ }
+ if (e.target.id === 'editFolderDelete') {
+  var count = folderCount(editingFolderId);
+  var msg = 'Delete this folder?';
+  if (count > 0) msg += ' The ' + count + ' figure' + (count > 1 ? 's' : '') + ' inside will become unfiled.';
+  if (!confirm(msg)) return;
+  deleteFolder(editingFolderId, function() {
+   document.getElementById('editFolderOverlay').className = 'confirm-overlay';
+   toast('Folder deleted');
+   renderFoldersPage();
+   renderFoldersBar();
+   renderGallery();
+   populateFolderSelect();
+   triggerAutoBackup();
+   editingFolderId = null;
+  });
+ }
+}, false);
+
+document.getElementById('editFolderName').addEventListener('keydown', function(e) {
+ if (e.key === 'Enter') { e.preventDefault(); document.getElementById('editFolderSave').click(); }
+}, false);
+
+// Cover upload (shared)
 function openCoverUpload(folderId) {
  coverFolderId = folderId;
  var name = folderName(folderId) || 'Folder';
@@ -1379,6 +2004,7 @@ document.getElementById('folderSearchInput').addEventListener('input', function(
  clearTimeout(folderSearchTimer);
  folderSearchTimer = setTimeout(renderFoldersPage, 200);
 }, false);
+
 
 /* --- INIT --- */
 openDB(function() {
