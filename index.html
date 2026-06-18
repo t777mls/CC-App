@@ -75,6 +75,13 @@ body {
 .folder-chip.active .fc-count { background: rgba(0,0,0,0.25); color: var(--white); }
 .folder-chip.drop-target { border-color: var(--gold); border-style: dashed; background: rgba(251,225,34,0.12); color: var(--gold); transform: scale(1.05); }
 
+.gallery-toolbar { display: flex; gap: 10px; margin-bottom: 16px; }
+.btn-slideshow { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; background: var(--red); color: var(--white); border: none; border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.btn-slideshow svg { width: 16px; height: 16px; pointer-events: none; }
+.btn-slideshow span { pointer-events: none; }
+.btn-slideshow:active { background: var(--red-dark); }
+.btn-slideshow:disabled { opacity: 0.4; }
+
 .filter-tabs { display: flex; margin-bottom: 12px; background: var(--surface); border-radius: var(--radius-sm); padding: 3px; border: 1px solid var(--border); }
 .filter-tab { flex: 1; padding: 9px 10px; border: none; background: none; font-size: 12px; font-family: inherit; font-weight: 600; color: var(--text-muted); cursor: pointer; border-radius: 6px; text-align: center; -webkit-tap-highlight-color: transparent; }
 .filter-tab.active { color: var(--white); background: var(--surface-raised); }
@@ -170,7 +177,28 @@ body {
 .btn-keep { background: var(--surface-raised); color: var(--text-secondary); border: 1px solid var(--border); }
 .btn-remove { background: var(--red); color: var(--white); }
 
-.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-80px); background: var(--gold); color: var(--black); padding: 12px 22px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; z-index: 600; transition: transform 0.3s ease; pointer-events: none; max-width: 90%; text-align: center; }
+/* SLIDESHOW */
+.slideshow { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #000; z-index: 700; display: none; flex-direction: column; }
+.slideshow.open { display: flex; }
+.ss-stage { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.ss-img { max-width: 100%; max-height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.5s ease; }
+.ss-img.show { opacity: 1; }
+.ss-caption { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 20px 20px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); pointer-events: none; }
+.ss-caption .ss-name { font-size: 18px; font-weight: 700; color: #fff; }
+.ss-caption .ss-sub { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+.ss-counter { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 16px); left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.5); color: #fff; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 20px; }
+.ss-close { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 12px); right: 16px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.5); border: none; color: #fff; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; }
+.ss-tap { position: absolute; top: 0; bottom: 0; width: 33%; z-index: 2; }
+.ss-tap.left { left: 0; }
+.ss-tap.right { right: 0; }
+.ss-controls { display: flex; align-items: center; justify-content: center; gap: 24px; padding: 18px 20px calc(env(safe-area-inset-bottom, 0px) + 20px); background: #000; }
+.ss-ctrl { width: 48px; height: 48px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.ss-ctrl svg { width: 22px; height: 22px; pointer-events: none; }
+.ss-ctrl.play { width: 60px; height: 60px; background: var(--red); border-color: var(--red); }
+.ss-ctrl.play svg { width: 26px; height: 26px; }
+.ss-speed { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 12px); left: 16px; background: rgba(0,0,0,0.5); border: none; color: #fff; font-size: 12px; font-weight: 700; padding: 8px 12px; border-radius: 20px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+
+.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-80px); background: var(--gold); color: var(--black); padding: 12px 22px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; z-index: 800; transition: transform 0.3s ease; pointer-events: none; max-width: 90%; text-align: center; }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
 .stats-grid { display: flex; gap: 10px; margin-bottom: 28px; }
@@ -239,6 +267,12 @@ body {
     <button class="btn-new-folder" id="btnNewFolder">+ New Folder</button>
   </div>
   <div class="folders-bar" id="foldersBar"></div>
+  <div class="gallery-toolbar">
+    <button class="btn-slideshow" id="btnSlideshow">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/></svg>
+      <span id="slideshowLabel">Play Slideshow</span>
+    </button>
+  </div>
   <div class="filter-tabs" id="filterTabs">
     <button class="filter-tab active" data-type="tags"><span>Tags</span></button>
     <button class="filter-tab" data-type="brand"><span>Brand</span></button>
@@ -450,6 +484,23 @@ body {
   </div>
 </div>
 
+<div class="slideshow" id="slideshow">
+  <button class="ss-speed" id="ssSpeed">3s</button>
+  <div class="ss-counter" id="ssCounter">1 / 1</div>
+  <button class="ss-close" id="ssClose">&#10005;</button>
+  <div class="ss-stage" id="ssStage">
+    <div class="ss-tap left" id="ssTapLeft"></div>
+    <div class="ss-tap right" id="ssTapRight"></div>
+    <img class="ss-img" id="ssImg" src="" alt="">
+    <div class="ss-caption" id="ssCaption"></div>
+  </div>
+  <div class="ss-controls">
+    <button class="ss-ctrl" id="ssPrev"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg></button>
+    <button class="ss-ctrl play" id="ssPlay"><svg id="ssPlayIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5"/></svg></button>
+    <button class="ss-ctrl" id="ssNext"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -471,6 +522,15 @@ var backupConfig = { owner: '', repo: '', branch: 'main', token: '', auto: false
 var backupInProgress = false;
 
 var dragState = { active: false, id: null, ghost: null, holdTimer: null, startX: 0, startY: 0, candidate: null };
+
+// slideshow state
+var ssItems = [];
+var ssIndex = 0;
+var ssPlaying = false;
+var ssTimer = null;
+var ssUrls = [];
+var ssSpeeds = [2000, 3000, 5000, 8000];
+var ssSpeedIdx = 1;
 
 function toast(msg) {
   var t = document.getElementById('toast');
@@ -710,6 +770,7 @@ document.getElementById('foldersBar').addEventListener('click', function(e) {
   activeFolder = chip.getAttribute('data-folder');
   renderFoldersBar();
   renderFiltered();
+  updateSlideshowLabel();
 }, false);
 
 document.getElementById('btnNewFolder').addEventListener('click', function() {
@@ -850,6 +911,13 @@ document.addEventListener('mouseup', function(e) {
 
 function freeURLs() { for (var i = 0; i < urls.length; i++) URL.revokeObjectURL(urls[i]); urls = []; }
 
+function updateSlideshowLabel() {
+  var label = document.getElementById('slideshowLabel');
+  if (activeFolder === 'all') label.textContent = 'Play Slideshow';
+  else if (activeFolder === 'none') label.textContent = 'Play Unfiled';
+  else label.textContent = 'Play ' + (folderName(activeFolder) || 'Folder');
+}
+
 function renderGallery() {
   if (!db) return;
   freeURLs();
@@ -861,6 +929,7 @@ function renderGallery() {
       renderFoldersBar();
       buildChips();
       renderFiltered();
+      updateSlideshowLabel();
     });
   });
 }
@@ -1030,6 +1099,86 @@ document.getElementById('searchInput').addEventListener('input', function() {
   clearTimeout(searchTimer); searchTimer = setTimeout(renderFiltered, 200);
 }, false);
 
+// === SLIDESHOW ===
+function startSlideshow() {
+  var filtered = applyFilters();
+  var withPhotos = [];
+  for (var i = 0; i < filtered.length; i++) { if (filtered[i].hasPhoto) withPhotos.push(filtered[i]); }
+  if (withPhotos.length === 0) { toast('No photos to show here'); return; }
+  ssItems = withPhotos;
+  ssIndex = 0;
+  document.getElementById('slideshow').className = 'slideshow open';
+  showSlide(0);
+  startPlaying();
+}
+
+function freeSsUrls() { for (var i = 0; i < ssUrls.length; i++) URL.revokeObjectURL(ssUrls[i]); ssUrls = []; }
+
+function showSlide(idx) {
+  if (idx < 0) idx = ssItems.length - 1;
+  if (idx >= ssItems.length) idx = 0;
+  ssIndex = idx;
+  var f = ssItems[idx];
+  var imgEl = document.getElementById('ssImg');
+  imgEl.classList.remove('show');
+  document.getElementById('ssCounter').textContent = (idx + 1) + ' / ' + ssItems.length;
+  var sub = [];
+  if (f.brand) sub.push(f.brand);
+  if (f.year) sub.push(f.year);
+  if (f.code) sub.push(f.code);
+  document.getElementById('ssCaption').innerHTML = '<div class="ss-name">' + f.name + '</div>' + (sub.length ? '<div class="ss-sub">' + sub.join('  &middot;  ') + '</div>' : '');
+  getPhoto(f.id, function(blob) {
+    if (blob) {
+      var url = URL.createObjectURL(blob);
+      ssUrls.push(url);
+      imgEl.src = url;
+      imgEl.onload = function() { imgEl.classList.add('show'); };
+    } else { imgEl.classList.add('show'); }
+  });
+}
+
+function nextSlide() { showSlide(ssIndex + 1); }
+function prevSlide() { showSlide(ssIndex - 1); }
+
+function startPlaying() {
+  ssPlaying = true;
+  setPlayIcon();
+  if (ssTimer) clearInterval(ssTimer);
+  ssTimer = setInterval(function() { nextSlide(); }, ssSpeeds[ssSpeedIdx]);
+}
+
+function stopPlaying() {
+  ssPlaying = false;
+  setPlayIcon();
+  if (ssTimer) { clearInterval(ssTimer); ssTimer = null; }
+}
+
+function setPlayIcon() {
+  var ico = document.getElementById('ssPlayIcon');
+  if (ssPlaying) ico.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5"/>';
+  else ico.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/>';
+}
+
+function closeSlideshow() {
+  stopPlaying();
+  document.getElementById('slideshow').className = 'slideshow';
+  freeSsUrls();
+  document.getElementById('ssImg').src = '';
+}
+
+document.getElementById('btnSlideshow').addEventListener('click', function() { startSlideshow(); }, false);
+document.getElementById('ssClose').addEventListener('click', function() { closeSlideshow(); }, false);
+document.getElementById('ssNext').addEventListener('click', function() { if (ssPlaying) startPlaying(); nextSlide(); }, false);
+document.getElementById('ssPrev').addEventListener('click', function() { if (ssPlaying) startPlaying(); prevSlide(); }, false);
+document.getElementById('ssTapRight').addEventListener('click', function() { if (ssPlaying) startPlaying(); nextSlide(); }, false);
+document.getElementById('ssTapLeft').addEventListener('click', function() { if (ssPlaying) startPlaying(); prevSlide(); }, false);
+document.getElementById('ssPlay').addEventListener('click', function() { if (ssPlaying) stopPlaying(); else startPlaying(); }, false);
+document.getElementById('ssSpeed').addEventListener('click', function() {
+  ssSpeedIdx = (ssSpeedIdx + 1) % ssSpeeds.length;
+  this.textContent = (ssSpeeds[ssSpeedIdx] / 1000) + 's';
+  if (ssPlaying) startPlaying();
+}, false);
+
 function renderStats() {
   if (!db) return;
   getAllFigures(function(collection) {
@@ -1173,7 +1322,6 @@ function triggerAutoBackup() {
   autoBackupTimer = setTimeout(function() { doGithubBackup(true); }, 4000);
 }
 
-// === TEST CONNECTION ===
 function readConfigFields() {
   return {
     owner: document.getElementById('cfgOwner').value.trim(),
@@ -1205,12 +1353,10 @@ document.getElementById('btnTestConn').addEventListener('click', function() {
   else if (c.token.indexOf('ghp_') !== 0 && c.token.indexOf('github_pat_') !== 0) lines.push({ status: 'bad', text: 'Token format looks off (should start with ghp_ or github_pat_)' });
   else lines.push({ status: 'ok', text: 'Token present (' + c.token.length + ' chars)' });
 
-  // If any local check failed, stop here
   var anyBad = false;
   for (var i = 0; i < lines.length; i++) { if (lines[i].status === 'bad') anyBad = true; }
   if (anyBad || !c.owner || !c.repo || !c.token) { renderTestResults(lines); toast('Fix the flagged items'); return; }
 
-  // Live check against GitHub
   lines.push({ status: 'pending', text: 'Checking GitHub connection...' });
   renderTestResults(lines);
   lines.pop();
@@ -1231,7 +1377,6 @@ document.getElementById('btnTestConn').addEventListener('click', function() {
         renderTestResults(lines); return;
       }
       lines.push({ status: 'ok', text: 'Write access confirmed' });
-      // Check branch exists
       var brUrl = 'https://api.github.com/repos/' + c.owner + '/' + c.repo + '/branches/' + encodeURIComponent(c.branch) + '?t=' + Date.now();
       return fetch(brUrl, { headers: { 'Authorization': 'token ' + c.token, 'Accept': 'application/vnd.github+json' } }).then(function(br) {
         if (br.status === 200) lines.push({ status: 'ok', text: 'Branch "' + c.branch + '" exists. All good, save and back up.' });
@@ -1242,7 +1387,6 @@ document.getElementById('btnTestConn').addEventListener('click', function() {
     .catch(function() { lines.push({ status: 'bad', text: 'Network error reaching GitHub. Check your connection.' }); renderTestResults(lines); });
 }, false);
 
-// === BACKUP PAGE UI ===
 function renderBackupStatus() {
   var dot = document.getElementById('statusDot');
   var txt = document.getElementById('statusText');
@@ -1286,7 +1430,6 @@ document.getElementById('autoToggle').addEventListener('change', function() {
 }, false);
 
 document.getElementById('btnBackupNow').addEventListener('click', function() {
-  // Pull latest from fields in case user hasn't saved yet
   var c = readConfigFields();
   backupConfig.owner = c.owner; backupConfig.repo = c.repo; backupConfig.branch = c.branch; backupConfig.token = c.token;
   doGithubBackup(false);
