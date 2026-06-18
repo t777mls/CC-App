@@ -311,6 +311,66 @@ a:active { color: var(--white); }
 .spotlight-btn { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--surface-raised); border: 1px solid var(--border); color: var(--text-muted); display: flex; align-items: center; justify-content: center; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .spotlight-btn:active { background: var(--border); }
 .spotlight-btn svg { width: 16px; height: 16px; pointer-events: none; }
+.wip-toolbar { display: flex; gap: 10px; margin-bottom: 16px; }
+.wip-toolbar button { flex: 1; padding: 12px; border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.btn-wip-add { background: var(--red); color: var(--white); border: none; }
+.btn-wip-add:active { background: var(--red-dark); }
+.wip-list { list-style: none; }
+.wip-item { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.wip-item:last-child { border-bottom: none; }
+.wip-check { width: 24px; height: 24px; flex-shrink: 0; border-radius: 6px; border: 2px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; }
+.wip-check.done { background: var(--green); border-color: var(--green); }
+.wip-check svg { width: 14px; height: 14px; color: var(--white); display: none; }
+.wip-check.done svg { display: block; }
+.wip-name { flex: 1; font-size: 14px; font-weight: 600; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.wip-name:active { color: var(--gold); }
+.wip-item.completed .wip-name { color: var(--text-muted); text-decoration: line-through; }
+.wip-empty { text-align: center; padding: 40px; color: var(--text-muted); font-size: 14px; }
+.wip-filter-bar { display: flex; gap: 8px; margin-bottom: 16px; }
+.wip-filter-bar .chip { font-size: 11px; padding: 6px 12px; }
+.wip-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 250; display: none; align-items: flex-end; justify-content: center; }
+.wip-modal.open { display: flex; }
+.wip-panel { background: var(--surface); border-radius: var(--radius-lg) var(--radius-lg) 0 0; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border); border-bottom: none; padding: 24px 20px 40px; }
+.wip-panel h2 { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+.wip-panel .form-group { margin-bottom: 16px; }
+.wip-photos { margin-bottom: 20px; }
+.wip-photos-label { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.wip-photos-grid { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+.wip-photos-grid::-webkit-scrollbar { display: none; }
+.wip-photo-thumb { width: 80px; height: 80px; flex-shrink: 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); position: relative; cursor: pointer; }
+.wip-photo-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.wip-photo-thumb .wpt-remove { position: absolute; top: 4px; right: 4px; width: 20px; height: 20px; border-radius: 50%; background: var(--red); border: none; color: white; font-size: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.wip-photo-add { width: 80px; height: 80px; flex-shrink: 0; border-radius: 8px; border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); font-size: 24px; -webkit-tap-highlight-color: transparent; }
+.wip-photo-add:active { border-color: var(--gold); color: var(--gold); }
+.wip-checklist { margin-bottom: 20px; }
+.wip-cl-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.wip-cl-item:last-child { border-bottom: none; }
+.wip-cl-check { width: 22px; height: 22px; flex-shrink: 0; border-radius: 5px; border: 2px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.wip-cl-check.done { background: var(--green); border-color: var(--green); }
+.wip-cl-check svg { width: 12px; height: 12px; color: var(--white); display: none; }
+.wip-cl-check.done svg { display: block; }
+.wip-cl-text { flex: 1; font-size: 13px; font-weight: 500; }
+.wip-cl-text.done { color: var(--text-muted); text-decoration: line-through; }
+.wip-cl-add { display: flex; gap: 8px; margin-top: 10px; }
+.wip-cl-add input { flex: 1; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--black); color: var(--text-primary); font-size: 13px; font-family: inherit; outline: none; }
+.wip-cl-add input:focus { border-color: var(--red); }
+.wip-cl-add button { padding: 10px 14px; background: var(--gold); color: var(--black); border: none; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer; }
+.wip-panel-btns { display: flex; gap: 10px; margin-top: 20px; }
+.wip-panel-btns button { flex: 1; padding: 14px; border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 700; cursor: pointer; border: none; }
+.wip-btn-close { background: var(--surface-raised); color: var(--text-secondary); border: 1px solid var(--border) !important; }
+.wip-btn-save { background: var(--red); color: var(--white); }
+.wip-btn-delete { background: rgba(218,41,28,0.15); color: var(--red); border: 1px solid rgba(218,41,28,0.3) !important; }
+.admin-cl-list { border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; margin-bottom: 12px; }
+.admin-cl-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+.admin-cl-row:last-child { border-bottom: none; }
+.admin-cl-row .acl-name { flex: 1; font-size: 13px; font-weight: 600; }
+.admin-cl-row .acl-arrows { display: flex; gap: 4px; }
+.admin-cl-row .acl-arrows button { width: 28px; height: 28px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface-raised); color: var(--text-muted); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.admin-cl-row .acl-remove { width: 28px; height: 28px; border-radius: 4px; border: 1px solid rgba(218,41,28,0.3); background: rgba(218,41,28,0.1); color: var(--red); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.admin-cl-add { display: flex; gap: 8px; }
+.admin-cl-add input { flex: 1; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text-primary); font-size: 14px; font-family: inherit; outline: none; }
+.admin-cl-add input:focus { border-color: var(--red); }
+.admin-cl-add button { padding: 12px 16px; background: var(--gold); color: var(--black); border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 700; font-family: inherit; cursor: pointer; }
 .fp-toolbar { display: flex; gap: 10px; margin-bottom: 16px; }
 .fp-toolbar .btn-new-folder-page { flex: 1; padding: 12px; background: var(--red); color: var(--white); border: none; border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .fp-toolbar .btn-new-folder-page:active { background: var(--red-dark); }
@@ -344,14 +404,6 @@ a:active { color: var(--white); }
  <div class="search-wrap">
  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.2-5.2m0 0A7.5 7.5 0 105.2 5.2a7.5 7.5 0 0010.6 10.6z"/></svg>
  <input type="text" class="search-input" id="searchInput" placeholder="Search your collection...">
- </div>
- <div class="spotlight" id="spotlight">
- <div class="spotlight-inner" id="spotlightInner">
- <div class="spotlight-img" id="spotlightImg"></div>
- <div class="spotlight-text">
-  <div class="spotlight-label">&#9733; Figure of the Day</div>
-  <div class="spotlight-name" id="spotlightName"></div>
-  <div class="spotlight-meta" id="spotlightMeta"></div>
  </div>
  <button class="spotlight-btn" id="spotlightShuffle" title="New random pick">
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3"/></svg>
@@ -408,7 +460,7 @@ a:active { color: var(--white); }
  <div class="batch-thumbs" id="batchThumbs"></div>
  <div class="batch-status" id="batchStatus">Tap a thumbnail to fill in its details</div>
  </div>
- <input type="file" id="batchFileInput" accept="image/*" capture="environment" style="display:none" multiple>
+ <input type="file" id="batchFileInput" accept="image/*" style="display:none" multiple>
  <div class="form-group">
  <label class="form-label">Figure Name *</label>
  <input type="text" class="form-input" id="fName" placeholder="e.g. Goku Super Saiyan" required>
@@ -471,12 +523,14 @@ a:active { color: var(--white); }
  <button type="submit" class="btn-submit" id="submitBtn">Add to Collection</button>
  </form>
 </div>
-<div id="pg-stats" class="page">
+<div id="pg-admin" class="page">
  <div class="page-header">
- <h1>Stats</h1>
+ <h1>Admin</h1>
  <div class="accent-bar"></div>
- <p>Your collection at a glance</p>
+ <p>Stats, data, and backup settings</p>
  </div>
+
+ <div class="section-title">Collection Stats</div>
  <div class="stats-grid" id="statsGrid"></div>
  <div id="statsBreakdown"></div>
  <div class="data-btns">
@@ -484,13 +538,8 @@ a:active { color: var(--white); }
  <button class="btn-data" id="btnImport">Import JSON</button>
  </div>
  <input type="file" id="importFile" accept=".json" style="display:none">
-</div>
-<div id="pg-backup" class="page">
- <div class="page-header">
- <h1>Backup</h1>
- <div class="accent-bar"></div>
- <p>Auto-sync your collection to a private GitHub repo</p>
- </div>
+
+ <div class="section-title" style="margin-top:40px;">Backup</div>
  <div class="backup-card">
  <div class="backup-status">
  <span class="status-dot" id="statusDot"></span>
@@ -501,8 +550,9 @@ a:active { color: var(--white); }
  <button class="btn-backup-now" id="btnBackupNow">Back Up Now</button>
  <button class="btn-restore" id="btnRestore">Restore Latest</button>
  </div>
- <button class="btn-save-close" id="btnSaveClose">Save &amp; Close App</button>
+ <button class="btn-save-close" id="btnSaveClose">Save & Close App</button>
  </div>
+
  <div class="section-title">Sync Behaviour</div>
  <div class="toggle-row">
  <div class="tg-text"><span>Auto-restore on open</span><small>Pull the latest backup every time the app starts</small></div>
@@ -516,9 +566,11 @@ a:active { color: var(--white); }
  <div class="tg-text"><span>Backup when app is hidden</span><small>Best-effort save when you switch away or close</small></div>
  <label class="switch"><input type="checkbox" id="closeToggle"><span class="slider"></span></label>
  </div>
+
  <div class="section-title">Version History</div>
  <button class="btn-refresh-versions" id="btnRefreshVersions">Refresh Version List</button>
  <div class="version-list" id="versionList"><div class="versions-empty">Tap refresh to load saved versions</div></div>
+
  <div class="section-title">GitHub Configuration</div>
  <div class="form-group">
  <label class="form-label">Repository Owner (username)</label>
@@ -540,7 +592,15 @@ a:active { color: var(--white); }
  <button class="btn-test-conn" id="btnTestConn">Test Connection</button>
  <button class="btn-save-config" id="btnSaveConfig">Save Configuration</button>
  <div class="test-results" id="testResults"></div>
- <button class="btn-clear-token" id="btnClearToken">Clear Token &amp; Config</button>
+ <button class="btn-clear-token" id="btnClearToken">Clear Token & Config</button>
+  <div class="section-title" style="margin-top:40px;">WIP Checklist Template</div>
+ <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Configure the default checklist items for new WIP figures. Changes apply to new records only.</p>
+ <div class="admin-cl-list" id="adminClList"></div>
+ <div class="admin-cl-add">
+ <input type="text" id="adminClInput" placeholder="New checklist item">
+ <button id="adminClAddBtn">Add</button>
+ </div>
+
  <div class="help-box">
  <h4>How backups work</h4>
  <ol>
@@ -551,6 +611,24 @@ a:active { color: var(--white); }
  </ol>
  </div>
 </div>
+<div id="pg-wip" class="page">
+ <div class="page-header">
+ <h1>Work in Progress</h1>
+ <div class="accent-bar"></div>
+ <p>Custom figures being repainted or modified</p>
+ </div>
+ <div class="wip-toolbar">
+ <button class="btn-wip-add" id="btnWipAdd">+ Add Player</button>
+ </div>
+ <div class="wip-filter-bar" id="wipFilterBar">
+ <button class="chip active" data-wip-filter="all">All</button>
+ <button class="chip" data-wip-filter="active">In Progress</button>
+ <button class="chip" data-wip-filter="done">Completed</button>
+ </div>
+ <ul class="wip-list" id="wipList"></ul>
+ <div class="wip-empty" id="wipEmpty" style="display:none;">No work in progress items yet</div>
+</div>
+
 <div id="pg-folders" class="page">
  <div class="page-header">
  <h1>Folders</h1>
@@ -572,6 +650,10 @@ a:active { color: var(--white); }
  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
  <span>Gallery</span>
  </button>
+  <button class="nav-btn" data-page="pg-wip">
+ <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/></svg>
+ <span>WIP</span>
+ </button>
   <button class="nav-btn" data-page="pg-folders">
  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
  <span>Folders</span>
@@ -580,13 +662,9 @@ a:active { color: var(--white); }
  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
  <span>Add</span>
  </button>
- <button class="nav-btn" data-page="pg-stats">
- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h16M4 20V10m0 10l4 0V14m-4-4h4m0 0V6m0 8h4m0 0V4m0 10h4m0 0v-4m0 4h4v-8"/></svg>
- <span>Stats</span>
- </button>
- <button class="nav-btn" data-page="pg-backup">
- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5l9-4.5 9 4.5v9l-9 4.5-9-4.5v-9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/></svg>
- <span>Backup</span>
+ <button class="nav-btn" data-page="pg-admin">
+ <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+ <span>Admin</span>
  </button>
 </nav>
 <div class="modal-bg" id="modalBg">
@@ -662,6 +740,20 @@ a:active { color: var(--white); }
  </div>
  </div>
 </div>
+<div class="wip-modal" id="wipModal">
+ <div class="wip-panel" id="wipPanel"></div>
+</div>
+<div class="confirm-overlay" id="wipAddOverlay">
+ <div class="confirm-box">
+ <h3>Add Player</h3>
+ <input type="text" id="wipAddName" placeholder="Player name" autocomplete="off">
+ <div class="confirm-btns">
+ <button class="btn-keep" id="wipAddCancel">Cancel</button>
+ <button class="btn-gold" id="wipAddConfirm">Add</button>
+ </div>
+ </div>
+</div>
+<input type="file" id="wipPhotoInput" accept="image/*" style="display:none">
 <div class="confirm-overlay" id="editFolderOverlay">
  <div class="confirm-box">
  <h3 id="editFolderTitle">Edit Folder</h3>
@@ -781,9 +873,8 @@ function switchPage(pageId) {
  for (var i = 0; i < btns.length; i++) { btns[i].className = btns[i].getAttribute('data-page') === pageId ? 'nav-btn active' : 'nav-btn'; }
  for (var j = 0; j < pages.length; j++) { pages[j].className = pages[j].id === pageId ? 'page active' : 'page'; }
  if (pageId === 'pg-gallery') renderGallery();
- if (pageId === 'pg-stats') renderStats();
  if (pageId === 'pg-add') { populateFolderSelect(); if (!editingId) resetForm(); }
- if (pageId === 'pg-backup') renderBackupPage();
+ if (pageId === 'pg-admin') { renderStats(); renderBackupPage(); }
  if (pageId === 'pg-folders') renderFoldersPage();
 }
 document.querySelector('.nav').addEventListener('click', function(e) {
@@ -1099,7 +1190,8 @@ document.getElementById('foldersBar').addEventListener('click', function(e) {
  var chip = e.target.closest('.folder-chip');
  if (!chip) return;
  activeFolder = chip.getAttribute('data-folder');
- renderFoldersBar(); renderFiltered(); updateSlideshowLabel();pickSpotlight(false);
+ renderFoldersBar(); renderFiltered();
+ pickSpotlight(false);
 }, false);
 document.getElementById('btnNewFolder').addEventListener('click', function() {
  document.getElementById('folderNameInput').value = '';
@@ -1167,7 +1259,7 @@ function freeURLs() { for (var i = 0; i < urls.length; i++) URL.revokeObjectURL(
 function updateSlideshowLabel() { var label = document.getElementById('slideshowLabel'); if (activeFolder === 'all') label.textContent = 'Play Slideshow'; else if (activeFolder === 'none') label.textContent = 'Play Unfiled'; else label.textContent = 'Play ' + (folderName(activeFolder) || 'Folder'); }
 function renderGallery() {
  if (!db) return; freeURLs();
- getAllFolders(function(fl) { folders = fl; getAllFigures(function(arr) { cached = arr; document.getElementById('count-badge').textContent = arr.length + ' figure' + (arr.length !== 1 ? 's' : ''); renderFoldersBar(); buildChips(); renderFiltered(); updateSlideshowLabel(); }); });
+ getAllFolders(function(fl) { folders = fl; getAllFigures(function(arr) { cached = arr; document.getElementById('count-badge').textContent = arr.length + ' figure' + (arr.length !== 1 ? 's' : ''); renderFoldersBar(); buildChips(); renderFiltered(); updateSlideshowLabel(); pickSpotlight(false); }); });
 }
 
 /* --- FILTER --- */
@@ -1451,6 +1543,264 @@ document.getElementById('btnRefreshVersions').addEventListener('click', function
 document.getElementById('versionList').addEventListener('click', function(e) { var btn = e.target.closest('.btn-vr-restore'); if (!btn) return; pendingVersionPath = btn.getAttribute('data-path'); document.getElementById('versionRestoreMsg').textContent = 'Restore from ' + btn.getAttribute('data-label') + '?'; document.getElementById('versionRestoreOverlay').className = 'confirm-overlay open'; }, false);
 document.getElementById('versionRestoreOverlay').addEventListener('click', function(e) { if (e.target.id === 'versionRestoreCancel' || e.target === this) { this.className = 'confirm-overlay'; pendingVersionPath = null; } if (e.target.id === 'versionRestoreConfirm') { this.className = 'confirm-overlay'; if (pendingVersionPath) { toast('Restoring...'); fetchFileContent(pendingVersionPath, function(text) { mergePayloadText(text, function(n) { toast('Restored ' + n + ' figures'); renderGallery(); }); }); pendingVersionPath = null; } } }, false);
 document.getElementById('btnClearToken').addEventListener('click', function() { if (!confirm('Clear all backup settings?')) return; backupConfig = { owner: '', repo: '', branch: 'main', token: '', auto: false, autoRestore: false, backupOnClose: false, lastBackup: '' }; saveSetting('backupConfig', backupConfig, function() { renderBackupPage(); toast('Cleared'); }); }, false);
+/* --- WORK IN PROGRESS --- */
+var wipItems = [];
+var wipFilter = 'all';
+var wipCurrentId = null;
+var wipChecklistTemplate = ['Strip original paint', 'Prime figure', 'Base coat', 'Detail painting', 'Decals/transfers', 'Clear coat/seal', 'Final assembly', 'Photography'];
+
+function loadWipData(cb) {
+ getSetting('wipItems', function(data) {
+  wipItems = data || [];
+  getSetting('wipChecklistTemplate', function(tpl) {
+   if (tpl) wipChecklistTemplate = tpl;
+   if (cb) cb();
+  });
+ });
+}
+function saveWipItems(cb) { saveSetting('wipItems', wipItems, cb); }
+function saveWipTemplate(cb) { saveSetting('wipChecklistTemplate', wipChecklistTemplate, cb); }
+
+function renderWipPage() {
+ loadWipData(function() {
+  renderWipList();
+  renderAdminChecklist();
+ });
+}
+
+function renderWipList() {
+ var list = document.getElementById('wipList');
+ var empty = document.getElementById('wipEmpty');
+ var filtered = [];
+ for (var i = 0; i < wipItems.length; i++) {
+  var w = wipItems[i];
+  if (wipFilter === 'active' && w.completed) continue;
+  if (wipFilter === 'done' && !w.completed) continue;
+  filtered.push(w);
+ }
+ filtered.sort(function(a, b) {
+  if (a.completed !== b.completed) return a.completed ? 1 : -1;
+  return (a.playerName || '').toLowerCase() < (b.playerName || '').toLowerCase() ? -1 : 1;
+ });
+ if (!filtered.length) {
+  list.innerHTML = '';
+  empty.style.display = 'block';
+  empty.textContent = wipItems.length ? 'No matching items' : 'No work in progress items yet';
+  return;
+ }
+ empty.style.display = 'none';
+ var html = '';
+ for (var i = 0; i < filtered.length; i++) {
+  var w = filtered[i];
+  var clDone = 0, clTotal = (w.checklist || []).length;
+  for (var c = 0; c < clTotal; c++) { if (w.checklist[c].done) clDone++; }
+  var progress = clTotal ? ' (' + clDone + '/' + clTotal + ')' : '';
+  html += '<li class="wip-item' + (w.completed ? ' completed' : '') + '" data-wip-id="' + w.id + '">';
+  html += '<button class="wip-check' + (w.completed ? ' done' : '') + '" data-wip-toggle="' + w.id + '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></button>';
+  html += '<span class="wip-name" data-wip-open="' + w.id + '">' + esc(w.playerName) + '<span style="color:var(--text-muted);font-size:11px;font-weight:500;">' + progress + '</span></span>';
+  html += '</li>';
+ }
+ list.innerHTML = html;
+}
+
+// Filter
+document.getElementById('wipFilterBar').addEventListener('click', function(e) {
+ var chip = e.target.closest('.chip');
+ if (!chip) return;
+ wipFilter = chip.getAttribute('data-wip-filter');
+ var chips = this.querySelectorAll('.chip');
+ for (var i = 0; i < chips.length; i++) chips[i].className = 'chip' + (chips[i].getAttribute('data-wip-filter') === wipFilter ? ' active' : '');
+ renderWipList();
+}, false);
+
+// Toggle complete
+document.getElementById('wipList').addEventListener('click', function(e) {
+ var toggle = e.target.closest('[data-wip-toggle]');
+ if (toggle) {
+  var id = toggle.getAttribute('data-wip-toggle');
+  for (var i = 0; i < wipItems.length; i++) {
+   if (wipItems[i].id === id) { wipItems[i].completed = !wipItems[i].completed; break; }
+  }
+  saveWipItems(function() { renderWipList(); triggerAutoBackup(); });
+  return;
+ }
+ var open = e.target.closest('[data-wip-open]');
+ if (open) { openWipDetail(open.getAttribute('data-wip-open')); }
+}, false);
+
+// Add player
+document.getElementById('btnWipAdd').addEventListener('click', function() {
+ document.getElementById('wipAddName').value = '';
+ document.getElementById('wipAddOverlay').className = 'confirm-overlay open';
+ setTimeout(function() { document.getElementById('wipAddName').focus(); }, 100);
+}, false);
+document.getElementById('wipAddOverlay').addEventListener('click', function(e) {
+ if (e.target.id === 'wipAddCancel' || e.target === this) { this.className = 'confirm-overlay'; }
+ if (e.target.id === 'wipAddConfirm') {
+  var name = document.getElementById('wipAddName').value.trim();
+  if (!name) { toast('Enter a name'); return; }
+  var checklist = [];
+  for (var i = 0; i < wipChecklistTemplate.length; i++) { checklist.push({ text: wipChecklistTemplate[i], done: false }); }
+  var item = { id: genId(), playerName: name, completed: false, photos: [], checklist: checklist, notes: '', createdAt: new Date().toISOString() };
+  wipItems.push(item);
+  saveWipItems(function() { document.getElementById('wipAddOverlay').className = 'confirm-overlay'; renderWipList(); toast(name + ' added'); triggerAutoBackup(); });
+ }
+}, false);
+document.getElementById('wipAddName').addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); document.getElementById('wipAddConfirm').click(); } }, false);
+
+// Detail modal
+function openWipDetail(id) {
+ wipCurrentId = id;
+ var w = null;
+ for (var i = 0; i < wipItems.length; i++) { if (wipItems[i].id === id) { w = wipItems[i]; break; } }
+ if (!w) return;
+ var panel = document.getElementById('wipPanel');
+ // Photos
+ var photosHtml = '<div class="wip-photos"><div class="wip-photos-label">Reference Photos / Kit Ideas</div><divThis is a chunky one. I'll split it into clear sections.
+
+---
+
+## 1. CSS
+
+**Find:**
+```css
+.spotlight-btn svg { width: 16px; height: 16px; pointer-events: none; }
+.wip-list { margin-top: 16px; }
+.wip-item { display: flex; align-items: center; gap: 12px; padding: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 8px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.wip-item:active { background: var(--surface-raised); }
+.wip-item.done { opacity: 0.5; }
+.wip-check { width: 24px; height: 24px; flex-shrink: 0; border-radius: 6px; border: 2px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; }
+.wip-check.checked { background: var(--green); border-color: var(--green); }
+.wip-check svg { width: 14px; height: 14px; color: var(--white); display: none; }
+.wip-check.checked svg { display: block; }
+.wip-name { flex: 1; font-size: 14px; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wip-item.done .wip-name { text-decoration: line-through; color: var(--text-muted); }
+.wip-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: var(--red); color: var(--white); flex-shrink: 0; }
+.wip-badge.complete { background: var(--green); }
+.wip-toolbar { display: flex; gap: 10px; margin-bottom: 16px; }
+.btn-add-wip { flex: 1; padding: 12px; background: var(--red); color: var(--white); border: none; border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.btn-add-wip:active { background: var(--red-dark); }
+.wip-filter-bar { display: flex; gap: 8px; margin-bottom: 16px; }
+.wip-filter-bar .chip { font-size: 11px; padding: 7px 12px; }
+.wip-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 250; display: none; align-items: flex-end; justify-content: center; }
+.wip-modal.open { display: flex; }
+.wip-panel { background: var(--surface); border-radius: var(--radius-lg) var(--radius-lg) 0 0; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border); border-bottom: none; padding: 24px 20px 40px; }
+.wip-panel h2 { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+.wip-section-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 20px 0 10px; }
+.wip-photos { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+.wip-photos::-webkit-scrollbar { display: none; }
+.wip-photo-thumb { width: 80px; height: 80px; flex-shrink: 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; position: relative; }
+.wip-photo-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.wip-photo-thumb .wip-photo-del { position: absolute; top: 2px; right: 2px; width: 18px; height: 18px; border-radius: 50%; background: var(--red); border: none; color: white; font-size: 11px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.wip-add-photo { width: 80px; height: 80px; flex-shrink: 0; border-radius: 8px; border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); font-size: 24px; -webkit-tap-highlight-color: transparent; }
+.wip-add-photo:active { background: var(--surface-raised); }
+.wip-checklist { list-style: none; }
+.wip-cl-item { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.wip-cl-item:last-child { border-bottom: none; }
+.wip-cl-check { width: 22px; height: 22px; flex-shrink: 0; border-radius: 5px; border: 2px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; }
+.wip-cl-check.checked { background: var(--green); border-color: var(--green); }
+.wip-cl-check svg { width: 12px; height: 12px; color: var(--white); display: none; }
+.wip-cl-check.checked svg { display: block; }
+.wip-cl-text { font-size: 13px; font-weight: 500; flex: 1; }
+.wip-cl-item.done .wip-cl-text { text-decoration: line-through; color: var(--text-muted); }
+.wip-panel-btns { display: flex; gap: 10px; margin-top: 24px; }
+.wip-panel-btns button { flex: 1; padding: 14px; border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 600; cursor: pointer; border: none; -webkit-tap-highlight-color: transparent; }
+.wip-btn-close { background: var(--surface-raised); color: var(--text-secondary); border: 1px solid var(--border); }
+.wip-btn-delete { background: rgba(218,41,28,0.15); color: var(--red); }
+.wip-field-row { margin-bottom: 14px; }
+.wip-field-row label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 6px; }
+.wip-field-row input, .wip-field-row textarea, .wip-field-row select { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--black); color: var(--text-primary); font-size: 14px; font-family: inherit; outline: none; }
+.wip-field-row textarea { min-height: 60px; resize: vertical; }
+.wip-field-row input:focus, .wip-field-row textarea:focus { border-color: var(--red); }
+.admin-cl-list { border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; margin-bottom: 12px; }
+.admin-cl-item { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+.admin-cl-item:last-child { border-bottom: none; }
+.admin-cl-item .acl-name { flex: 1; font-size: 13px; font-weight: 600; }
+.admin-cl-item .acl-btns { display: flex; gap: 6px; }
+.admin-cl-item .acl-btn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-raised); color: var(--text-muted); font-size: 14px; display: flex; align-items: center; jThis is a big one. Here's the full WIP system:
+
+---
+
+## 1. CSS
+
+**Find:**
+```css
+.spotlight-btn svg { width: 16px; height: 16px; pointer-events: none; }
+.wip-list { margin-top: 16px; }
+.wip-item { display: flex; align-items: center; gap: 12px; padding: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 8px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.wip-item:active { background: var(--surface-raised); }
+.wip-item.done { opacity: 0.5; }
+.wip-check { width: 24px; height: 24px; flex-shrink: 0; border-radius: 6px; border: 2px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; }
+.wip-check.checked { background: var(--green); border-color: var(--green); }
+.wip-check svg { width: 14px; height: 14px; color: var(--white); display: none; }
+.wip-check.checked svg { display: block; }
+.wip-info { flex: 1; min-width: 0; }
+.wip-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wip-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.wip-item.done .wip-name { text-decoration: line-through; color: var(--text-muted); }
+.wip-empty { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 13px; }
+.wip-filters { display: flex; gap: 8px; margin-bottom: 16px; }
+.wip-filter { flex: 1; padding: 9px; border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius-sm); font-size: 12px; font-family: inherit; font-weight: 600; color: var(--text-secondary); text-align: center; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.wip-filter.active { background: var(--red); color: var(--white); border-color: var(--red); }
+.wip-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 250; display: none; align-items: flex-end; justify-content: center; }
+.wip-modal.open { display: flex; }
+.wip-panel { background: var(--surface); border-radius: var(--radius-lg) var(--radius-lg) 0 0; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border); border-bottom: none; padding: 24px 20px 40px; }
+.wip-panel h2 { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+.wip-section-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 20px 0 10px; }
+.wip-photos { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+.wip-photos::-webkit-scrollbar { display: none; }
+.wip-photo-thumb { width: 80px; height: 80px; flex-shrink: 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; }
+.wip-photo-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.wip-photo-add { width: 80px; height: 80px; flex-shrink: 0; border-radius: 8px; border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 24px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.wip-photo-add:active { border-color: var(--red); color: var(--red); }
+.wip-checklist-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.wip-checklist-item:last-child { border-bottom: none; }
+.wip-cl-check { width: 20px; height: 20px; flex-shrink: 0; border-radius: 4px; border: 2px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; }
+.wip-cl-check.checked { background: var(--green); border-color: var(--green); }
+.wip-cl-check svg { width: 12px; height: 12px; color: var(--white); display: none; }
+.wip-cl-check.checked svg { display: block; }
+.wip-cl-label { font-size: 13px; font-weight: 500; flex: 1; }
+.wip-cl-label.struck { text-decoration: line-through; color: var(This is a big one. Here's the full WIP system:
+
+---
+
+## 1. CSS
+
+**Find:**
+```css
+.spotlight-btn svg { width: 16px; height: 16px; pointer-events: none; }
+.wip-list { list-style: none; }
+.wip-item { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.wip-item:last-child { border-bottom: none; }
+.wip-check { width: 24px; height: 24px; flex-shrink: 0; border-radius: 6px; border: 2px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; }
+.wip-check.done { background: var(--green); border-color: var(--green); }
+.wip-check svg { width: 14px; height: 14px; color: var(--white); display: none; }
+.wip-check.done svg { display: block; }
+.wip-name { flex: 1; font-size: 14px; font-weight: 600; color: var(--text-primary); cursor: pointer; -webkit-tap-highlight-color: transparent; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wip-name.completed { text-decoration: line-through; color: var(--text-muted); }
+.wip-delete { width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%; background: none; border: none; color: var(--text-muted); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.wip-empty { text-align: center; padding: 40px; color: var(--text-muted); font-size: 13px; }
+.wip-add-bar { display: flex; gap: 10px; margin-bottom: 20px; }
+.wip-add-bar input { flex: 1; }
+.wip-add-bar button { flex-shrink: 0; padding: 14px 18px; background: var(--red); color: var(--white); border: none; border-radius: var(--radius-sm); font-size: 14px; font-family: inherit; font-weight: 700; cursor: pointer; }
+.wip-filter-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.wip-filter-btn { flex: 1; padding: 10px; border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius-sm); font-size: 12px; font-family: inherit; font-weight: 600; color: var(--text-muted); cursor: pointer; text-align: center; }
+.wip-filter-btn.active { background: var(--red); color: var(--white); border-color: var(--red); }
+.wip-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 250; display: none; align-items: flex-end; justify-content: center; }
+.wip-modal.open { display: flex; }
+.wip-panel { background: var(--surface); border-radius: var(--radius-lg) var(--radius-lg) 0 0; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border); border-bottom: none; padding: 24px 20px 40px; }
+.wip-panel h2 { font-size: 20px; font-weight: 800; margin-bottom: 20px; }
+.wip-section-title { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 20px 0 10px; }
+.wip-photos-grid { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; margin-bottom: 8px; }
+.wip-photos-grid::-webkit-scrollbar {This is a big one. I'll break it into sections with exact placement.
+
+---
+
+## 1. CSS
+
+**Find:**
+```css
+.spotlight-btn svg { width: 16px; height: 16px; pointer-events: none; }
 
 /* --- RANDOM SPOTLIGHT --- */
 var spotlightId = null;
@@ -1459,7 +1809,68 @@ function getTodaySeed() {
  var d = new Date();
  return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
 }
+/* --- RANDOM SPOTLIGHT --- */
+var spotlightId = null;
 
+function getTodaySeed() {
+ var d = new Date();
+ return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+}
+
+function pickSpotlight(force) {
+ if (!cached.length) { document.getElementById('spotlight').className = 'spotlight'; return; }
+ var today = getTodaySeed();
+ if (!force) {
+  var savedDay = null;
+  try { savedDay = localStorage.getItem('spotlight_day'); spotlightId = localStorage.getItem('spotlight_id'); } catch(e) {}
+  if (savedDay === today && spotlightId) {
+   var stillExists = false;
+   for (var i = 0; i < cached.length; i++) { if (cached[i].id === spotlightId) { stillExists = true; break; } }
+   if (stillExists) { renderSpotlight(spotlightId); return; }
+  }
+ }
+ var idx = Math.floor(Math.random() * cached.length);
+ spotlightId = cached[idx].id;
+ try { localStorage.setItem('spotlight_day', today); localStorage.setItem('spotlight_id', spotlightId); } catch(e) {}
+ renderSpotlight(spotlightId);
+}
+
+function renderSpotlight(id) {
+ var f = null;
+ for (var i = 0; i < cached.length; i++) { if (cached[i].id === id) { f = cached[i]; break; } }
+ if (!f) { document.getElementById('spotlight').className = 'spotlight'; return; }
+ document.getElementById('spotlight').className = 'spotlight show';
+ document.getElementById('spotlightName').textContent = f.name;
+ var meta = [];
+ if (f.brand) meta.push(f.brand);
+ if (f.year) meta.push(f.year);
+ if (f.condition) meta.push(f.condition);
+ document.getElementById('spotlightMeta').textContent = meta.join(' \u00B7 ') || 'No details';
+ var imgWrap = document.getElementById('spotlightImg');
+ if (f.hasPhoto) {
+  getPhoto(f.id, function(blob) {
+   if (blob) {
+    var url = URL.createObjectURL(blob);
+    urls.push(url);
+    imgWrap.innerHTML = '<img src="' + url + '" alt="">';
+   } else {
+    imgWrap.innerHTML = '<span class="sp-ph">No img</span>';
+   }
+  });
+ } else {
+  imgWrap.innerHTML = '<span class="sp-ph">No img</span>';
+ }
+}
+
+document.getElementById('spotlightInner').addEventListener('click', function(e) {
+ if (e.target.closest('.spotlight-btn')) return;
+ if (spotlightId) openDetail(spotlightId);
+}, false);
+
+document.getElementById('spotlightShuffle').addEventListener('click', function(e) {
+ e.stopPropagation();
+ pickSpotlight(true);
+}, false);
 function pickSpotlight(force) {
  if (!cached.length) { document.getElementById('spotlight').className = 'spotlight'; return; }
  var today = getTodaySeed();
