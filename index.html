@@ -80,7 +80,6 @@ body {
 .btn-slideshow svg { width: 16px; height: 16px; pointer-events: none; }
 .btn-slideshow span { pointer-events: none; }
 .btn-slideshow:active { background: var(--red-dark); }
-.btn-slideshow:disabled { opacity: 0.4; }
 
 .filter-tabs { display: flex; margin-bottom: 12px; background: var(--surface); border-radius: var(--radius-sm); padding: 3px; border: 1px solid var(--border); }
 .filter-tab { flex: 1; padding: 9px 10px; border: none; background: none; font-size: 12px; font-family: inherit; font-weight: 600; color: var(--text-muted); cursor: pointer; border-radius: 6px; text-align: center; -webkit-tap-highlight-color: transparent; }
@@ -177,7 +176,6 @@ body {
 .btn-keep { background: var(--surface-raised); color: var(--text-secondary); border: 1px solid var(--border); }
 .btn-remove { background: var(--red); color: var(--white); }
 
-/* SLIDESHOW */
 .slideshow { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #000; z-index: 700; display: none; flex-direction: column; }
 .slideshow.open { display: flex; }
 .ss-stage { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
@@ -219,11 +217,13 @@ body {
 .backup-sub { font-size: 12px; color: var(--text-muted); margin-left: 20px; }
 .backup-actions { display: flex; gap: 10px; margin-top: 16px; }
 .btn-backup-now { flex: 1; padding: 13px; background: var(--red); color: var(--white); border: none; border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.btn-backup-now:disabled { opacity: 0.4; }
 .btn-restore { flex: 1; padding: 13px; background: var(--surface-raised); color: var(--text-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.btn-save-close { width: 100%; padding: 16px; margin-top: 12px; background: var(--gold); color: var(--black); border: none; border-radius: var(--radius-sm); font-size: 15px; font-family: inherit; font-weight: 800; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .section-title { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 24px 0 12px; }
-.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
-.toggle-row span { font-size: 14px; font-weight: 500; }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; gap: 14px; }
+.toggle-row .tg-text { flex: 1; }
+.toggle-row .tg-text span { font-size: 14px; font-weight: 600; display: block; }
+.toggle-row .tg-text small { font-size: 11px; color: var(--text-muted); display: block; margin-top: 2px; line-height: 1.4; }
 .switch { position: relative; width: 48px; height: 28px; flex-shrink: 0; }
 .switch input { opacity: 0; width: 0; height: 0; }
 .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: var(--border); border-radius: 28px; transition: 0.2s; }
@@ -243,6 +243,15 @@ body {
 .test-line.bad { color: #FF8A80; background: rgba(218,41,28,0.08); }
 .test-line.bad .ico { color: var(--red); }
 .test-line.pending { color: var(--text-muted); }
+.version-list { border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; margin-top: 4px; }
+.version-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+.version-row:last-child { border-bottom: none; }
+.version-row .vr-info { flex: 1; min-width: 0; }
+.version-row .vr-date { font-size: 13px; font-weight: 600; }
+.version-row .vr-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.btn-vr-restore { flex-shrink: 0; padding: 8px 14px; background: var(--surface-raised); color: var(--gold); border: 1px solid rgba(251,225,34,0.3); border-radius: var(--radius-sm); font-size: 12px; font-family: inherit; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.btn-refresh-versions { width: 100%; padding: 13px; background: var(--surface); color: var(--text-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 600; cursor: pointer; margin-bottom: 12px; -webkit-tap-highlight-color: transparent; }
+.versions-empty { font-size: 12px; color: var(--text-muted); text-align: center; padding: 20px; }
 .help-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-top: 16px; }
 .help-box h4 { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
 .help-box ol { margin-left: 18px; }
@@ -383,14 +392,28 @@ body {
     <div class="backup-sub" id="statusSub">Add a token below to enable backups</div>
     <div class="backup-actions">
       <button class="btn-backup-now" id="btnBackupNow">Back Up Now</button>
-      <button class="btn-restore" id="btnRestore">Restore</button>
+      <button class="btn-restore" id="btnRestore">Restore Latest</button>
     </div>
+    <button class="btn-save-close" id="btnSaveClose">Save &amp; Close App</button>
   </div>
 
+  <div class="section-title">Sync Behaviour</div>
   <div class="toggle-row">
-    <span>Auto-backup on changes</span>
+    <div class="tg-text"><span>Auto-restore on open</span><small>Pull the latest backup every time the app starts</small></div>
+    <label class="switch"><input type="checkbox" id="autoRestoreToggle"><span class="slider"></span></label>
+  </div>
+  <div class="toggle-row">
+    <div class="tg-text"><span>Auto-backup on changes</span><small>Save a few seconds after any add, edit, or move</small></div>
     <label class="switch"><input type="checkbox" id="autoToggle"><span class="slider"></span></label>
   </div>
+  <div class="toggle-row">
+    <div class="tg-text"><span>Backup when app is hidden</span><small>Best-effort save when you switch away or close</small></div>
+    <label class="switch"><input type="checkbox" id="closeToggle"><span class="slider"></span></label>
+  </div>
+
+  <div class="section-title">Version History</div>
+  <button class="btn-refresh-versions" id="btnRefreshVersions">Refresh Version List</button>
+  <div class="version-list" id="versionList"><div class="versions-empty">Tap refresh to load saved versions</div></div>
 
   <div class="section-title">GitHub Configuration</div>
   <div class="form-group">
@@ -408,7 +431,7 @@ body {
   <div class="form-group">
     <label class="form-label">Personal Access Token</label>
     <input type="text" class="form-input" id="cfgToken" placeholder="ghp_..." autocomplete="off" autocapitalize="off" spellcheck="false" style="-webkit-text-security:disc;">
-    <div class="form-hint">Stored only on this device, never committed to any repo. Needs <code>repo</code> scope (classic) or <code>Contents: Read and write</code> (fine-grained).</div>
+    <div class="form-hint">Stored only on this device, never committed. Needs <code>repo</code> scope (classic) or <code>Contents: Read and write</code> (fine-grained).</div>
   </div>
   <button class="btn-test-conn" id="btnTestConn">Test Connection</button>
   <button class="btn-save-config" id="btnSaveConfig">Save Configuration</button>
@@ -416,14 +439,12 @@ body {
   <button class="btn-clear-token" id="btnClearToken">Clear Token &amp; Config</button>
 
   <div class="help-box">
-    <h4>Setup Instructions</h4>
+    <h4>How backups work</h4>
     <ol>
-      <li>On GitHub, create a new <strong>private</strong> repo, e.g. <code>CC-App-Backup</code>. Tick "Add a README" so the branch exists.</li>
-      <li>Go to GitHub <strong>Settings &rarr; Developer settings &rarr; Personal access tokens &rarr; Tokens (classic)</strong>.</li>
-      <li>Click <strong>Generate new token (classic)</strong>. Name it, set expiry, and tick the <code>repo</code> scope.</li>
-      <li>Generate, then copy the token (starts with <code>ghp_</code>). You only see it once.</li>
-      <li>Back here: enter username, backup repo name, branch (<code>main</code>), and paste the token.</li>
-      <li>Tap <strong>Test Connection</strong>. Fix anything it flags, then <strong>Save Configuration</strong> and turn on Auto-backup.</li>
+      <li>Each backup writes a timestamped file into a <code>backups/</code> folder, plus updates <code>backup.json</code> as the latest pointer.</li>
+      <li><strong>Auto-restore on open</strong> loads the latest on startup so a second device stays current.</li>
+      <li><strong>Version History</strong> lists every saved version. Restore any earlier one if a file corrupts or saves by mistake.</li>
+      <li>The app keeps your most recent 30 versions and prunes older ones automatically.</li>
     </ol>
   </div>
 </div>
@@ -475,11 +496,32 @@ body {
 
 <div class="confirm-overlay" id="restoreOverlay">
   <div class="confirm-box">
-    <h3>Restore from Backup</h3>
+    <h3>Restore Latest Backup</h3>
     <p>This pulls the latest backup from GitHub and merges it into your collection. Existing figures with matching IDs are updated. Continue?</p>
     <div class="confirm-btns">
       <button class="btn-keep" id="restoreCancel">Cancel</button>
       <button class="btn-remove" id="restoreConfirm">Restore</button>
+    </div>
+  </div>
+</div>
+
+<div class="confirm-overlay" id="closeOverlay">
+  <div class="confirm-box">
+    <h3 id="closeTitle">Backing Up...</h3>
+    <p id="closeMsg">Saving your collection to GitHub before closing.</p>
+    <div class="confirm-btns" id="closeBtns" style="display:none;">
+      <button class="btn-remove" id="closeDone" style="flex:1;">OK</button>
+    </div>
+  </div>
+</div>
+
+<div class="confirm-overlay" id="versionRestoreOverlay">
+  <div class="confirm-box">
+    <h3>Restore This Version?</h3>
+    <p id="versionRestoreMsg">This merges the selected backup into your collection.</p>
+    <div class="confirm-btns">
+      <button class="btn-keep" id="versionRestoreCancel">Cancel</button>
+      <button class="btn-remove" id="versionRestoreConfirm">Restore</button>
     </div>
   </div>
 </div>
@@ -518,12 +560,12 @@ var shown = 0;
 var PAGE_SIZE = 30;
 var urls = [];
 var currentDetailId = null;
-var backupConfig = { owner: '', repo: '', branch: 'main', token: '', auto: false, lastBackup: '' };
+var backupConfig = { owner: '', repo: '', branch: 'main', token: '', auto: false, autoRestore: false, backupOnClose: false, lastBackup: '' };
 var backupInProgress = false;
+var KEEP_VERSIONS = 30;
 
 var dragState = { active: false, id: null, ghost: null, holdTimer: null, startX: 0, startY: 0, candidate: null };
 
-// slideshow state
 var ssItems = [];
 var ssIndex = 0;
 var ssPlaying = false;
@@ -1099,7 +1141,6 @@ document.getElementById('searchInput').addEventListener('input', function() {
   clearTimeout(searchTimer); searchTimer = setTimeout(renderFiltered, 200);
 }, false);
 
-// === SLIDESHOW ===
 function startSlideshow() {
   var filtered = applyFilters();
   var withPhotos = [];
@@ -1262,56 +1303,107 @@ function mergePayloadText(text, cb) {
 
 function b64EncodeUnicode(str) { return btoa(unescape(encodeURIComponent(str))); }
 function b64DecodeUnicode(str) { return decodeURIComponent(escape(atob(str))); }
-function ghApiBase() { return 'https://api.github.com/repos/' + backupConfig.owner + '/' + backupConfig.repo + '/contents/backup.json'; }
+function ghContentsUrl(path) { return 'https://api.github.com/repos/' + backupConfig.owner + '/' + backupConfig.repo + '/contents/' + path; }
+function ghHeaders() { return { 'Authorization': 'token ' + backupConfig.token, 'Accept': 'application/vnd.github+json' }; }
 
-function ghGetExistingSha(cb) {
-  var url = ghApiBase() + '?ref=' + encodeURIComponent(backupConfig.branch) + '&t=' + Date.now();
-  fetch(url, { headers: { 'Authorization': 'token ' + backupConfig.token, 'Accept': 'application/vnd.github+json' } })
+function ghGetSha(path, cb) {
+  var url = ghContentsUrl(path) + '?ref=' + encodeURIComponent(backupConfig.branch) + '&t=' + Date.now();
+  fetch(url, { headers: ghHeaders() })
     .then(function(res) { if (res.status === 200) return res.json(); return null; })
     .then(function(json) { cb(json ? json.sha : null); })
     .catch(function() { cb(null); });
 }
 
-function doGithubBackup(silent) {
-  if (!backupConfig.owner || !backupConfig.repo || !backupConfig.token) { if (!silent) toast('Configure GitHub first'); return; }
-  if (backupInProgress) return;
+function ghPutFile(path, contentB64, sha, cb) {
+  var body = { message: 'Backup ' + new Date().toISOString(), content: contentB64, branch: backupConfig.branch };
+  if (sha) body.sha = sha;
+  fetch(ghContentsUrl(path), { method: 'PUT', headers: { 'Authorization': 'token ' + backupConfig.token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+    .then(function(res) { cb(res.status === 200 || res.status === 201, res.status); })
+    .catch(function() { cb(false, 0); });
+}
+
+function tsName() {
+  var d = new Date();
+  function p(n) { return (n < 10 ? '0' : '') + n; }
+  return d.getFullYear() + '-' + p(d.getMonth()+1) + '-' + p(d.getDate()) + '_' + p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds());
+}
+
+function doGithubBackup(silent, done) {
+  if (!backupConfig.owner || !backupConfig.repo || !backupConfig.token) { if (!silent) toast('Configure GitHub first'); if (done) done(false); return; }
+  if (backupInProgress) { if (done) done(false); return; }
   backupInProgress = true;
   if (!silent) toast('Backing up...');
   buildPayload(function(payload) {
-    var content = b64EncodeUnicode(JSON.stringify(payload, null, 2));
-    ghGetExistingSha(function(sha) {
-      var body = { message: 'Backup ' + new Date().toISOString(), content: content, branch: backupConfig.branch };
-      if (sha) body.sha = sha;
-      fetch(ghApiBase(), {
-        method: 'PUT',
-        headers: { 'Authorization': 'token ' + backupConfig.token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      }).then(function(res) {
-        backupInProgress = false;
-        if (res.status === 200 || res.status === 201) {
-          backupConfig.lastBackup = new Date().toISOString();
-          saveSetting('backupConfig', backupConfig);
-          if (!silent) toast('Backup complete');
-          renderBackupStatus();
-        } else {
-          res.json().then(function(j) { if (!silent) toast('Backup failed: ' + (j.message || res.status)); }).catch(function(){ if (!silent) toast('Backup failed (' + res.status + ')'); });
-        }
-      }).catch(function() { backupInProgress = false; if (!silent) toast('Network error'); });
+    var json = JSON.stringify(payload, null, 2);
+    var contentB64 = b64EncodeUnicode(json);
+    var versionPath = 'backups/backup-' + tsName() + '.json';
+    // Write the timestamped version first
+    ghPutFile(versionPath, contentB64, null, function(okVer) {
+      // Then update the latest pointer
+      ghGetSha('backup.json', function(sha) {
+        ghPutFile('backup.json', contentB64, sha, function(okLatest, status) {
+          backupInProgress = false;
+          if (okLatest || okVer) {
+            backupConfig.lastBackup = new Date().toISOString();
+            saveSetting('backupConfig', backupConfig);
+            if (!silent) toast('Backup complete');
+            renderBackupStatus();
+            pruneOldVersions();
+            if (done) done(true);
+          } else {
+            if (!silent) toast('Backup failed (' + status + ')');
+            if (done) done(false);
+          }
+        });
+      });
     });
   });
 }
 
-function doGithubRestore() {
-  if (!backupConfig.owner || !backupConfig.repo || !backupConfig.token) { toast('Configure GitHub first'); return; }
-  toast('Fetching backup...');
-  var url = ghApiBase() + '?ref=' + encodeURIComponent(backupConfig.branch) + '&t=' + Date.now();
-  fetch(url, { headers: { 'Authorization': 'token ' + backupConfig.token, 'Accept': 'application/vnd.github+json' } })
-    .then(function(res) { if (res.status !== 200) throw new Error('No backup found (' + res.status + ')'); return res.json(); })
-    .then(function(json) {
-      var text = b64DecodeUnicode(json.content.replace(/\n/g, ''));
-      mergePayloadText(text, function(n) { toast('Restored ' + n + ' figures'); renderGallery(); });
+function listBackups(cb) {
+  var url = ghContentsUrl('backups') + '?ref=' + encodeURIComponent(backupConfig.branch) + '&t=' + Date.now();
+  fetch(url, { headers: ghHeaders() })
+    .then(function(res) { if (res.status === 200) return res.json(); return []; })
+    .then(function(arr) {
+      if (!Array.isArray(arr)) { cb([]); return; }
+      var files = [];
+      for (var i = 0; i < arr.length; i++) { if (arr[i].name && arr[i].name.indexOf('backup-') === 0) files.push(arr[i]); }
+      files.sort(function(a, b) { return a.name < b.name ? 1 : -1; });
+      cb(files);
     })
-    .catch(function(err) { toast(err.message || 'Restore failed'); });
+    .catch(function() { cb([]); });
+}
+
+function pruneOldVersions() {
+  listBackups(function(files) {
+    if (files.length <= KEEP_VERSIONS) return;
+    var toDelete = files.slice(KEEP_VERSIONS);
+    for (var i = 0; i < toDelete.length; i++) {
+      (function(file) {
+        fetch(ghContentsUrl('backups/' + file.name), {
+          method: 'DELETE',
+          headers: { 'Authorization': 'token ' + backupConfig.token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: 'Prune old backup', sha: file.sha, branch: backupConfig.branch })
+        });
+      })(toDelete[i]);
+    }
+  });
+}
+
+function fetchFileContent(path, cb) {
+  var url = ghContentsUrl(path) + '?ref=' + encodeURIComponent(backupConfig.branch) + '&t=' + Date.now();
+  fetch(url, { headers: ghHeaders() })
+    .then(function(res) { if (res.status !== 200) throw new Error('Not found (' + res.status + ')'); return res.json(); })
+    .then(function(json) { cb(b64DecodeUnicode(json.content.replace(/\n/g, ''))); })
+    .catch(function(err) { toast(err.message || 'Fetch failed'); });
+}
+
+function doGithubRestore(silent, done) {
+  if (!backupConfig.owner || !backupConfig.repo || !backupConfig.token) { if (!silent) toast('Configure GitHub first'); if (done) done(false); return; }
+  if (!silent) toast('Fetching backup...');
+  fetchFileContent('backup.json', function(text) {
+    mergePayloadText(text, function(n) { if (!silent) toast('Restored ' + n + ' figures'); renderGallery(); if (done) done(true); });
+  });
 }
 
 var autoBackupTimer = null;
@@ -1322,6 +1414,13 @@ function triggerAutoBackup() {
   autoBackupTimer = setTimeout(function() { doGithubBackup(true); }, 4000);
 }
 
+// Backup when app is hidden / backgrounded (best effort)
+document.addEventListener('visibilitychange', function() {
+  if (document.hidden && backupConfig.backupOnClose && backupConfig.owner && backupConfig.repo && backupConfig.token && !backupInProgress) {
+    doGithubBackup(true);
+  }
+}, false);
+
 function readConfigFields() {
   return {
     owner: document.getElementById('cfgOwner').value.trim(),
@@ -1329,6 +1428,11 @@ function readConfigFields() {
     branch: document.getElementById('cfgBranch').value.trim() || 'main',
     token: document.getElementById('cfgToken').value.trim()
   };
+}
+
+function syncConfigFromFields() {
+  var c = readConfigFields();
+  backupConfig.owner = c.owner; backupConfig.repo = c.repo; backupConfig.branch = c.branch; backupConfig.token = c.token;
 }
 
 function renderTestResults(lines) {
@@ -1365,26 +1469,23 @@ document.getElementById('btnTestConn').addEventListener('click', function() {
   fetch(repoUrl, { headers: { 'Authorization': 'token ' + c.token, 'Accept': 'application/vnd.github+json' } })
     .then(function(res) {
       if (res.status === 401) { lines.push({ status: 'bad', text: 'Token rejected (401). It may be wrong, expired, or missing the repo scope.' }); renderTestResults(lines); return null; }
-      if (res.status === 404) { lines.push({ status: 'bad', text: 'Repo not found (404). Check the owner/repo names, and that the token can access this private repo.' }); renderTestResults(lines); return null; }
+      if (res.status === 404) { lines.push({ status: 'bad', text: 'Repo not found (404). Check the owner/repo names and token access.' }); renderTestResults(lines); return null; }
       if (res.status !== 200) { lines.push({ status: 'bad', text: 'GitHub returned ' + res.status }); renderTestResults(lines); return null; }
       return res.json();
     })
     .then(function(repo) {
       if (!repo) return;
-      lines.push({ status: 'ok', text: 'Repo found' + (repo['private'] ? ' (private)' : ' (PUBLIC: consider making it private)') });
-      if (repo.permissions && !repo.permissions.push) {
-        lines.push({ status: 'bad', text: 'Token cannot write to this repo. Needs repo scope (classic) or Contents: Read and write (fine-grained).' });
-        renderTestResults(lines); return;
-      }
+      lines.push({ status: 'ok', text: 'Repo found' + (repo['private'] ? ' (private)' : ' (PUBLIC: make it private!)') });
+      if (repo.permissions && !repo.permissions.push) { lines.push({ status: 'bad', text: 'Token cannot write. Needs repo scope or Contents: Read and write.' }); renderTestResults(lines); return; }
       lines.push({ status: 'ok', text: 'Write access confirmed' });
       var brUrl = 'https://api.github.com/repos/' + c.owner + '/' + c.repo + '/branches/' + encodeURIComponent(c.branch) + '?t=' + Date.now();
       return fetch(brUrl, { headers: { 'Authorization': 'token ' + c.token, 'Accept': 'application/vnd.github+json' } }).then(function(br) {
-        if (br.status === 200) lines.push({ status: 'ok', text: 'Branch "' + c.branch + '" exists. All good, save and back up.' });
-        else lines.push({ status: 'bad', text: 'Branch "' + c.branch + '" not found. Create it or add a README so it exists.' });
+        if (br.status === 200) lines.push({ status: 'ok', text: 'Branch "' + c.branch + '" exists. All good!' });
+        else lines.push({ status: 'bad', text: 'Branch "' + c.branch + '" not found. Add a README so it exists.' });
         renderTestResults(lines);
       });
     })
-    .catch(function() { lines.push({ status: 'bad', text: 'Network error reaching GitHub. Check your connection.' }); renderTestResults(lines); });
+    .catch(function() { lines.push({ status: 'bad', text: 'Network error reaching GitHub.' }); renderTestResults(lines); });
 }, false);
 
 function renderBackupStatus() {
@@ -1395,8 +1496,8 @@ function renderBackupStatus() {
   if (!configured) {
     dot.className = 'status-dot off'; txt.textContent = 'Not configured';
     sub.textContent = 'Add your details below to enable backups';
-  } else if (backupConfig.auto) {
-    dot.className = 'status-dot on'; txt.textContent = 'Auto-backup ON';
+  } else if (backupConfig.auto || backupConfig.autoRestore || backupConfig.backupOnClose) {
+    dot.className = 'status-dot on'; txt.textContent = 'Connected';
     sub.textContent = backupConfig.lastBackup ? ('Last backup: ' + new Date(backupConfig.lastBackup).toLocaleString()) : 'No backup yet, tap Back Up Now';
   } else {
     dot.className = 'status-dot'; txt.textContent = 'Configured (manual)';
@@ -1410,53 +1511,138 @@ function renderBackupPage() {
   document.getElementById('cfgBranch').value = backupConfig.branch || 'main';
   document.getElementById('cfgToken').value = backupConfig.token || '';
   document.getElementById('autoToggle').checked = !!backupConfig.auto;
+  document.getElementById('autoRestoreToggle').checked = !!backupConfig.autoRestore;
+  document.getElementById('closeToggle').checked = !!backupConfig.backupOnClose;
   document.getElementById('testResults').className = 'test-results';
   renderBackupStatus();
 }
 
 document.getElementById('btnSaveConfig').addEventListener('click', function() {
-  var c = readConfigFields();
-  backupConfig.owner = c.owner;
-  backupConfig.repo = c.repo;
-  backupConfig.branch = c.branch;
-  backupConfig.token = c.token;
+  syncConfigFromFields();
   saveSetting('backupConfig', backupConfig, function() { toast('Configuration saved'); renderBackupStatus(); });
 }, false);
 
 document.getElementById('autoToggle').addEventListener('change', function() {
   backupConfig.auto = this.checked;
   saveSetting('backupConfig', backupConfig, function() { renderBackupStatus(); });
-  if (backupConfig.auto) toast('Auto-backup enabled'); else toast('Auto-backup disabled');
+}, false);
+
+document.getElementById('autoRestoreToggle').addEventListener('change', function() {
+  backupConfig.autoRestore = this.checked;
+  saveSetting('backupConfig', backupConfig, function() { renderBackupStatus(); });
+}, false);
+
+document.getElementById('closeToggle').addEventListener('change', function() {
+  backupConfig.backupOnClose = this.checked;
+  saveSetting('backupConfig', backupConfig, function() { renderBackupStatus(); });
 }, false);
 
 document.getElementById('btnBackupNow').addEventListener('click', function() {
-  var c = readConfigFields();
-  backupConfig.owner = c.owner; backupConfig.repo = c.repo; backupConfig.branch = c.branch; backupConfig.token = c.token;
+  syncConfigFromFields();
   doGithubBackup(false);
 }, false);
 
 document.getElementById('btnRestore').addEventListener('click', function() {
-  var c = readConfigFields();
-  backupConfig.owner = c.owner; backupConfig.repo = c.repo; backupConfig.branch = c.branch; backupConfig.token = c.token;
+  syncConfigFromFields();
   document.getElementById('restoreOverlay').className = 'confirm-overlay open';
 }, false);
 
 document.getElementById('restoreOverlay').addEventListener('click', function(e) {
   if (e.target.id === 'restoreCancel' || e.target === this) { this.className = 'confirm-overlay'; }
-  if (e.target.id === 'restoreConfirm') { this.className = 'confirm-overlay'; doGithubRestore(); }
+  if (e.target.id === 'restoreConfirm') { this.className = 'confirm-overlay'; doGithubRestore(false); }
+}, false);
+
+// Save & Close App
+document.getElementById('btnSaveClose').addEventListener('click', function() {
+  syncConfigFromFields();
+  if (!backupConfig.owner || !backupConfig.repo || !backupConfig.token) { toast('Configure GitHub first'); return; }
+  var overlay = document.getElementById('closeOverlay');
+  document.getElementById('closeTitle').textContent = 'Backing Up...';
+  document.getElementById('closeMsg').textContent = 'Saving your collection to GitHub before closing.';
+  document.getElementById('closeBtns').style.display = 'none';
+  overlay.className = 'confirm-overlay open';
+  doGithubBackup(true, function(ok) {
+    if (ok) {
+      document.getElementById('closeTitle').textContent = 'Backed Up';
+      document.getElementById('closeMsg').textContent = 'Your collection is safely saved. You can now close the app (swipe up and away). It will auto-restore next time you open it.';
+    } else {
+      document.getElementById('closeTitle').textContent = 'Backup Failed';
+      document.getElementById('closeMsg').textContent = 'Could not reach GitHub. Check your connection and try again before closing.';
+    }
+    document.getElementById('closeBtns').style.display = 'flex';
+    // Best-effort close (works only if script opened the window)
+    try { window.close(); } catch(e) {}
+  });
+}, false);
+
+document.getElementById('closeOverlay').addEventListener('click', function(e) {
+  if (e.target.id === 'closeDone' || e.target === this) { this.className = 'confirm-overlay'; }
+}, false);
+
+// Version history
+var pendingVersionPath = null;
+document.getElementById('btnRefreshVersions').addEventListener('click', function() {
+  syncConfigFromFields();
+  if (!backupConfig.owner || !backupConfig.repo || !backupConfig.token) { toast('Configure GitHub first'); return; }
+  var list = document.getElementById('versionList');
+  list.innerHTML = '<div class="versions-empty">Loading...</div>';
+  listBackups(function(files) {
+    if (!files.length) { list.innerHTML = '<div class="versions-empty">No saved versions yet. Tap Back Up Now to create one.</div>'; return; }
+    var html = '';
+    for (var i = 0; i < files.length; i++) {
+      var nm = files[i].name.replace('backup-', '').replace('.json', '');
+      var parts = nm.split('_');
+      var dateStr = parts[0] || nm;
+      var timeStr = '';
+      if (parts[1] && parts[1].length === 6) timeStr = parts[1].substr(0,2) + ':' + parts[1].substr(2,2) + ':' + parts[1].substr(4,2);
+      var sizeKb = files[i].size ? Math.round(files[i].size / 1024) + ' KB' : '';
+      html += '<div class="version-row"><div class="vr-info"><div class="vr-date">' + dateStr + (timeStr ? ' ' + timeStr : '') + '</div><div class="vr-meta">' + sizeKb + '</div></div><button class="btn-vr-restore" data-path="backups/' + files[i].name + '" data-label="' + dateStr + (timeStr ? ' ' + timeStr : '') + '">Restore</button></div>';
+    }
+    list.innerHTML = html;
+  });
+}, false);
+
+document.getElementById('versionList').addEventListener('click', function(e) {
+  var btn = e.target.closest('.btn-vr-restore');
+  if (!btn) return;
+  pendingVersionPath = btn.getAttribute('data-path');
+  document.getElementById('versionRestoreMsg').textContent = 'Restore the backup from ' + btn.getAttribute('data-label') + '? It merges into your current collection.';
+  document.getElementById('versionRestoreOverlay').className = 'confirm-overlay open';
+}, false);
+
+document.getElementById('versionRestoreOverlay').addEventListener('click', function(e) {
+  if (e.target.id === 'versionRestoreCancel' || e.target === this) { this.className = 'confirm-overlay'; pendingVersionPath = null; }
+  if (e.target.id === 'versionRestoreConfirm') {
+    this.className = 'confirm-overlay';
+    if (pendingVersionPath) {
+      toast('Restoring version...');
+      fetchFileContent(pendingVersionPath, function(text) { mergePayloadText(text, function(n) { toast('Restored ' + n + ' figures'); renderGallery(); }); });
+      pendingVersionPath = null;
+    }
+  }
 }, false);
 
 document.getElementById('btnClearToken').addEventListener('click', function() {
   if (!confirm('Clear all backup settings and token from this device?')) return;
-  backupConfig = { owner: '', repo: '', branch: 'main', token: '', auto: false, lastBackup: '' };
+  backupConfig = { owner: '', repo: '', branch: 'main', token: '', auto: false, autoRestore: false, backupOnClose: false, lastBackup: '' };
   saveSetting('backupConfig', backupConfig, function() { renderBackupPage(); toast('Cleared'); });
 }, false);
 
 openDB(function() {
   getSetting('backupConfig', function(cfg) {
-    if (cfg) { backupConfig = cfg; if (!backupConfig.branch) backupConfig.branch = 'main'; }
-    renderGallery();
-    setTimeout(function() { if (backupConfig.auto) doGithubBackup(true); }, 2500);
+    if (cfg) {
+      backupConfig = cfg;
+      if (!backupConfig.branch) backupConfig.branch = 'main';
+      if (backupConfig.autoRestore === undefined) backupConfig.autoRestore = false;
+      if (backupConfig.backupOnClose === undefined) backupConfig.backupOnClose = false;
+    }
+    // Auto-restore on open if enabled, then render
+    if (backupConfig.autoRestore && backupConfig.owner && backupConfig.repo && backupConfig.token) {
+      toast('Syncing latest...');
+      doGithubRestore(true, function() { renderGallery(); });
+    } else {
+      renderGallery();
+    }
   });
 });
 
