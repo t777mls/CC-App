@@ -300,6 +300,24 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
  </form>
 </div>
 
+<div id="pg-wip" class="page">
+ <div class="page-header">
+  <h1>Work in Progress</h1>
+  <div class="accent-bar"></div>
+  <p>Custom figures being repainted or modified</p>
+ </div>
+ <div class="wip-toolbar">
+  <button class="btn-wip-add" id="btnWipAdd">+ Add WIP</button>
+ </div>
+ <div class="wip-filter-bar" id="wipFilterBar">
+  <button class="chip active" data-wip-filter="all">All</button>
+  <button class="chip" data-wip-filter="active">In Progress</button>
+  <button class="chip" data-wip-filter="done">Completed</button>
+ </div>
+ <ul class="wip-list" id="wipList"></ul>
+ <div class="wip-empty" id="wipEmpty" style="display:none;">No work in progress items yet</div>
+</div>
+
 <div id="pg-admin" class="page">
  <div class="page-header">
   <h1>Admin</h1>
@@ -375,58 +393,7 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   </ol>
  </div>
 </div>
-<div id="pg-wip" class="page">
- <div class="page-header">
-  <h1>Work in Progress</h1>
-  <div class="accent-bar"></div>
-  <p>Custom figures being repainted or modified</p>
- </div>
- <div class="wip-toolbar">
-  <button class="btn-wip-add" id="btnWipAdd">+ Add WIP</button>
- </div>
- <div class="wip-filter-bar" id="wipFilterBar">
-  <button class="chip active" data-wip-filter="all">All</button>
-  <button class="chip" data-wip-filter="active">In Progress</button>
-  <button class="chip" data-wip-filter="done">Completed</button>
- </div>
- <ul class="wip-list" id="wipList"></ul>
- <div class="wip-empty" id="wipEmpty" style="display:none;">No work in progress items yet</div>
-</div>
 
-
-/* Also add the WIP modal and overlay. Find this line in Part 2:
-     <div class="confirm-overlay" id="editFolderOverlay">
-   Paste this BEFORE it:
-*/
-
-<div class="wip-modal" id="wipModal">
- <div class="wip-panel" id="wipPanel"></div>
-</div>
-<div class="confirm-overlay" id="wipAddOverlay">
- <div class="confirm-box">
-  <h3>Add WIP</h3>
-  <input type="text" id="wipAddName" placeholder="Figure name" autocomplete="off">
-  <div class="confirm-btns">
-   <button class="btn-keep" id="wipAddCancel">Cancel</button>
-   <button class="btn-gold" id="wipAddConfirm">Add</button>
-  </div>
- </div>
-</div>
-<input type="file" id="wipPhotoInput" accept="image/*" style="display:none">
-
- <button class="nav-btn" data-page="pg-wip">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/></svg>
-  <span>WIP</span>
- </button>
-/* Also add the WIP nav button. Find this line in Part 2:
-     <button class="nav-btn" data-page="pg-folders">
-   Paste this BEFORE it:
-*/
-
- <button class="nav-btn" data-page="pg-wip">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/></svg>
-  <span>WIP</span>
- </button>
 <div id="pg-folders" class="page">
  <div class="page-header">
   <h1>Folders</h1>
@@ -449,6 +416,10 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
   <span>Gallery</span>
  </button>
+ <button class="nav-btn" data-page="pg-wip">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/></svg>
+  <span>WIP</span>
+ </button>
  <button class="nav-btn" data-page="pg-folders">
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
   <span>Folders</span>
@@ -466,7 +437,6 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
 <div class="modal-bg" id="modalBg">
  <div class="modal-panel" id="modalPanel"></div>
 </div>
-
 <div class="confirm-overlay" id="confirmOverlay">
  <div class="confirm-box">
   <h3>Duplicate Figure</h3>
@@ -477,7 +447,6 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   </div>
  </div>
 </div>
-
 <div class="confirm-overlay" id="folderOverlay">
  <div class="confirm-box">
   <h3>New Folder</h3>
@@ -488,7 +457,6 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   </div>
  </div>
 </div>
-
 <div class="confirm-overlay" id="restoreOverlay">
  <div class="confirm-box">
   <h3>Restore Latest Backup</h3>
@@ -499,7 +467,6 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   </div>
  </div>
 </div>
-
 <div class="confirm-overlay" id="closeOverlay">
  <div class="confirm-box">
   <h3 id="closeTitle">Backing Up...</h3>
@@ -509,7 +476,6 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   </div>
  </div>
 </div>
-
 <div class="confirm-overlay" id="versionRestoreOverlay">
  <div class="confirm-box">
   <h3>Restore This Version?</h3>
@@ -520,7 +486,6 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   </div>
  </div>
 </div>
-
 <div class="confirm-overlay" id="pdfOverlay">
  <div class="confirm-box">
   <h3>Export PDF</h3>
@@ -542,7 +507,20 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   </div>
  </div>
 </div>
-
+<div class="wip-modal" id="wipModal">
+ <div class="wip-panel" id="wipPanel"></div>
+</div>
+<div class="confirm-overlay" id="wipAddOverlay">
+ <div class="confirm-box">
+  <h3>Add WIP</h3>
+  <input type="text" id="wipAddName" placeholder="Figure name" autocomplete="off">
+  <div class="confirm-btns">
+   <button class="btn-keep" id="wipAddCancel">Cancel</button>
+   <button class="btn-gold" id="wipAddConfirm">Add</button>
+  </div>
+ </div>
+</div>
+<input type="file" id="wipPhotoInput" accept="image/*" style="display:none">
 <div class="confirm-overlay" id="editFolderOverlay">
  <div class="confirm-box">
   <h3 id="editFolderTitle">Edit Folder</h3>
@@ -555,7 +533,6 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   <button type="button" class="btn-danger-sm" id="editFolderDelete">Delete Folder</button>
  </div>
 </div>
-
 <div class="confirm-overlay" id="coverOverlay">
  <div class="confirm-box">
   <h3 id="coverTitle">Set Folder Cover</h3>
@@ -567,7 +544,6 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   </div>
  </div>
 </div>
-
 <div class="confirm-overlay" id="bulkMoveOverlay">
  <div class="confirm-box">
   <h3>Move Selected</h3>
@@ -578,7 +554,6 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   </div>
  </div>
 </div>
-
 <div class="confirm-overlay" id="bulkTagOverlay">
  <div class="confirm-box">
   <h3>Add Tag to Selected</h3>
@@ -589,7 +564,6 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   </div>
  </div>
 </div>
-
 <div class="slideshow" id="slideshow">
  <button class="ss-speed" id="ssSpeed">3s</button>
  <div class="ss-counter" id="ssCounter">1 / 1</div>
@@ -606,7 +580,6 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   <button class="ss-ctrl" id="ssNext"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></button>
  </div>
 </div>
-
 <div class="bulk-bar" id="bulkBar">
  <div class="bulk-bar-top">
   <span class="bulk-count" id="bulkCount">0 selected</span>
@@ -618,10 +591,10 @@ a{color:var(--gold);text-decoration:none}a:active{color:var(--white)}
   <button class="bulk-btn del" id="bulkDelete">Delete</button>
  </div>
 </div>
-
 <div class="toast" id="toast"></div>
 
-<!-- ===== PART 3: JAVASCRIPT (paste directly after Part 2) ===== -->
+<!-- ===== End of Part 2. Part 3 contains the <script> and closing tags. ===== -->
+<!-- ===== PART 3a: Core JS (paste directly after Part 2) ===== -->
 <script>
 try {
 var db=null,cached=[],folders=[],tags=[],photoBlob=null,activeFilterType='tags',activeFilter='all',activeFolder='all',shown=0,PAGE_SIZE=30,urls=[],currentDetailId=null,editingId=null;
@@ -634,6 +607,8 @@ var quickAddMode=false;
 var batchQueue=[],batchCurrentIdx=-1;
 var spotlightId=null;
 var coverFolderId=null,editingFolderId=null,fpSort='alpha';
+var wipItems=[],wipFilter='all',wipCurrentId=null;
+var defaultChecklist=['Strip paint','Prime','Base coat','Detail paint','Seal/varnish','Photograph'];
 
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.className='toast show';setTimeout(function(){t.className='toast';},2600);}
 function genId(){return Date.now().toString(36)+Math.random().toString(36).substr(2,6);}
@@ -661,7 +636,6 @@ function resetForm(){
  renderBatchBar();
 }
 
-/* --- DB --- */
 function openDB(cb){
  if(!window.indexedDB){toast('Browser not supported');return;}
  var req=indexedDB.open('FigureDB',3);
@@ -688,19 +662,16 @@ function duplicateFigure(id,keepPhoto){
 }
 function resizeImg(file,cb){var reader=new FileReader();reader.onload=function(e){var img=new Image();img.onload=function(){var maxDim=1200,w=img.width,h=img.height;if(w>maxDim||h>maxDim){if(w>h){h=Math.round((h/w)*maxDim);w=maxDim;}else{w=Math.round((w/h)*maxDim);h=maxDim;}}var canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);canvas.toBlob(function(blob){cb(blob);},'image/jpeg',0.8);};img.src=e.target.result;};reader.readAsDataURL(file);}
 
-/* --- TAGS --- */
 function renderTags(){var box=document.getElementById('tagsBox'),input=document.getElementById('tagInput'),pills=box.querySelectorAll('.tag-pill');for(var i=0;i<pills.length;i++)pills[i].parentNode.removeChild(pills[i]);for(var j=0;j<tags.length;j++){var pill=document.createElement('span');pill.className='tag-pill';pill.setAttribute('data-idx',j);pill.innerHTML=esc(tags[j])+' <button type="button">&times;</button>';box.insertBefore(pill,input);}}
 document.getElementById('tagsBox').addEventListener('click',function(e){if(e.target.tagName==='BUTTON'&&e.target.parentElement.className==='tag-pill'){tags.splice(parseInt(e.target.parentElement.getAttribute('data-idx')),1);renderTags();}else{document.getElementById('tagInput').focus();}},false);
 document.getElementById('tagInput').addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===','){e.preventDefault();var val=this.value.trim().replace(/,/g,'');if(val&&tags.indexOf(val)===-1){tags.push(val);renderTags();}this.value='';}if(e.key==='Backspace'&&!this.value&&tags.length){tags.pop();renderTags();}},false);
 
-/* --- PHOTO --- */
 document.getElementById('uploadZone').addEventListener('click',function(){document.getElementById('fileInput').click();},false);
 document.getElementById('fileInput').addEventListener('change',function(){var file=this.files&&this.files[0];if(!file||!file.type.match('image.*'))return;if(file.size>10485760){toast('Too large (max 10MB)');return;}resizeImg(file,function(blob){photoBlob=blob;document.getElementById('previewImg').src=URL.createObjectURL(blob);document.getElementById('uploadZone').style.display='none';document.getElementById('previewBox').style.display='block';});},false);
 document.getElementById('removePhoto').addEventListener('click',function(){photoBlob=null;document.getElementById('fileInput').value='';document.getElementById('uploadZone').style.display='block';document.getElementById('previewBox').style.display='none';},false);
 
 function populateFolderSelect(){var sel=document.getElementById('fFolder'),cur=sel.value,html='<option value="">No folder</option>';for(var i=0;i<folders.length;i++){html+='<option value="'+folders[i].id+'">'+esc(folders[i].name)+'</option>';}sel.innerHTML=html;sel.value=cur;}
 
-/* --- EDIT MODE --- */
 function openEditForm(id){
  var f=null;for(var i=0;i<cached.length;i++){if(cached[i].id===id){f=cached[i];break;}}
  if(!f){getAllFigures(function(arr){cached=arr;openEditForm(id);});return;}
@@ -713,7 +684,6 @@ function openEditForm(id){
  else{document.getElementById('uploadZone').style.display='block';document.getElementById('previewBox').style.display='none';switchPage('pg-add');}
 }
 
-/* --- FORM SUBMIT --- */
 document.getElementById('addForm').addEventListener('submit',function(e){
  e.preventDefault();var name=document.getElementById('fName').value.trim();if(!name)return;
  var btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent='Saving...';
@@ -735,7 +705,6 @@ document.getElementById('addForm').addEventListener('submit',function(e){
  }
 },false);
 
-/* --- GALLERY --- */
 function folderName(id){for(var i=0;i<folders.length;i++){if(folders[i].id===id)return folders[i].name;}return null;}
 function folderCount(id){var c=0;for(var i=0;i<cached.length;i++){if(cached[i].folder===id)c++;}return c;}
 function renderFoldersBar(){
@@ -752,7 +721,6 @@ document.getElementById('folderOverlay').addEventListener('click',function(e){if
 document.getElementById('folderNameInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();document.getElementById('folderCreate').click();}},false);
 function assignToFolder(figureId,folderId){var f=null;for(var i=0;i<cached.length;i++){if(cached[i].id===figureId){f=cached[i];break;}}if(!f)return;f.folder=folderId;updateFigure(f,function(){toast('Moved to '+(folderId?folderName(folderId):'Unfiled'));renderGallery();triggerAutoBackup();});}
 
-/* --- DRAG & DROP --- */
 function getPoint(e){if(e.touches&&e.touches[0])return{x:e.touches[0].clientX,y:e.touches[0].clientY};if(e.changedTouches&&e.changedTouches[0])return{x:e.changedTouches[0].clientX,y:e.changedTouches[0].clientY};return{x:e.clientX,y:e.clientY};}
 function startHold(card,e){var pt=getPoint(e);dragState.candidate=card.getAttribute('data-id');dragState.startX=pt.x;dragState.startY=pt.y;dragState.holdTimer=setTimeout(function(){beginDrag(card,dragState.startX,dragState.startY);},350);}
 function beginDrag(card,x,y){dragState.active=true;dragState.id=card.getAttribute('data-id');card.classList.add('dragging');if(navigator.vibrate){try{navigator.vibrate(15);}catch(e){}}var f=null;for(var i=0;i<cached.length;i++){if(cached[i].id===dragState.id){f=cached[i];break;}}var ghost=document.createElement('div');ghost.className='drag-ghost';var imgEl=card.querySelector('.card-img');var inner=(imgEl&&imgEl.src)?'<img src="'+imgEl.src+'" alt="">':'<div class="dg-ph">No photo</div>';inner+='<div class="dg-name">'+esc(f?f.name:'')+'</div>';ghost.innerHTML=inner;ghost.style.left=x+'px';ghost.style.top=y+'px';document.body.appendChild(ghost);dragState.ghost=ghost;}
@@ -772,7 +740,6 @@ function freeURLs(){for(var i=0;i<urls.length;i++)URL.revokeObjectURL(urls[i]);u
 function updateSlideshowLabel(){var label=document.getElementById('slideshowLabel');if(activeFolder==='all')label.textContent='Play Slideshow';else if(activeFolder==='none')label.textContent='Play Unfiled';else label.textContent='Play '+(folderName(activeFolder)||'Folder');}
 function renderGallery(){if(!db)return;freeURLs();getAllFolders(function(fl){folders=fl;getAllFigures(function(arr){cached=arr;document.getElementById('count-badge').textContent=arr.length+' figure'+(arr.length!==1?'s':'');renderFoldersBar();buildChips();renderFiltered();updateSlideshowLabel();pickSpotlight(false);});});}
 
-/* --- FILTER --- */
 document.getElementById('filterTabs').addEventListener('click',function(e){var btn=e.target.closest('.filter-tab');if(!btn)return;var tabs=document.querySelectorAll('.filter-tab');for(var i=0;i<tabs.length;i++)tabs[i].className='filter-tab';btn.className='filter-tab active';activeFilterType=btn.getAttribute('data-type');activeFilter='all';buildChips();renderFiltered();},false);
 function buildChips(){var vals={};for(var i=0;i<cached.length;i++){var f=cached[i];if(activeFilterType==='tags'){for(var j=0;j<f.tags.length;j++)vals[f.tags[j]]=1;}else if(activeFilterType==='brand'&&f.brand)vals[f.brand]=1;else if(activeFilterType==='year'&&f.year)vals[f.year]=1;}var keys=Object.keys(vals).sort();var html='<button class="chip'+(activeFilter==='all'?' active':'')+'" data-val="all">All</button>';for(var k=0;k<keys.length;k++){html+='<button class="chip'+(activeFilter===keys[k]?' active':'')+'" data-val="'+esc(keys[k])+'">'+esc(keys[k])+'</button>';}document.getElementById('filterChips').innerHTML=html;}
 document.getElementById('filterChips').addEventListener('click',function(e){var btn=e.target.closest('.chip');if(!btn)return;activeFilter=btn.getAttribute('data-val');buildChips();renderFiltered();},false);
@@ -783,7 +750,6 @@ function buildCards(figures,total){var grid=document.getElementById('galleryGrid
 function appendCards(cards,total){var grid=document.getElementById('galleryGrid');grid.innerHTML='';for(var i=0;i<cards.length;i++){if(cards[i])grid.appendChild(cards[i]);}if(shown<total){var w=document.createElement('div');w.className='load-more-wrap';w.innerHTML='<button class="btn-more">Load more ('+(total-shown)+' remaining)</button>';grid.appendChild(w);}}
 gallery.addEventListener('click',function(e){if(dragState.active)return;var card=e.target.closest('.card');if(card){if(bulkMode){toggleBulkCard(card.getAttribute('data-id'));return;}openDetail(card.getAttribute('data-id'));return;}var more=e.target.closest('.btn-more');if(more){var filtered=applyFilters();shown=Math.min(shown+PAGE_SIZE,filtered.length);buildCards(filtered.slice(0,shown),filtered.length);}},false);
 
-/* --- DETAIL MODAL --- */
 function openDetail(id){
  currentDetailId=id;var f=null;for(var i=0;i<cached.length;i++){if(cached[i].id===id){f=cached[i];break;}}if(!f)return;
  var modal=document.getElementById('modalBg'),panel=document.getElementById('modalPanel');
@@ -809,7 +775,10 @@ document.getElementById('modalBg').addEventListener('click',function(e){
 document.getElementById('confirmOverlay').addEventListener('click',function(e){if(e.target.id==='confirmKeep'){this.className='confirm-overlay';duplicateFigure(currentDetailId,true);}if(e.target.id==='confirmRemove'){this.className='confirm-overlay';duplicateFigure(currentDetailId,false);}if(e.target===this){this.className='confirm-overlay';}},false);
 var searchTimer;document.getElementById('searchInput').addEventListener('input',function(){clearTimeout(searchTimer);searchTimer=setTimeout(renderFiltered,200);},false);
 
-/* --- SLIDESHOW --- */
+/* ===== END OF PART 3a. Paste Part 3b directly after this. ===== */
+/* ===== PART 3b: Slideshow, PDF, Spotlight, Bulk, Batch, Folders, WIP, Backup, Init ===== */
+/* Paste directly after Part 3a */
+
 function startSlideshow(){var filtered=applyFilters();var withPhotos=[];for(var i=0;i<filtered.length;i++){if(filtered[i].hasPhoto)withPhotos.push(filtered[i]);}if(withPhotos.length===0){toast('No photos to show');return;}ssItems=withPhotos;ssIndex=0;document.getElementById('slideshow').className='slideshow open';showSlide(0);startPlaying();}
 function freeSsUrls(){for(var i=0;i<ssUrls.length;i++)URL.revokeObjectURL(ssUrls[i]);ssUrls=[];}
 function showSlide(idx){if(idx<0)idx=ssItems.length-1;if(idx>=ssItems.length)idx=0;ssIndex=idx;var f=ssItems[idx];var imgEl=document.getElementById('ssImg');imgEl.classList.remove('show');document.getElementById('ssCounter').textContent=(idx+1)+' / '+ssItems.length;var sub=[];if(f.brand)sub.push(f.brand);if(f.year)sub.push(f.year);if(f.code)sub.push(f.code);document.getElementById('ssCaption').innerHTML='<div class="ss-name">'+esc(f.name)+'</div>'+(sub.length?'<div class="ss-sub">'+esc(sub.join(' \u00B7 '))+'</div>':'');getPhoto(f.id,function(blob){if(blob){var url=URL.createObjectURL(blob);ssUrls.push(url);imgEl.src=url;imgEl.onload=function(){imgEl.classList.add('show');};}else{imgEl.classList.add('show');}});}
@@ -840,7 +809,7 @@ function renderSpotlight(id){var f=null;for(var i=0;i<cached.length;i++){if(cach
 document.getElementById('spotlightInner').addEventListener('click',function(e){if(e.target.closest('.spotlight-btn'))return;if(spotlightId)openDetail(spotlightId);},false);
 document.getElementById('spotlightShuffle').addEventListener('click',function(e){e.stopPropagation();pickSpotlight(true);},false);
 
-/* --- BULK ACTIONS --- */
+/* --- BULK --- */
 document.getElementById('btnBulkMode').addEventListener('click',function(){if(bulkMode)exitBulkMode();else enterBulkMode();},false);
 function enterBulkMode(){bulkMode=true;bulkSelected=[];document.getElementById('galleryGrid').classList.add('bulk-mode');document.getElementById('bulkBar').className='bulk-bar open';document.getElementById('btnBulkMode').innerHTML='<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg> Exit Select';updateBulkCount();}
 function exitBulkMode(){bulkMode=false;bulkSelected=[];document.getElementById('galleryGrid').classList.remove('bulk-mode');document.getElementById('bulkBar').className='bulk-bar';document.getElementById('btnBulkMode').innerHTML='<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Select Multiple';var cards=document.querySelectorAll('.card.selected');for(var i=0;i<cards.length;i++)cards[i].classList.remove('selected');}
@@ -854,10 +823,8 @@ document.getElementById('bulkTagOverlay').addEventListener('click',function(e){i
 document.getElementById('bulkTagInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();document.getElementById('bulkTagConfirm').click();}},false);
 document.getElementById('bulkDelete').addEventListener('click',function(){if(!bulkSelected.length){toast('Select figures first');return;}if(!confirm('Delete '+bulkSelected.length+' figure'+(bulkSelected.length>1?'s':'')+'?'))return;var pending=bulkSelected.length;for(var i=0;i<bulkSelected.length;i++){(function(id){deleteFigure(id,function(){pending--;if(!pending){toast('Deleted');exitBulkMode();renderGallery();triggerAutoBackup();}});})(bulkSelected[i]);}},false);
 
-/* --- QUICK ADD --- */
+/* --- QUICK ADD + BATCH --- */
 document.getElementById('quickAddToggle').addEventListener('change',function(){quickAddMode=this.checked;},false);
-
-/* --- BATCH PHOTO QUEUE --- */
 document.getElementById('btnBatchPhoto').addEventListener('click',function(){document.getElementById('batchFileInput').click();},false);
 document.getElementById('batchFileInput').addEventListener('change',function(){var files=this.files;if(!files||!files.length)return;var toProcess=files.length;for(var i=0;i<files.length;i++){(function(file){if(!file.type.match('image.*')){toProcess--;return;}resizeImg(file,function(blob){batchQueue.push({blob:blob,saved:false});toProcess--;if(toProcess<=0){renderBatchBar();toast(files.length+' photo'+(files.length>1?'s':'')+' queued');}});})(files[i]);}this.value='';},false);
 function renderBatchBar(){var bar=document.getElementById('batchBar'),thumbs=document.getElementById('batchThumbs'),countEl=document.getElementById('batchCount'),statusEl=document.getElementById('batchStatus');if(!batchQueue.length){bar.style.display='none';return;}bar.style.display='block';var unsaved=0;for(var i=0;i<batchQueue.length;i++){if(!batchQueue[i].saved)unsaved++;}countEl.textContent=batchQueue.length+' photo'+(batchQueue.length>1?'s':'')+' queued';statusEl.textContent=unsaved+' remaining';var html='';for(var i=0;i<batchQueue.length;i++){var url=URL.createObjectURL(batchQueue[i].blob);urls.push(url);html+='<div class="batch-thumb'+(i===batchCurrentIdx?' active':'')+(batchQueue[i].saved?' done':'')+'" data-batch-idx="'+i+'"><img src="'+url+'"><span class="bt-num">'+(i+1)+'</span></div>';}thumbs.innerHTML=html;}
@@ -888,6 +855,20 @@ function openCoverUpload(folderId){coverFolderId=folderId;document.getElementByI
 document.getElementById('coverFileInput').addEventListener('change',function(){var file=this.files&&this.files[0];if(!file||!file.type.match('image.*'))return;if(!coverFolderId)return;resizeImg(file,function(blob){saveFolderCover(coverFolderId,blob,function(){document.getElementById('coverOverlay').className='confirm-overlay';toast('Cover set');renderFoldersPage();triggerAutoBackup();});});},false);
 document.getElementById('coverOverlay').addEventListener('click',function(e){if(e.target.id==='coverCancel'||e.target===this){this.className='confirm-overlay';}if(e.target.id==='coverRemove'){if(coverFolderId){saveFolderCover(coverFolderId,null,function(){document.getElementById('coverOverlay').className='confirm-overlay';toast('Cover removed');renderFoldersPage();triggerAutoBackup();});}}},false);
 var folderSearchTimer;document.getElementById('folderSearchInput').addEventListener('input',function(){clearTimeout(folderSearchTimer);folderSearchTimer=setTimeout(renderFoldersPage,200);},false);
+
+/* --- WIP PAGE --- */
+function loadWipItems(cb){getSetting('wipItems',function(val){wipItems=val||[];if(cb)cb();});}
+function saveWipItems(cb){saveSetting('wipItems',wipItems,cb);}
+function renderWipPage(){loadWipItems(function(){var list=document.getElementById('wipList'),empty=document.getElementById('wipEmpty');var filtered=wipItems.filter(function(w){if(wipFilter==='active')return!w.done;if(wipFilter==='done')return w.done;return true;});if(!filtered.length){list.innerHTML='';empty.style.display='block';empty.textContent=wipItems.length?'No matches':'No work in progress items yet';return;}empty.style.display='none';var html='';for(var i=0;i<filtered.length;i++){var w=filtered[i];var progress=0,total=0;if(w.checklist&&w.checklist.length){total=w.checklist.length;for(var c=0;c<w.checklist.length;c++){if(w.checklist[c].done)progress++;}}var pctText=total?(progress+'/'+total):'';html+='<li class="wip-item'+(w.done?' completed':'')+'" data-wip-id="'+w.id+'"><button class="wip-check'+(w.done?' done':'')+'" data-wip-toggle="'+w.id+'"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></button><span class="wip-name" data-wip-open="'+w.id+'">'+esc(w.name)+(pctText?' <span style="color:var(--text-muted);font-size:11px;font-weight:500;">('+pctText+')</span>':'')+'</span></li>';}list.innerHTML=html;});}
+document.getElementById('wipFilterBar').addEventListener('click',function(e){var btn=e.target.closest('.chip');if(!btn)return;wipFilter=btn.getAttribute('data-wip-filter');var chips=document.getElementById('wipFilterBar').querySelectorAll('.chip');for(var i=0;i<chips.length;i++)chips[i].className='chip';btn.className='chip active';renderWipPage();},false);
+document.getElementById('wipList').addEventListener('click',function(e){var toggle=e.target.closest('[data-wip-toggle]');if(toggle){var id=toggle.getAttribute('data-wip-toggle');for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===id){wipItems[i].done=!wipItems[i].done;break;}}saveWipItems(function(){renderWipPage();triggerAutoBackup();});return;}var open=e.target.closest('[data-wip-open]');if(open){openWipDetail(open.getAttribute('data-wip-open'));}},false);
+document.getElementById('btnWipAdd').addEventListener('click',function(){document.getElementById('wipAddName').value='';document.getElementById('wipAddOverlay').className='confirm-overlay open';setTimeout(function(){document.getElementById('wipAddName').focus();},100);},false);
+document.getElementById('wipAddOverlay').addEventListener('click',function(e){if(e.target.id==='wipAddCancel'||e.target===this){this.className='confirm-overlay';}if(e.target.id==='wipAddConfirm'){var name=document.getElementById('wipAddName').value.trim();if(!name){toast('Enter a name');return;}var checklist=[];for(var i=0;i<defaultChecklist.length;i++){checklist.push({text:defaultChecklist[i],done:false});}wipItems.push({id:genId(),name:name,done:false,notes:'',photos:[],checklist:checklist,createdAt:new Date().toISOString()});saveWipItems(function(){document.getElementById('wipAddOverlay').className='confirm-overlay';toast(name+' added');renderWipPage();triggerAutoBackup();});}},false);
+document.getElementById('wipAddName').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();document.getElementById('wipAddConfirm').click();}},false);
+function openWipDetail(id){wipCurrentId=id;var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===id){w=wipItems[i];break;}}if(!w)return;var panel=document.getElementById('wipPanel');var photosHtml='<div class="wip-photos"><div class="wip-photos-label">Photos</div><div class="wip-photos-grid" id="wipPhotosGrid">';if(w.photos){for(var p=0;p<w.photos.length;p++){photosHtml+='<div class="wip-photo-thumb" data-photo-idx="'+p+'"><img src="'+w.photos[p]+'" alt=""><button class="wpt-remove" data-remove-photo="'+p+'">&times;</button></div>';}}photosHtml+='<div class="wip-photo-add" id="wipPhotoAdd">+</div></div></div>';var clHtml='<div class="wip-checklist"><div class="wip-photos-label">Checklist</div>';if(w.checklist){for(var c=0;c<w.checklist.length;c++){clHtml+='<div class="wip-cl-item" data-cl-idx="'+c+'"><button class="wip-cl-check'+(w.checklist[c].done?' done':'')+'" data-cl-toggle="'+c+'"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></button><span class="wip-cl-text'+(w.checklist[c].done?' done':'')+'">'+esc(w.checklist[c].text)+'</span></div>';}}clHtml+='<div class="wip-cl-add"><input type="text" id="wipClInput" placeholder="Add step"><button id="wipClAddBtn">Add</button></div></div>';panel.innerHTML='<h2>'+esc(w.name)+'</h2>'+photosHtml+'<div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="wipNotes" placeholder="Progress notes...">'+esc(w.notes||'')+'</textarea></div>'+clHtml+'<div class="wip-panel-btns"><button class="wip-btn-close" id="wipClose">Close</button><button class="wip-btn-save" id="wipSave">Save</button><button class="wip-btn-delete" id="wipDeleteBtn">Delete</button></div>';document.getElementById('wipModal').className='wip-modal open';}
+document.getElementById('wipModal').addEventListener('click',function(e){if(e.target.id==='wipClose'||e.target===document.getElementById('wipModal')){this.className='wip-modal';wipCurrentId=null;return;}if(e.target.id==='wipSave'){var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}if(w){w.notes=document.getElementById('wipNotes').value.trim();}saveWipItems(function(){document.getElementById('wipModal').className='wip-modal';toast('Saved');renderWipPage();triggerAutoBackup();wipCurrentId=null;});return;}if(e.target.id==='wipDeleteBtn'){if(!confirm('Delete this WIP item?'))return;for(var i=wipItems.length-1;i>=0;i--){if(wipItems[i].id===wipCurrentId){wipItems.splice(i,1);break;}}saveWipItems(function(){document.getElementById('wipModal').className='wip-modal';toast('Deleted');renderWipPage();triggerAutoBackup();wipCurrentId=null;});return;}var clToggle=e.target.closest('[data-cl-toggle]');if(clToggle){var idx=parseInt(clToggle.getAttribute('data-cl-toggle'),10);var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}if(w&&w.checklist[idx]){w.checklist[idx].done=!w.checklist[idx].done;saveWipItems(function(){openWipDetail(wipCurrentId);});}return;}if(e.target.id==='wipClAddBtn'){var input=document.getElementById('wipClInput');var text=input.value.trim();if(!text)return;var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}if(w){if(!w.checklist)w.checklist=[];w.checklist.push({text:text,done:false});saveWipItems(function(){openWipDetail(wipCurrentId);});}return;}var removePhoto=e.target.closest('[data-remove-photo]');if(removePhoto){var pidx=parseInt(removePhoto.getAttribute('data-remove-photo'),10);var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}if(w&&w.photos){w.photos.splice(pidx,1);saveWipItems(function(){openWipDetail(wipCurrentId);});}return;}if(e.target.id==='wipPhotoAdd'||e.target.closest('#wipPhotoAdd')){document.getElementById('wipPhotoInput').click();return;}},false);
+document.getElementById('wipPhotoInput').addEventListener('change',function(){var file=this.files&&this.files[0];if(!file||!file.type.match('image.*'))return;var reader=new FileReader();reader.onload=function(){var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}if(w){if(!w.photos)w.photos=[];w.photos.push(reader.result);saveWipItems(function(){openWipDetail(wipCurrentId);});}};reader.readAsDataURL(file);this.value='';},false);
+document.addEventListener('keydown',function(e){if(e.target&&e.target.id==='wipClInput'&&e.key==='Enter'){e.preventDefault();var btn=document.getElementById('wipClAddBtn');if(btn)btn.click();}},false);
 
 /* --- STATS --- */
 function renderStats(){if(!db)return;getAllFigures(function(collection){var brands={},years={},conditions={};for(var i=0;i<collection.length;i++){var f=collection[i];if(f.brand)brands[f.brand]=(brands[f.brand]||0)+1;if(f.year)years[f.year]=(years[f.year]||0)+1;if(f.condition)conditions[f.condition]=(conditions[f.condition]||0)+1;}document.getElementById('statsGrid').innerHTML='<div class="stat-box"><div class="stat-num">'+collection.length+'</div><div class="stat-label">Total</div></div><div class="stat-box"><div class="stat-num">'+Object.keys(brands).length+'</div><div class="stat-label">Brands</div></div><div class="stat-box"><div class="stat-num">'+folders.length+'</div><div class="stat-label">Folders</div></div>';var html='',sections=[['By Brand',brands],['By Year',years],['By Condition',conditions]];for(var s=0;s<sections.length;s++){var title=sections[s][0],obj=sections[s][1],entries=[];for(var key in obj){if(obj.hasOwnProperty(key))entries.push([key,obj[key]]);}if(!entries.length)continue;entries.sort(function(a,b){return b[1]-a[1];});html+='<div style="margin-top:28px;"><h3 style="font-size:14px;font-weight:700;margin-bottom:14px;color:#B0B0B0;">'+title+'</h3>';for(var e=0;e<Math.min(entries.length,20);e++){var pct=Math.round((entries[e][1]/collection.length)*100);html+='<div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;"><span style="font-weight:600;">'+esc(entries[e][0])+'</span><span style="color:#707070;">'+entries[e][1]+'</span></div><div class="bar-track"><div class="bar-fill" style="width:'+Math.max(pct,2)+'%;"></div></div></div>';}html+='</div>';}document.getElementById('statsBreakdown').innerHTML=html||'<p style="color:#707070;text-align:center;padding:40px;">Add figures to see stats</p>';});}
@@ -935,155 +916,7 @@ document.getElementById('btnRefreshVersions').addEventListener('click',function(
 document.getElementById('versionList').addEventListener('click',function(e){var btn=e.target.closest('.btn-vr-restore');if(!btn)return;pendingVersionPath=btn.getAttribute('data-path');document.getElementById('versionRestoreMsg').textContent='Restore from '+btn.getAttribute('data-label')+'?';document.getElementById('versionRestoreOverlay').className='confirm-overlay open';},false);
 document.getElementById('versionRestoreOverlay').addEventListener('click',function(e){if(e.target.id==='versionRestoreCancel'||e.target===this){this.className='confirm-overlay';pendingVersionPath=null;}if(e.target.id==='versionRestoreConfirm'){this.className='confirm-overlay';if(pendingVersionPath){toast('Restoring...');fetchFileContent(pendingVersionPath,function(text){mergePayloadText(text,function(n){toast('Restored '+n);renderGallery();});});pendingVersionPath=null;}}},false);
 document.getElementById('btnClearToken').addEventListener('click',function(){if(!confirm('Clear all backup settings?'))return;backupConfig={owner:'',repo:'',branch:'main',token:'',auto:false,autoRestore:false,backupOnClose:false,lastBackup:''};saveSetting('backupConfig',backupConfig,function(){renderBackupPage();toast('Cleared');});},false);
-/* --- WIP PAGE --- */
-var wipItems=[];
-var wipFilter='all';
-var wipCurrentId=null;
-var wipPhotoTarget=null;
-var defaultChecklist=['Strip paint','Prime','Base coat','Detail paint','Seal/varnish','Photograph'];
 
-function loadWipItems(cb){getSetting('wipItems',function(val){wipItems=val||[];if(cb)cb();});}
-function saveWipItems(cb){saveSetting('wipItems',wipItems,cb);}
-
-function renderWipPage(){
- loadWipItems(function(){
-  var list=document.getElementById('wipList'),empty=document.getElementById('wipEmpty');
-  var filtered=wipItems.filter(function(w){
-   if(wipFilter==='active')return!w.done;
-   if(wipFilter==='done')return w.done;
-   return true;
-  });
-  if(!filtered.length){list.innerHTML='';empty.style.display='block';empty.textContent=wipItems.length?'No matches':'No work in progress items yet';return;}
-  empty.style.display='none';
-  var html='';
-  for(var i=0;i<filtered.length;i++){
-   var w=filtered[i];
-   var progress=0,total=0;
-   if(w.checklist&&w.checklist.length){total=w.checklist.length;for(var c=0;c<w.checklist.length;c++){if(w.checklist[c].done)progress++;}}
-   var pctText=total?(progress+'/'+total):'';
-   html+='<li class="wip-item'+(w.done?' completed':'')+'" data-wip-id="'+w.id+'"><button class="wip-check'+(w.done?' done':'')+'" data-wip-toggle="'+w.id+'"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></button><span class="wip-name" data-wip-open="'+w.id+'">'+esc(w.name)+(pctText?' <span style="color:var(--text-muted);font-size:11px;font-weight:500;">('+pctText+')</span>':'')+'</span></li>';
-  }
-  list.innerHTML=html;
- });
-}
-
-document.getElementById('wipFilterBar').addEventListener('click',function(e){
- var btn=e.target.closest('.chip');if(!btn)return;
- wipFilter=btn.getAttribute('data-wip-filter');
- var chips=document.getElementById('wipFilterBar').querySelectorAll('.chip');
- for(var i=0;i<chips.length;i++)chips[i].className='chip';
- btn.className='chip active';
- renderWipPage();
-},false);
-
-document.getElementById('wipList').addEventListener('click',function(e){
- var toggle=e.target.closest('[data-wip-toggle]');
- if(toggle){
-  var id=toggle.getAttribute('data-wip-toggle');
-  for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===id){wipItems[i].done=!wipItems[i].done;break;}}
-  saveWipItems(function(){renderWipPage();triggerAutoBackup();});
-  return;
- }
- var open=e.target.closest('[data-wip-open]');
- if(open){openWipDetail(open.getAttribute('data-wip-open'));}
-},false);
-
-document.getElementById('btnWipAdd').addEventListener('click',function(){
- document.getElementById('wipAddName').value='';
- document.getElementById('wipAddOverlay').className='confirm-overlay open';
- setTimeout(function(){document.getElementById('wipAddName').focus();},100);
-},false);
-
-document.getElementById('wipAddOverlay').addEventListener('click',function(e){
- if(e.target.id==='wipAddCancel'||e.target===this){this.className='confirm-overlay';}
- if(e.target.id==='wipAddConfirm'){
-  var name=document.getElementById('wipAddName').value.trim();
-  if(!name){toast('Enter a name');return;}
-  var checklist=[];
-  for(var i=0;i<defaultChecklist.length;i++){checklist.push({text:defaultChecklist[i],done:false});}
-  wipItems.push({id:genId(),name:name,done:false,notes:'',photos:[],checklist:checklist,createdAt:new Date().toISOString()});
-  saveWipItems(function(){document.getElementById('wipAddOverlay').className='confirm-overlay';toast(name+' added');renderWipPage();triggerAutoBackup();});
- }
-},false);
-document.getElementById('wipAddName').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();document.getElementById('wipAddConfirm').click();}},false);
-
-function openWipDetail(id){
- wipCurrentId=id;
- var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===id){w=wipItems[i];break;}}
- if(!w)return;
- var panel=document.getElementById('wipPanel');
- var photosHtml='<div class="wip-photos"><div class="wip-photos-label">Photos</div><div class="wip-photos-grid" id="wipPhotosGrid">';
- if(w.photos){for(var p=0;p<w.photos.length;p++){photosHtml+='<div class="wip-photo-thumb" data-photo-idx="'+p+'"><img src="'+w.photos[p]+'" alt=""><button class="wpt-remove" data-remove-photo="'+p+'">&times;</button></div>';}}
- photosHtml+='<div class="wip-photo-add" id="wipPhotoAdd">+</div></div></div>';
- var clHtml='<div class="wip-checklist"><div class="wip-photos-label">Checklist</div>';
- if(w.checklist){for(var c=0;c<w.checklist.length;c++){clHtml+='<div class="wip-cl-item" data-cl-idx="'+c+'"><button class="wip-cl-check'+(w.checklist[c].done?' done':'')+'" data-cl-toggle="'+c+'"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></button><span class="wip-cl-text'+(w.checklist[c].done?' done':'')+'">'+esc(w.checklist[c].text)+'</span></div>';}}
- clHtml+='<div class="wip-cl-add"><input type="text" id="wipClInput" placeholder="Add step"><button id="wipClAddBtn">Add</button></div></div>';
- panel.innerHTML='<h2>'+esc(w.name)+'</h2>'+photosHtml+'<div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="wipNotes" placeholder="Progress notes...">'+esc(w.notes||'')+'</textarea></div>'+clHtml+'<div class="wip-panel-btns"><button class="wip-btn-close" id="wipClose">Close</button><button class="wip-btn-save" id="wipSave">Save</button><button class="wip-btn-delete" id="wipDeleteBtn">Delete</button></div>';
- document.getElementById('wipModal').className='wip-modal open';
-}
-
-document.getElementById('wipModal').addEventListener('click',function(e){
- if(e.target.id==='wipClose'||e.target===document.getElementById('wipModal')){this.className='wip-modal';wipCurrentId=null;return;}
- if(e.target.id==='wipSave'){
-  var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}
-  if(w){w.notes=document.getElementById('wipNotes').value.trim();}
-  saveWipItems(function(){document.getElementById('wipModal').className='wip-modal';toast('Saved');renderWipPage();triggerAutoBackup();wipCurrentId=null;});
-  return;
- }
- if(e.target.id==='wipDeleteBtn'){
-  if(!confirm('Delete this WIP item?'))return;
-  for(var i=wipItems.length-1;i>=0;i--){if(wipItems[i].id===wipCurrentId){wipItems.splice(i,1);break;}}
-  saveWipItems(function(){document.getElementById('wipModal').className='wip-modal';toast('Deleted');renderWipPage();triggerAutoBackup();wipCurrentId=null;});
-  return;
- }
- var clToggle=e.target.closest('[data-cl-toggle]');
- if(clToggle){
-  var idx=parseInt(clToggle.getAttribute('data-cl-toggle'),10);
-  var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}
-  if(w&&w.checklist[idx]){w.checklist[idx].done=!w.checklist[idx].done;saveWipItems(function(){openWipDetail(wipCurrentId);});}
-  return;
- }
- if(e.target.id==='wipClAddBtn'){
-  var input=document.getElementById('wipClInput');var text=input.value.trim();if(!text)return;
-  var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}
-  if(w){if(!w.checklist)w.checklist=[];w.checklist.push({text:text,done:false});saveWipItems(function(){openWipDetail(wipCurrentId);});}
-  return;
- }
- var removePhoto=e.target.closest('[data-remove-photo]');
- if(removePhoto){
-  var pidx=parseInt(removePhoto.getAttribute('data-remove-photo'),10);
-  var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}
-  if(w&&w.photos){w.photos.splice(pidx,1);saveWipItems(function(){openWipDetail(wipCurrentId);});}
-  return;
- }
- if(e.target.id==='wipPhotoAdd'||e.target.closest('#wipPhotoAdd')){
-  document.getElementById('wipPhotoInput').click();
-  return;
- }
-},false);
-
-document.getElementById('wipPhotoInput').addEventListener('change',function(){
- var file=this.files&&this.files[0];if(!file||!file.type.match('image.*'))return;
- var reader=new FileReader();
- reader.onload=function(){
-  var w=null;for(var i=0;i<wipItems.length;i++){if(wipItems[i].id===wipCurrentId){w=wipItems[i];break;}}
-  if(w){if(!w.photos)w.photos=[];w.photos.push(reader.result);saveWipItems(function(){openWipDetail(wipCurrentId);});}
- };
- reader.readAsDataURL(file);
- this.value='';
-},false);
-
-document.getElementById('wipClInput')&&document.addEventListener('keydown',function(e){
- if(e.target&&e.target.id==='wipClInput'&&e.key==='Enter'){e.preventDefault();var btn=document.getElementById('wipClAddBtn');if(btn)btn.click();}
-},false);
-
-
-/* Also add to switchPage. Find this line in Part 3:
-     if(pageId==='pg-folders')renderFoldersPage();
-   Paste this AFTER it:
-*/
-
- if(pageId==='pg-wip')renderWipPage();
 /* --- INIT --- */
 openDB(function(){
  getSetting('backupConfig',function(cfg){
