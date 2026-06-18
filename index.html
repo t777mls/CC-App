@@ -179,8 +179,8 @@ a:active { color: var(--white); }
 .ss-caption { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 20px 20px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); pointer-events: none; }
 .ss-caption .ss-name { font-size: 18px; font-weight: 700; color: #fff; }
 .ss-caption .ss-sub { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
-.ss-counter { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 16px); left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.5); color: #fff; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 20px; }
-.ss-close { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 12px); right: 16px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.5); border: none; color: #fff; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; }
+.ss-counter { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 16px); left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.5); color: #fff; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 20px; z-index: 10; }
+.ss-close { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 12px); right: 16px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.5); border: none; color: #fff; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; z-index: 10; }
 .ss-tap { position: absolute; top: 0; bottom: 0; width: 33%; z-index: 2; }
 .ss-tap.left { left: 0; }
 .ss-tap.right { right: 0; }
@@ -189,7 +189,7 @@ a:active { color: var(--white); }
 .ss-ctrl svg { width: 22px; height: 22px; pointer-events: none; }
 .ss-ctrl.play { width: 60px; height: 60px; background: var(--red); border-color: var(--red); }
 .ss-ctrl.play svg { width: 26px; height: 26px; }
-.ss-speed { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 12px); left: 16px; background: rgba(0,0,0,0.5); border: none; color: #fff; font-size: 12px; font-weight: 700; padding: 8px 12px; border-radius: 20px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.ss-speed { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 12px); left: 16px; background: rgba(0,0,0,0.5); border: none; color: #fff; font-size: 12px; font-weight: 700; padding: 8px 12px; border-radius: 20px; cursor: pointer; -webkit-tap-highlight-color: transparent; z-index: 10; }
 .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-80px); background: var(--gold); color: var(--black); padding: 12px 22px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; z-index: 800; transition: transform 0.3s ease; pointer-events: none; max-width: 90%; text-align: center; }
 .toast.show { transform: translateX(-50%) translateY(0); }
 .stats-grid { display: flex; gap: 10px; margin-bottom: 28px; }
@@ -249,6 +249,18 @@ a:active { color: var(--white); }
 .help-box ol { margin-left: 18px; }
 .help-box li { font-size: 12px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 6px; }
 .help-box code { background: var(--black); padding: 1px 6px; border-radius: 4px; font-size: 11px; color: var(--gold); }
+.folders-page-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (min-width: 480px) { .folders-page-grid { grid-template-columns: repeat(3, 1fr); } }
+.fp-card { border-radius: var(--radius-md); overflow: hidden; background: var(--surface); border: 1px solid var(--border); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.fp-card:active { opacity: 0.85; }
+.fp-cover { width: 100%; height: 0; padding-bottom: 100%; position: relative; background: var(--surface-raised); overflow: hidden; }
+.fp-cover img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+.fp-cover .fp-placeholder { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--text-muted); font-size: 24px; }
+.fp-info { padding: 12px; }
+.fp-name { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fp-count { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+.fp-search { margin-bottom: 16px; }
+.fp-set-cover { width: 100%; padding: 12px; margin-top: 12px; background: rgba(251,225,34,0.1); color: var(--gold); border: 1px solid rgba(251,225,34,0.25); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 </style>
 </head>
 <body>
@@ -435,10 +447,26 @@ a:active { color: var(--white); }
  </ol>
  </div>
 </div>
+<div id="pg-folders" class="page">
+ <div class="page-header">
+ <h1>Folders</h1>
+ <div class="accent-bar"></div>
+ <p>Browse your collection by folder</p>
+ </div>
+ <div class="search-wrap fp-search">
+ <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.2-5.2m0 0A7.5 7.5 0 105.2 5.2a7.5 7.5 0 0010.6 10.6z"/></svg>
+ <input type="text" class="search-input" id="folderSearchInput" placeholder="Search folders...">
+ </div>
+ <div class="folders-page-grid" id="foldersPageGrid"></div>
+</div>
 <nav class="nav">
  <button class="nav-btn active" data-page="pg-gallery">
  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
  <span>Gallery</span>
+ </button>
+  <button class="nav-btn" data-page="pg-folders">
+ <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
+ <span>Folders</span>
  </button>
  <button class="nav-btn" data-page="pg-add">
  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
@@ -526,6 +554,17 @@ a:active { color: var(--white); }
  </div>
  </div>
 </div>
+<div class="confirm-overlay" id="coverOverlay">
+ <div class="confirm-box">
+ <h3 id="coverTitle">Set Folder Cover</h3>
+ <p>Choose an image for this folder's cover.</p>
+ <input type="file" id="coverFileInput" accept="image/*" style="margin-bottom:12px;">
+ <div class="confirm-btns">
+ <button class="btn-keep" id="coverCancel">Cancel</button>
+ <button class="btn-remove" id="coverRemove">Remove Cover</button>
+ </div>
+ </div>
+</div>
 <div class="slideshow" id="slideshow">
  <button class="ss-speed" id="ssSpeed">3s</button>
  <div class="ss-counter" id="ssCounter">1 / 1</div>
@@ -594,6 +633,7 @@ function switchPage(pageId) {
  if (pageId === 'pg-stats') renderStats();
  if (pageId === 'pg-add') { populateFolderSelect(); if (!editingId) resetForm(); }
  if (pageId === 'pg-backup') renderBackupPage();
+ if (pageId === 'pg-folders') renderFoldersPage();
 }
 document.querySelector('.nav').addEventListener('click', function(e) {
  var btn = e.target.closest('.nav-btn');
@@ -1224,6 +1264,121 @@ document.getElementById('btnRefreshVersions').addEventListener('click', function
 document.getElementById('versionList').addEventListener('click', function(e) { var btn = e.target.closest('.btn-vr-restore'); if (!btn) return; pendingVersionPath = btn.getAttribute('data-path'); document.getElementById('versionRestoreMsg').textContent = 'Restore from ' + btn.getAttribute('data-label') + '?'; document.getElementById('versionRestoreOverlay').className = 'confirm-overlay open'; }, false);
 document.getElementById('versionRestoreOverlay').addEventListener('click', function(e) { if (e.target.id === 'versionRestoreCancel' || e.target === this) { this.className = 'confirm-overlay'; pendingVersionPath = null; } if (e.target.id === 'versionRestoreConfirm') { this.className = 'confirm-overlay'; if (pendingVersionPath) { toast('Restoring...'); fetchFileContent(pendingVersionPath, function(text) { mergePayloadText(text, function(n) { toast('Restored ' + n + ' figures'); renderGallery(); }); }); pendingVersionPath = null; } } }, false);
 document.getElementById('btnClearToken').addEventListener('click', function() { if (!confirm('Clear all backup settings?')) return; backupConfig = { owner: '', repo: '', branch: 'main', token: '', auto: false, autoRestore: false, backupOnClose: false, lastBackup: '' }; saveSetting('backupConfig', backupConfig, function() { renderBackupPage(); toast('Cleared'); }); }, false);
+
+/* --- FOLDERS PAGE --- */
+var coverFolderId = null;
+
+function getFolderCover(folderId, cb) {
+ var tx = db.transaction(['photos'], 'readonly');
+ var req = tx.objectStore('photos').get('folder_' + folderId);
+ req.onsuccess = function() { cb(req.result ? req.result.blob : null); };
+ req.onerror = function() { cb(null); };
+}
+function saveFolderCover(folderId, blob, cb) {
+ var tx = db.transaction(['photos'], 'readwrite');
+ if (blob) tx.objectStore('photos').put({ id: 'folder_' + folderId, blob: blob });
+ else tx.objectStore('photos').delete('folder_' + folderId);
+ tx.oncomplete = function() { if (cb) cb(); };
+}
+function renderFoldersPage() {
+ if (!db) return;
+ var search = document.getElementById('folderSearchInput').value.toLowerCase();
+ var grid = document.getElementById('foldersPageGrid');
+ var filtered = [];
+ for (var i = 0; i < folders.length; i++) {
+  if (search && folders[i].name.toLowerCase().indexOf(search) === -1) continue;
+  filtered.push(folders[i]);
+ }
+ if (!filtered.length) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted);">' + (folders.length ? 'No matching folders' : 'No folders yet') + '</div>'; return; }
+ var pending = filtered.length;
+ var cards = new Array(filtered.length);
+ for (var i = 0; i < filtered.length; i++) {
+  (function(idx, folder) {
+   var count = folderCount(folder.id);
+   getFolderCover(folder.id, function(blob) {
+    var div = document.createElement('div');
+    div.className = 'fp-card';
+    div.setAttribute('data-folder-id', folder.id);
+    var imgHtml = '';
+    if (blob) {
+     var url = URL.createObjectURL(blob);
+     urls.push(url);
+     imgHtml = '<div class="fp-cover"><img src="' + url + '" alt=""></div>';
+    } else {
+     imgHtml = '<div class="fp-cover"><span class="fp-placeholder"><svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg></span></div>';
+    }
+    div.innerHTML = imgHtml + '<div class="fp-info"><div class="fp-name">' + esc(folder.name) + '</div><div class="fp-count">' + count + ' figure' + (count !== 1 ? 's' : '') + '</div></div>';
+    cards[idx] = div;
+    pending--;
+    if (pending <= 0) {
+     grid.innerHTML = '';
+     for (var c = 0; c < cards.length; c++) { if (cards[c]) grid.appendChild(cards[c]); }
+    }
+   });
+  })(i, filtered[i]);
+ }
+}
+
+document.getElementById('foldersPageGrid').addEventListener('click', function(e) {
+ var card = e.target.closest('.fp-card');
+ if (!card) return;
+ var fid = card.getAttribute('data-folder-id');
+ activeFolder = fid;
+ switchPage('pg-gallery');
+}, false);
+
+var fpHoldTimer = null;
+var fpHoldId = null;
+document.getElementById('foldersPageGrid').addEventListener('touchstart', function(e) {
+ var card = e.target.closest('.fp-card');
+ if (!card) return;
+ fpHoldId = card.getAttribute('data-folder-id');
+ fpHoldTimer = setTimeout(function() { openCoverUpload(fpHoldId); fpHoldId = null; }, 500);
+}, { passive: true });
+document.getElementById('foldersPageGrid').addEventListener('touchmove', function() { if (fpHoldTimer) { clearTimeout(fpHoldTimer); fpHoldTimer = null; } }, { passive: true });
+document.getElementById('foldersPageGrid').addEventListener('touchend', function() { if (fpHoldTimer) { clearTimeout(fpHoldTimer); fpHoldTimer = null; } }, false);
+
+function openCoverUpload(folderId) {
+ coverFolderId = folderId;
+ var name = folderName(folderId) || 'Folder';
+ document.getElementById('coverTitle').textContent = 'Cover: ' + name;
+ document.getElementById('coverFileInput').value = '';
+ document.getElementById('coverOverlay').className = 'confirm-overlay open';
+}
+
+document.getElementById('coverFileInput').addEventListener('change', function() {
+ var file = this.files && this.files[0];
+ if (!file || !file.type.match('image.*')) return;
+ if (!coverFolderId) return;
+ resizeImg(file, function(blob) {
+  saveFolderCover(coverFolderId, blob, function() {
+   document.getElementById('coverOverlay').className = 'confirm-overlay';
+   toast('Cover set');
+   renderFoldersPage();
+   triggerAutoBackup();
+  });
+ });
+}, false);
+
+document.getElementById('coverOverlay').addEventListener('click', function(e) {
+ if (e.target.id === 'coverCancel' || e.target === this) { this.className = 'confirm-overlay'; }
+ if (e.target.id === 'coverRemove') {
+  if (coverFolderId) {
+   saveFolderCover(coverFolderId, null, function() {
+    document.getElementById('coverOverlay').className = 'confirm-overlay';
+    toast('Cover removed');
+    renderFoldersPage();
+    triggerAutoBackup();
+   });
+  }
+ }
+}, false);
+
+var folderSearchTimer;
+document.getElementById('folderSearchInput').addEventListener('input', function() {
+ clearTimeout(folderSearchTimer);
+ folderSearchTimer = setTimeout(renderFoldersPage, 200);
+}, false);
 
 /* --- INIT --- */
 openDB(function() {
