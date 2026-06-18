@@ -1,0 +1,3077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  font-optical-sizing: auto;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+  backdrop-filter: blur(12px);
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 8px 12px;
+  border: none;
+  background: none;
+  color: var(--text-tertiary);
+  font-size: 0.65rem;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s var(--ease-out);
+  position: relative;
+}
+
+.nav-btn.active { color: var(--gold); }
+.nav-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30%;
+  right: 30%;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 0 0 2px 2px;
+}
+.nav-btn svg { width: 20px; height: 20px; stroke-width: 1.8; }
+
+.page {
+  display: none;
+  padding: 20px 16px 100px;
+  max-width: 600px;
+  margin: 0 auto;
+  animation: fadeIn 0.3s var(--ease-out);
+}
+
+.page.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header { margin-bottom: 28px; padding-top: 8px; }
+
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.page-header p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+.collection-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-raised);
+  color: var(--gold);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-top: 14px;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--border);
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.filter-bar::-webkit-scrollbar { display: none; }
+
+.filter-chip {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 0.75rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s var(--ease-out);
+  white-space: nowrap;
+}
+
+.filter-chip:hover { border-color: var(--red-primary); color: var(--text-primary); }
+.filter-chip.active {
+  background: var(--red-primary);
+  color: white;
+  border-color: var(--red-primary);
+}
+
+.filter-type-row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  border: 1px solid var(--border);
+}
+
+.filter-type-btn {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  background: none;
+  font-size: 0.75rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s var(--ease-out);
+}
+
+.filter-type-btn.active {
+  color: var(--text-primary);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-sm);
+}
+
+.search-wrap {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.search-wrap svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--text-tertiary);
+  stroke-width: 2.2;
+}
+
+.search-input {
+  width: 100%;
+  padding: 13px 14px 13px 42px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  font-size: 0.85rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: border-color 0.15s var(--ease-out), box-shadow 0.15s var(--ease-out);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--red-primary);
+  box-shadow: 0 0 0 3px oklch(48% 0.22 25 / 0.15);
+}
+
+.search-input::placeholder { color: var(--text-tertiary); }
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 480px) {
+  .gallery { grid-template-columns: repeat(3, 1fr); }
+}
+
+.figure-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-out), border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+
+.figure-card:active { transform: scale(0.97); }
+.figure-card:hover { border-color: var(--red-primary); box-shadow: var(--shadow-md); }
+
+.figure-card-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+  background: var(--surface-raised);
+}
+
+.figure-card-info { padding: 10px 10px 12px; }
+
+.figure-card-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.figure-card-meta {
+  font-size: 0.68rem;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+  display: flex;
+  gap: 8px;
+}
+
+.figure-card-tag {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--red-primary);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+}
+
+.load-more-wrap {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.btn-load-more {
+  padding: 12px 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 0.8rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s var(--ease-out);
+}
+
+.btn-load-more:hover { border-color: var(--red-primary); color: var(--gold); }
+
+.empty-state {
+  text-align: center;
+  padding: 56px 24px;
+  color: var(--text-tertiary);
+}
+
+.empty-state svg {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 16px;
+  opacity: 0.4;
+  color: var(--red-primary);
+}
+
+.empty-state h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.empty-state p { font-size: 0.85rem; }
+
+.form-group { margin-bottom: 22px; }
+
+.form-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 0.9rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: border-color 0.15s var(--ease-out), box-shadow 0.15s var(--ease-out);
+  -webkit-appearance: none;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none;
+  border-color: var(--red-primary);
+  box-shadow: 0 0 0 3px oklch(48% 0.22 25 / 0.15);
+}
+
+.form-input::placeholder, .form-textarea::placeholder { color: var(--text-tertiary); }
+
+.form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+
+.tags-input-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  min-height: 48px;
+  align-items: center;
+  cursor: text;
+  transition: border-color 0.15s var(--ease-out), box-shadow 0.15s var(--ease-out);
+}
+
+.tags-input-wrap:focus-within {
+  border-color: var(--red-primary);
+  box-shadow: 0 0 0 3px oklch(48% 0.22 25 / 0.15);
+}
+
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  background: var(--red-deep);
+  color: oklch(90% 0.02 25);
+  border-radius: 5px;
+  font-size: 0.73rem;
+  font-weight: 600;
+}
+
+.tag-pill button {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+  opacity: 0.6;
+}
+
+.tag-pill button:hover { opacity: 1; }
+
+.tags-text-input {
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 0.85rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--text-primary);
+  flex: 1;
+  min-width: 80px;
+  padding: 4px 0;
+}
+
+.tags-text-input::placeholder { color: var(--text-tertiary); }
+
+.upload-area {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: 36px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+}
+
+.upload-area:hover, .upload-area.dragover {
+  border-color: var(--red-primary);
+  background: oklch(16% 0.03 25);
+}
+
+.upload-area svg {
+  width: 28px;
+  height: 28px;
+  color: var(--red-primary);
+  margin-bottom: 10px;
+}
+
+.upload-area p { font-size: 0.8rem; color: var(--text-secondary); font-weight: 500; }
+.upload-area .hint { font-size: 0.7rem; color: var(--text-tertiary); margin-top: 4px; display: block; }
+
+.upload-preview {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: none;
+  border: 1px solid var(--border);
+}
+
+.upload-preview img {
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  display: block;
+}
+
+.upload-preview .remove-photo {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--red-primary);
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 16px 24px;
+  background: var(--red-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-family: inherit;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.15s var(--ease-out), transform 0.1s var(--ease-out), box-shadow 0.15s var(--ease-out);
+  box-shadow: 0 4px 16px oklch(48% 0.22 25 / 0.3);
+}
+
+.btn-primary:hover { background: var(--red-bright); }
+.btn-primary:active { transform: scale(0.98); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: oklch(8% 0.01 25 / 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fadeOverlay 0.2s var(--ease-out);
+}
+
+.modal-overlay.open { display: flex; }
+
+@keyframes fadeOverlay { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-content {
+  background: var(--surface);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  width: 100%;
+  max-width: 600px;
+  max-height: 88dvh;
+  overflow-y: auto;
+  animation: slideUp 0.3s var(--ease-out);
+  border: 1px solid var(--border);
+  border-bottom: none;
+}
+
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+.modal-img {
+  width: 100%;
+  max-height: 50vh;
+  object-fit: contain;
+  background: var(--bg);
+}
+
+.modal-body { padding: 24px 20px 44px; }
+
+.modal-body h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+
+.modal-detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.modal-detail-row:last-child { border-bottom: none; }
+.modal-detail-label { color: var(--text-tertiary); font-weight: 500; }
+.modal-detail-value { color: var(--text-primary); font-weight: 600; text-align: right; max-width: 60%; }
+
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.modal-tag {
+  padding: 5px 11px;
+  background: var(--red-deep);
+  color: oklch(90% 0.02 25);
+  border-radius: 5px;
+  font-size: 0.73rem;
+  font-weight: 600;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.btn-delete {
+  flex: 1;
+  padding: 13px;
+  background: var(--danger-light);
+  color: oklch(70% 0.15 25);
+  border: 1px solid oklch(35% 0.08 25);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-close-modal {
+  flex: 1;
+  padding: 13px;
+  background: var(--surface-raised);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: var(--gold);
+  color: oklch(15% 0.02 85);
+  padding: 12px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+  z-index: 300;
+  transition: transform 0.3s var(--ease-out);
+  pointer-events: none;
+  box-shadow: 0 8px 24px oklch(75% 0.16 85 / 0.3);
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+.stat-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 12px;
+  text-align: center;
+}
+
+.stat-card .num {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.stat-card .label {
+  font-size: 0.65rem;
+  color: var(--text-tertiary);
+  font-weight: 700;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.stat-bar-track {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red-primary), var(--gold));
+  border-radius: 3px;
+  transition: width 0.6s var(--ease-out);
+  min-width: 3px;
+}
+
+.data-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 36px;
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: 13px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s var(--ease-out);
+}
+
+.btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+.accent-line {
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red-primary), var(--gold));
+  border-radius: 2px;
+  margin-top: 12px;
+}
+</style>
+</head>
+<body>
+
+<div id="page-gallery" class="page active">
+  <div class="page-header">
+    <h1>Collection</h1>
+    <div class="accent-line"></div>
+    <div class="collection-count" id="count-badge">Loading...</div>
+  </div>
+  <div class="search-wrap">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+    <input type="text" class="search-input" id="search-input" placeholder="Search your collection...">
+  </div>
+  <div class="filter-type-row" id="filter-type-row">
+    <button class="filter-type-btn active" data-type="tags">Tags</button>
+    <button class="filter-type-btn" data-type="brand">Brand</button>
+    <button class="filter-type-btn" data-type="year">Year</button>
+  </div>
+  <div class="filter-bar" id="filter-bar"></div>
+  <div class="gallery" id="gallery-grid"></div>
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/></svg>
+    <h3>No figures yet</h3>
+    <p>Tap the + to add your first piece</p>
+  </div>
+</div>
+
+<div id="page-add" class="page">
+  <div class="page-header">
+    <h1>Add Figure</h1>
+    <div class="accent-line"></div>
+    <p>Add a new piece to your collection</p>
+  </div>
+  <form id="add-form">
+    <div class="form-group">
+      <label class="form-label">Figure Name *</label>
+      <input type="text" class="form-input" id="input-name" placeholder="e.g. Goku Super Saiyan" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Year</label>
+      <input type="text" class="form-input" id="input-year" placeholder="e.g. 2024">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Collector Code</label>
+      <input type="text" class="form-input" id="input-code" placeholder="e.g. DBZ-001">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Brand / Series</label>
+      <input type="text" class="form-input" id="input-brand" placeholder="e.g. Banpresto, S.H. Figuarts">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Condition</label>
+      <select class="form-select" id="input-condition">
+        <option value="">Select condition</option>
+        <option value="Mint (Sealed)">Mint (Sealed)</option>
+        <option value="Mint (Open)">Mint (Open)</option>
+        <option value="Excellent">Excellent</option>
+        <option value="Good">Good</option>
+        <option value="Fair">Fair</option>
+        <option value="Poor">Poor</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notes</label>
+      <textarea class="form-textarea" id="input-notes" placeholder="Any extra details..."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Tags</label>
+      <div class="tags-input-wrap" id="tags-wrap">
+        <input type="text" class="tags-text-input" id="input-tags" placeholder="Type and press Enter">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Photo</label>
+      <div class="upload-area" id="upload-area">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z"/></svg>
+        <p>Tap to upload a photo</p>
+        <span class="hint">JPG, PNG up to 10MB</span>
+      </div>
+      <div class="upload-preview" id="upload-preview">
+        <img id="preview-img" src="" alt="Preview">
+        <button type="button" class="remove-photo" id="remove-photo">â</button>
+      </div>
+      <input type="file" id="file-input" accept="image/*" capture="environment" hidden>
+    </div>
+    <button type="submit" class="btn-primary" id="submit-btn">Add to Collection</button>
+  </form>
+</div>
+
+<div id="page-stats" class="page">
+  <div class="page-header">
+    <h1>Stats</h1>
+    <div class="accent-line"></div>
+    <p>Your collection at a glance</p>
+  </div>
+  <div class="stat-row" id="stat-row"></div>
+  <div id="stats-breakdown"></div>
+  <div class="data-actions">
+    <button class="btn-secondary" id="btn-export">Export JSON</button>
+    <button class="btn-secondary" id="btn-import">Import JSON</button>
+  </div>
+  <input type="file" id="import-input" accept=".json" hidden>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" data-page="page-gallery">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
+    Gallery
+  </button>
+  <button class="nav-btn" data-page="page-add">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+    Add
+  </button>
+  <button class="nav-btn" data-page="page-stats">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+    Stats
+  </button>
+</nav>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-content" id="modal-content"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const DB_NAME = 'FigureCollectionDB';
+const DB_VERSION = 1;
+const STORE_FIGURES = 'figures';
+const STORE_PHOTOS = 'photos';
+
+let db = null;
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    request.onupgradeneeded = (e) => {
+      const database = e.target.result;
+      if (!database.objectStoreNames.contains(STORE_FIGURES)) {
+        const figStore = database.createObjectStore(STORE_FIGURES, { keyPath: 'id' });
+        figStore.createIndex('name', 'name', { unique: false });
+        figStore.createIndex('brand', 'brand', { unique: false });
+        figStore.createIndex('year', 'year', { unique: false });
+        figStore.createIndex('addedAt', 'addedAt', { unique: false });
+      }
+      if (!database.objectStoreNames.contains(STORE_PHOTOS)) {
+        database.createObjectStore(STORE_PHOTOS, { keyPath: 'id' });
+      }
+    };
+    request.onsuccess = (e) => { db = e.target.result; resolve(db); };
+    request.onerror = (e) => reject(e.target.error);
+  });
+}
+
+function dbTransaction(stores, mode = 'readonly') {
+  return db.transaction(stores, mode);
+}
+
+async function addFigure(figureData, photoBlob) {
+  return new Promise((resolve, reject) => {
+    const tx = dbTransaction([STORE_FIGURES, STORE_PHOTOS], 'readwrite');
+    tx.objectStore(STORE_FIGURES).add(figureData);
+    if (photoBlob) {
+      tx.objectStore(STORE_PHOTOS).add({ id: figureData.id, blob: photoBlob });
+    }
+    tx.oncomplete = () => resolve();
+    tx.onerror = (e) => reject(e.target.error);
+  });
+}
+
+async function getAllFigures() {
+  return new Promise((resolve, reject) => {
+    const tx = dbTransaction([STORE_FIGURES]);
+    const request = tx.objectStore(STORE_FIGURES).getAll();
+    request.onsuccess = () => {
+      resolve(request.result.sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt)));
+    };
+    request.onerror = (e) => reject(e.target.error);
+  });
+}
+
+async function getPhoto(figureId) {
+  return new Promise((resolve, reject) => {
+    const tx = dbTransaction([STORE_PHOTOS]);
+    const request = tx.objectStore(STORE_PHOTOS).get(figureId);
+    request.onsuccess = () => resolve(request.result ? request.result.blob : null);
+    request.onerror = (e) => reject(e.target.error);
+  });
+}
+
+function createThumbURL(blob) { return URL.createObjectURL(blob); }
+
+async function deleteFigure(id) {
+  return new Promise((resolve, reject) => {
+    const tx = dbTransaction([STORE_FIGURES, STORE_PHOTOS], 'readwrite');
+    tx.objectStore(STORE_FIGURES).delete(id);
+    tx.objectStore(STORE_PHOTOS).delete(id);
+    tx.oncomplete = () => resolve();
+    tx.onerror = (e) => reject(e.target.error);
+  });
+}
+
+async function exportCollection() {
+  const figures = await getAllFigures();
+  const exportData = [];
+  for (const fig of figures) {
+    const photoBlob = await getPhoto(fig.id);
+    let photoBase64 = null;
+    if (photoBlob) photoBase64 = await blobToBase64(photoBlob);
+    exportData.push({ ...fig, photo: photoBase64 });
+  }
+  return JSON.stringify(exportData, null, 2);
+}
+
+async function importCollection(jsonStr) {
+  const data = JSON.parse(jsonStr);
+  let imported = 0;
+  for (const item of data) {
+    const { photo, ...metadata } = item;
+    let blob = null;
+    if (photo) blob = base64ToBlob(photo);
+    if (!metadata.id) metadata.id = generateId();
+    if (!metadata.addedAt) metadata.addedAt = new Date().toISOString();
+    try { await addFigure(metadata, blob); imported++; } catch (e) {}
+  }
+  return imported;
+}
+
+function generateId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+
+function blobToBase64(blob) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsDataURL(blob);
+  });
+}
+
+function base64ToBlob(base64) {
+  const parts = base64.split(',');
+  const mime = parts[0].match(/:(.*?);/)[1];
+  const bytes = atob(parts[1]);
+  const arr = new Uint8Array(bytes.length);
+  for (let i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
+  return new Blob([arr], { type: mime });
+}
+
+function resizeImage(file, maxDim = 1200) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let w = img.width, h = img.height;
+      if (w <= maxDim && h <= maxDim) {
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0);
+        canvas.toBlob((blob) => resolve(blob), 'image/jpeg', 0.8);
+        return;
+      }
+      if (w > h) { h = (h / w) * maxDim; w = maxDim; }
+      else { w = (w / h) * maxDim; h = maxDim; }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      canvas.toBlob((blob) => resolve(blob), 'image/jpeg', 0.8);
+    };
+    img.src = url;
+  });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+const navBtns = document.querySelectorAll('.nav-btn');
+const pages = document.querySelectorAll('.page');
+
+navBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.page;
+    navBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    pages.forEach(p => { p.classList.remove('active'); if (p.id === target) p.classList.add('active'); });
+    if (target === 'page-gallery') renderGallery();
+    if (target === 'page-stats') renderStats();
+  });
+});
+
+let currentTags = [];
+const tagsWrap = document.getElementById('tags-wrap');
+const tagsInput = document.getElementById('input-tags');
+
+tagsInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    const val = tagsInput.value.trim().replace(/,/g, '');
+    if (val && !currentTags.includes(val)) { currentTags.push(val); renderTagPills(); }
+    tagsInput.value = '';
+  }
+  if (e.key === 'Backspace' && !tagsInput.value && currentTags.length) { currentTags.pop(); renderTagPills(); }
+});
+
+tagsWrap.addEventListener('click', () => tagsInput.focus());
+
+function renderTagPills() {
+  tagsWrap.querySelectorAll('.tag-pill').forEach(p => p.remove());
+  currentTags.forEach((tag, i) => {
+    const pill = document.createElement('span');
+    pill.className = 'tag-pill';
+    pill.innerHTML = `${tag}<button type="button" data-i="${i}">\u00d7</button>`;
+    pill.querySelector('button').addEventListener('click', () => { currentTags.splice(i, 1); renderTagPills(); });
+    tagsWrap.insertBefore(pill, tagsInput);
+  });
+}
+
+const uploadArea = document.getElementById('upload-area');
+const uploadPreview = document.getElementById('upload-preview');
+const fileInput = document.getElementById('file-input');
+const previewImg = document.getElementById('preview-img');
+const removePhoto = document.getElementById('remove-photo');
+let currentPhotoBlob = null;
+
+uploadArea.addEventListener('click', () => fileInput.click());
+uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+uploadArea.addEventListener('drop', (e) => {
+  e.preventDefault(); uploadArea.classList.remove('dragover');
+  if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
+
+async function handleFile(file) {
+  if (!file.type.startsWith('image/')) return;
+  if (file.size > 10 * 1024 * 1024) { showToast('Image too large (max 10MB)'); return; }
+  currentPhotoBlob = await resizeImage(file, 1200);
+  previewImg.src = URL.createObjectURL(currentPhotoBlob);
+  uploadArea.style.display = 'none';
+  uploadPreview.style.display = 'block';
+}
+
+removePhoto.addEventListener('click', () => {
+  currentPhotoBlob = null; fileInput.value = '';
+  uploadArea.style.display = 'block'; uploadPreview.style.display = 'none';
+  if (previewImg.src.startsWith('blob:')) URL.revokeObjectURL(previewImg.src);
+});
+
+document.getElementById('add-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const submitBtn = document.getElementById('submit-btn');
+  const name = document.getElementById('input-name').value.trim();
+  if (!name) return;
+
+  submitBtn.disabled = true; submitBtn.textContent = 'Saving...';
+
+  const figureData = {
+    id: generateId(), name,
+    year: document.getElementById('input-year').value.trim(),
+    code: document.getElementById('input-code').value.trim(),
+    brand: document.getElementById('input-brand').value.trim(),
+    condition: document.getElementById('input-condition').value,
+    notes: document.getElementById('input-notes').value.trim(),
+    tags: [...currentTags],
+    hasPhoto: !!currentPhotoBlob,
+    addedAt: new Date().toISOString()
+  };
+
+  try {
+    await addFigure(figureData, currentPhotoBlob);
+    e.target.reset(); currentTags = []; renderTagPills();
+    currentPhotoBlob = null; uploadArea.style.display = 'block'; uploadPreview.style.display = 'none';
+    if (previewImg.src.startsWith('blob:')) URL.revokeObjectURL(previewImg.src);
+    showToast(`${name} added!`);
+    setTimeout(() => { document.querySelector('[data-page="page-gallery"]').click(); }, 500);
+  } catch (err) { showToast('Error saving figure'); console.error(err); }
+
+  submitBtn.disabled = false; submitBtn.textContent = 'Add to Collection';
+});
+
+let activeFilter = 'all';
+let activeFilterType = 'tags';
+let cachedFigures = [];
+let displayedCount = 0;
+const PAGE_SIZE = 30;
+const objectURLs = [];
+
+function revokeURLs() { objectURLs.forEach(url => URL.revokeObjectURL(url)); objectURLs.length = 0; }
+
+document.getElementById('filter-type-row').addEventListener('click', (e) => {
+  const btn = e.target.closest('.filter-type-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilterType = btn.dataset.type;
+  activeFilter = 'all';
+  renderFilterBar();
+});
+
+function getFilterValues(figures, type) {
+  const values = new Set();
+  figures.forEach(f => {
+    if (type === 'tags') f.tags.forEach(t => values.add(t));
+    else if (type === 'brand' && f.brand) values.add(f.brand);
+    else if (type === 'year' && f.year) values.add(f.year);
+  });
+  return Array.from(values).sort();
+}
+
+function renderFilterBar() {
+  const bar = document.getElementById('filter-bar');
+  const values = getFilterValues(cachedFigures, activeFilterType);
+  let html = `<button class="filter-chip ${activeFilter === 'all' ? 'active' : ''}" data-filter="all">All</button>`;
+  values.forEach(val => { html += `<button class="filter-chip ${activeFilter === val ? 'active' : ''}" data-filter="${val}">${val}</button>`; });
+  bar.innerHTML = html;
+  bar.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => { activeFilter = chip.dataset.filter; renderFilteredGallery(); renderFilterBar(); });
+  });
+}
+
+function filterFigures(figures) {
+  const search = document.getElementById('search-input').value.toLowerCase();
+  let filtered = figures;
+  if (activeFilter !== 'all') {
+    filtered = filtered.filter(f => {
+      if (activeFilterType === 'tags') return f.tags.includes(activeFilter);
+      if (activeFilterType === 'brand') return f.brand === activeFilter;
+      if (activeFilterType === 'year') return f.year === activeFilter;
+      return true;
+    });
+  }
+  if (search) {
+    filtered = filtered.filter(f =>
+      f.name.toLowerCase().includes(search) ||
+      (f.brand && f.brand.toLowerCase().includes(search)) ||
+      (f.code && f.code.toLowerCase().includes(search)) ||
+      (f.year && f.year.includes(search)) ||
+      (f.condition && f.condition.toLowerCase().includes(search)) ||
+      f.tags.some(t => t.toLowerCase().includes(search))
+    );
+  }
+  return filtered;
+}
+
+async function renderGallery() {
+  revokeURLs();
+  cachedFigures = await getAllFigures();
+  document.getElementById('count-badge').textContent = `${cachedFigures.length} figure${cachedFigures.length !== 1 ? 's' : ''}`;
+  renderFilterBar();
+  renderFilteredGallery();
+}
+
+async function renderFilteredGallery() {
+  const grid = document.getElementById('gallery-grid');
+  const empty = document.getElementById('empty-state');
+  const filtered = filterFigures(cachedFigures);
+  revokeURLs();
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    empty.querySelector('h3').textContent = cachedFigures.length > 0 ? 'No matches' : 'No figures yet';
+    empty.querySelector('p').textContent = cachedFigures.length > 0 ? 'Try a different search or filter' : 'Tap the + to add your first piece';
+    return;
+  }
+
+  empty.style.display = 'none';
+  displayedCount = Math.min(PAGE_SIZE, filtered.length);
+  await renderCards(grid, filtered.slice(0, displayedCount), filtered.length);
+}
+
+async function renderCards(grid, figures, totalFiltered) {
+  let html = '';
+  for (const f of figures) {
+    let imgHtml;
+    if (f.hasPhoto) {
+      const blob = await getPhoto(f.id);
+      if (blob) { const url = createThumbURL(blob); objectURLs.push(url); imgHtml = `<img class="figure-card-img" src="${url}" alt="${f.name}" loading="lazy">`; }
+      else { imgHtml = `<div class="figure-card-img" style="display:flex;align-items:center;justify-content:center;color:var(--text-tertiary);font-size:0.7rem;font-weight:500;">No photo</div>`; }
+    } else { imgHtml = `<div class="figure-card-img" style="display:flex;align-items:center;justify-content:center;color:var(--text-tertiary);font-size:0.7rem;font-weight:500;">No photo</div>`; }
+
+    html += `<div class="figure-card" data-id="${f.id}">${imgHtml}${f.year ? `<span class="figure-card-tag">${f.year}</span>` : ''}<div class="figure-card-info"><div class="figure-card-name">${f.name}</div><div class="figure-card-meta">${f.brand ? `<span>${f.brand}</span>` : ''}${f.code ? `<span>${f.code}</span>` : ''}</div></div></div>`;
+  }
+
+  if (displayedCount < totalFiltered) {
+    html += `<div class="load-more-wrap"><button class="btn-load-more" id="btn-load-more">Load more (${totalFiltered - displayedCount} remaining)</button></div>`;
+  }
+  grid.innerHTML = html;
+
+  grid.querySelectorAll('.figure-card').forEach(card => { card.addEventListener('click', () => openDetail(card.dataset.id)); });
+
+  const loadMoreBtn = document.getElementById('btn-load-more');
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', async () => {
+      const filtered = filterFigures(cachedFigures);
+      const nextBatch = filtered.slice(displayedCount, displayedCount + PAGE_SIZE);
+      displayedCount += nextBatch.length;
+      loadMoreBtn.parentElement.remove();
+
+      let newHtml = '';
+      for (const f of nextBatch) {
+        let imgHtml;
+        if (f.hasPhoto) { const blob = await getPhoto(f.id); if (blob) { const url = createThumbURL(blob); objectURLs.push(url); imgHtml = `<img class="figure-card-img" src="${url}" alt="${f.name}" loading="lazy">`; } else { imgHtml = `<div class="figure-card-img" style="display:flex;align-items:center;justify-content:center;color:var(--text-tertiary);font-size:0.7rem;">No photo</div>`; } }
+        else { imgHtml = `<div class="figure-card-img" style="display:flex;align-items:center;justify-content:center;color:var(--text-tertiary);font-size:0.7rem;">No photo</div>`; }
+        newHtml += `<div class="figure-card" data-id="${f.id}">${imgHtml}${f.year ? `<span class="figure-card-tag">${f.year}</span>` : ''}<div class="figure-card-info"><div class="figure-card-name">${f.name}</div><div class="figure-card-meta">${f.brand ? `<span>${f.brand}</span>` : ''}${f.code ? `<span>${f.code}</span>` : ''}</div></div></div>`;
+      }
+      if (displayedCount < filtered.length) { newHtml += `<div class="load-more-wrap"><button class="btn-load-more" id="btn-load-more">Load more (${filtered.length - displayedCount} remaining)</button></div>`; }
+      grid.insertAdjacentHTML('beforeend', newHtml);
+      grid.querySelectorAll('.figure-card:not([data-bound])').forEach(card => { card.setAttribute('data-bound', '1'); card.addEventListener('click', () => openDetail(card.dataset.id)); });
+    });
+  }
+}
+
+async function openDetail(id) {
+  const f = cachedFigures.find(x => x.id === id);
+  if (!f) return;
+  const modal = document.getElementById('modal-overlay');
+  const content = document.getElementById('modal-content');
+
+  let imgHtml = '';
+  if (f.hasPhoto) { const blob = await getPhoto(f.id); if (blob) { const url = URL.createObjectURL(blob); objectURLs.push(url); imgHtml = `<img class="modal-img" src="${url}" alt="${f.name}">`; } }
+
+  content.innerHTML = `
+    ${imgHtml}
+    <div class="modal-body">
+      <h2>${f.name}</h2>
+      <div style="margin-top:16px;">
+        ${f.year ? `<div class="modal-detail-row"><span class="modal-detail-label">Year</span><span class="modal-detail-value">${f.year}</span></div>` : ''}
+        ${f.code ? `<div class="modal-detail-row"><span class="modal-detail-label">Collector Code</span><span class="modal-detail-value">${f.code}</span></div>` : ''}
+        ${f.brand ? `<div class="modal-detail-row"><span class="modal-detail-label">Brand / Series</span><span class="modal-detail-value">${f.brand}</span></div>` : ''}
+        ${f.condition ? `<div class="modal-detail-row"><span class="modal-detail-label">Condition</span><span class="modal-detail-value">${f.condition}</span></div>` : ''}
+        ${f.notes ? `<div class="modal-detail-row"><span class="modal-detail-label">Notes</span><span class="modal-detail-value">${f.notes}</span></div>` : ''}
+        <div class="modal-detail-row"><span class="modal-detail-label">Added</span><span class="modal-detail-value">${new Date(f.addedAt).toLocaleDateString()}</span></div>
+      </div>
+      ${f.tags.length ? `<div class="modal-tags">${f.tags.map(t => `<span class="modal-tag">${t}</span>`).join('')}</div>` : ''}
+      <div class="modal-actions">
+        <button class="btn-close-modal" id="modal-close">Close</button>
+        <button class="btn-delete" id="modal-delete">Delete</button>
+      </div>
+    </div>`;
+
+  modal.classList.add('open');
+  document.getElementById('modal-close').addEventListener('click', () => modal.classList.remove('open'));
+  document.getElementById('modal-delete').addEventListener('click', async () => {
+    if (confirm('Remove this figuHere's the full source. Copy everything below into a file called `index.html` in your repo:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  font-optical-sizing: auto;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+  backdrop-filter: blur(12px);
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 8px 12px;
+  border: none;
+  background: none;
+  color: var(--text-tertiary);
+  font-size: 0.65rem;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s var(--ease-out);
+  position: relative;
+}
+
+.nav-btn.active { color: var(--gold); }
+.nav-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30%;
+  right: 30%;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 0 0 2px 2px;
+}
+.nav-btn svg { width: 20px; height: 20px; stroke-width: 1.8; }
+
+.page {
+  display: none;
+  padding: 20px 16px 100px;
+  max-width: 600px;
+  margin: 0 auto;
+  animation: fadeIn 0.3s var(--ease-out);
+}
+
+.page.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header { margin-bottom: 28px; padding-top: 8px; }
+
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.page-header p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+.collection-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-raised);
+  color: var(--gold);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-top: 14px;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--border);
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.filter-bar::-webkit-scrollbar { display: none; }
+
+.filter-chip {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 0.75rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s var(--ease-out);
+  white-space: nowrap;
+}
+
+.filter-chip:hover { border-color: var(--red-primary); color: var(--text-primary); }
+.filter-chip.active {
+  background: var(--red-primary);
+  color: white;
+  border-color: var(--red-primary);
+}
+
+.filter-type-row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  border: 1px solid var(--border);
+}
+
+.filter-type-btn {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  background: none;
+  font-size: 0.75rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s var(--ease-out);
+}
+
+.filter-type-btn.active {
+  color: var(--text-primary);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-sm);
+}
+
+.search-wrap {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.search-wrap svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--text-tertiary);
+  stroke-width: 2.2;
+}
+
+.search-input {
+  width: 100%;
+  padding: 13px 14px 13px 42px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  font-size: 0.85rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: border-color 0.15s var(--ease-out), box-shadow 0.15s var(--ease-out);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--red-primary);
+  box-shadow: 0 0 0 3px oklch(48% 0.22 25 / 0.15);
+}
+
+.search-input::placeholder { color: var(--text-tertiary); }
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 480px) {
+  .gallery { grid-template-columns: repeat(3, 1fr); }
+}
+
+.figure-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-out), border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+
+.figure-card:active { transform: scale(0.97); }
+.figure-card:hover { border-color: var(--red-primary); box-shadow: var(--shadow-md); }
+
+.figure-card-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+  background: var(--surface-raised);
+}
+
+.figure-card-info { padding: 10px 10px 12px; }
+
+.figure-card-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.figure-card-meta {
+  font-size: 0.68rem;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+  display: flex;
+  gap: 8px;
+}
+
+.figure-card-tag {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--red-primary);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+}
+
+Here's the full source, ready to paste as `index.html` in your repo:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5Here's the full source, ready to paste as `index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  font-optical-sizing: auto;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surfacHere's the full source. Copy this into a file called `index.html` in your repo:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radHere's the full source. Copy this into a file called `index.html` in your repo:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  font-optical-sizing: auto;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+  backdrop-filter: blur(12px);
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 8px 12px;
+  border: none;
+  background: none;
+  color: var(--text-tertiary);
+  font-size: 0.65rem;
+  font-family: inherit;
+  font-weight: 600;
+  lHere's the full source. Copy everything below into a file called `index.html` in your repo:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  font-optical-sizing: aHere's the full source, ready to paste as `index.html` in your repo:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  font-optical-sizing: auto;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+  backdrop-filter: blur(12px);
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 8px 12px;
+  border: none;
+  background: none;
+  color: var(--text-tertiary);
+  font-size: 0.65rem;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s var(--ease-out);
+  position: relative;
+}
+
+.nav-btn.active { color: var(--gold); }
+.nav-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30%;
+  right: 30%;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 0 0 2px 2px;
+}
+.nav-btn svg { width: 20px; height: 20px; stroke-width: 1.8; }
+
+.page {
+  display: none;
+  padding: 20px 16px 100px;
+  max-width: 600px;
+  margin: 0 auto;
+  animation: fadeIn 0.3s var(--ease-out);
+}
+
+.page.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header { margin-bottom: 28px; padding-top: 8px; }
+
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.page-header p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+.collection-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-raised);
+  color: var(--gold);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-top: 14px;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--border);
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.filter-bar::-webkit-scrollbar { display: none; }
+
+.filter-chip {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 0.75rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s var(--ease-out);
+  white-space: nowrap;
+}
+
+.filter-chip:hover { border-color: var(--red-primary); color: var(--text-primary); }
+.filter-chip.active {
+  background: var(--red-primary);
+  color: white;
+  border-color: var(--red-primary);
+}
+
+.filterHere's the full source, ready to paste as `index.html` in your repo:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  font-optical-sizing: auto;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+  backdrop-filter: blur(12px);
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 8px 12px;
+  border: none;
+  background: none;
+  color: var(--text-tertiary);
+  font-size: 0.65rem;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s var(--ease-out);
+  position: relative;
+}
+
+.nav-btn.active { color: var(--gold); }
+.nav-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30%;
+  right: 30%;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 0 0 2px 2px;
+}
+.nav-btn svg { width: 20px; height: 20px; stroke-width: 1.8; }
+
+.page {
+  display: none;
+  padding: 20px 16px 100px;
+  max-width: 600px;
+  margin: 0 auto;
+  animation: fadeIn 0.3s var(--ease-out);
+}
+
+.page.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header { margin-bottom: 28px; padding-top: 8px; }
+
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.page-header p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+.collection-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-raised);
+  color: var(--gold);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-top: 14px;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--border);
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.fiHere's the full source. Copy everything below into a file called `index.html` in your repo:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  font-optical-sizing: auto;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+  backdrop-filter: blur(12px);
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 8px 12px;
+  border: none;
+  background: none;
+  color: var(--text-tertiary);
+  font-size: 0.65rem;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s var(--ease-out);
+  position: relative;
+}
+
+.nav-btn.active { color: var(--gold); }
+.nav-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30%;
+  right: 30%;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 0 0 2px 2px;
+}
+.nav-btn svg { width: 20px; height: 20px; stroke-width: 1.8; }
+
+.page {
+  display: none;
+  padding: 20px 16px 100px;
+  max-width: 600px;
+  margin: 0 auto;
+  animation: fadeIn 0.3s var(--ease-out);
+}
+
+.page.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header { margin-bottom: 28px; padding-top: 8px; }
+
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.page-header p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+.collection-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-raised);
+  color: var(--gold);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-top: 14px;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--border);
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.filter-bar::-webkit-scrollbar { display: none; }
+
+.filter-chip {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 0.75rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transitHere's the full source. Copy the whole thing and save it as `index.html` in your repo:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  font-optical-sizing: auto;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+  backdrop-filter: blur(12px);
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 8px 12px;
+  border: none;
+  background: none;
+  color: var(--text-tertiary);
+  font-size: 0.65rem;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s var(--ease-out);
+  position: relative;
+}
+
+.nav-btn.active { color: var(--gold); }
+.nav-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30%;
+  right: 30%;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 0 0 2px 2px;
+}
+.nav-btn svg { width: 20px; height: 20px; stroke-width: 1.8; }
+
+.page {
+  display: none;
+  padding: 20px 16px 100px;
+  max-width: 600px;
+  margin: 0 auto;
+  animation: fadeIn 0.3s var(--ease-out);
+}
+
+.page.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header { margin-bottom: 28px; padding-top: 8px; }
+
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.page-header p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+.collection-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-raised);
+  color: var(--gold);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-top: 14px;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--border);
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.filter-bar::-webkit-scrollbar { display: none; }
+
+.filter-chip {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 0.75rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s var(--ease-out);
+  white-space: nowrap;
+}
+
+.filter-chip:hover { border-color: var(--red-primary); color: var(--text-primary); }
+.filter-chip.active {
+  background: var(--red-primary);
+  color: white;
+  border-color: var(--red-primary);
+}
+
+.filter-type-row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  border: 1px solid var(--border);
+}
+
+.filter-type-btn {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  background: none;
+  font-size: 0.75rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s var(--ease-out);
+}
+
+.filter-type-btn.active {
+  color: var(--text-primary);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-sm);
+}
+
+.search-wrap {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.search-wrap svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--text-tertiary);
+  stroke-width: 2.2;
+}
+
+.search-input {
+  width: 100%;
+  padding: 13px 14px 13px 42px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  font-size: 0.85rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: border-color 0.15s var(--ease-out), box-shadow 0.15s var(--ease-out);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--red-primary);
+  box-shadow: 0 0 0 3px oklch(48% 0.22 25 / 0.15);
+}
+
+.search-input::placeholder { color: var(--text-tertiary); }
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 480px) {
+  .gallery { grid-template-columns: repeat(3, 1fr); }
+}
+
+.figure-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-out), border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+
+.figure-card:active { transform: scale(0.97); }
+.figure-card:hover { border-color: var(--red-primary); box-shadow: var(--shadow-md); }
+
+.figure-card-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+  background: var(--surface-raised);
+}
+
+.figure-card-info { padding: 10px 10px 12px; }
+
+.figure-card-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.figure-card-meta {
+  font-size: 0.68rem;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+  display: flex;
+  gap: 8px;
+}
+
+.figure-card-tag {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--red-primary);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 3px 8pHere's the full source. Copy everything below into a file called `index.html` in your repo:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  font-optical-sizing: auto;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+  backdrop-filter: blur(12px);
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 8px 12px;
+  border: none;
+  background: none;
+  color: var(--text-tertiary);
+  font-size: 0.65rem;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s var(--ease-out);
+  position: relative;
+}
+
+.nav-btn.active { color: var(--gold); }
+.nav-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30%;
+  right: 30%;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 0 0 2px 2px;
+}
+.nav-btn svg { width: 20px; height: 20px; stroke-width: 1.8; }
+
+.page {
+  display: none;
+  padding: 20px 16px 100px;
+  max-width: 600px;
+  margin: 0 auto;
+  animation: fadeIn 0.3s var(--ease-out);
+}
+
+.page.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header { margin-bottom: 28px; padding-top: 8px; }
+
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.page-header p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+.collection-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-raised);
+  color: var(--gold);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-top: 14px;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--border);
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.filter-bar::-webkit-scrollbar { display: none; }
+
+.filter-chip {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 0.75rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s var(--ease-out);
+  white-space: nowrap;
+}
+
+.filter-chip:hover { border-color: var(--Here's the full source. Copy the entire block into a file called `index.html` in your repo:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  font-optical-sizing: auto;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+  backdrop-filter: blur(12px);
+}
+
+.nav-btnHere's the full source. Copy this into a file called `index.html` in your repo:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-Here's the full source. Copy it into a file called `index.html` in your repo:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Figure Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red-deep: oklch(38% 0.18 25);
+  --red-primary: oklch(48% 0.22 25);
+  --red-bright: oklch(55% 0.24 25);
+  --red-light: oklch(92% 0.04 25);
+  --red-subtle: oklch(96% 0.015 25);
+  --gold: oklch(75% 0.16 85);
+  --gold-dim: oklch(65% 0.14 85);
+  --gold-light: oklch(93% 0.04 85);
+  --bg: oklch(12% 0.015 25);
+  --surface: oklch(16% 0.012 25);
+  --surface-raised: oklch(20% 0.01 25);
+  --surface-top: oklch(24% 0.01 25);
+  --text-primary: oklch(95% 0.005 85);
+  --text-secondary: oklch(72% 0.008 85);
+  --text-tertiary: oklch(52% 0.008 25);
+  --border: oklch(28% 0.012 25);
+  --border-focus: var(--red-bright);
+  --accent: var(--red-primary);
+  --accent-hover: var(--red-bright);
+  --danger: oklch(55% 0.2 25);
+  --danger-light: oklch(25% 0.06 25);
+  --shadow-sm: 0 2px 8px oklch(5% 0.01 25 / 0.4);
+  --shadow-md: 0 8px 24px oklch(5% 0.01 25 / 0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { font-size: 16px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  font-optical-sizing: auto;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  backThe file at the link is already the full raw HTML, ready to save as `index.html`. But here it is in a code block you can copy directly:
+You can grab the full source directly from the file I generated: [figure-collection.html](https://run.clickup.ai/90121823452/f5836eb5-ee24-4760-8eaa-c68fbc086d2b/figure-collection.html)
