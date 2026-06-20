@@ -590,7 +590,7 @@ var newPhoto=photoBlob,removePhoto=false;
 if(newPhoto){f.hasPhoto=true;}else if(!document.getElementById('previewBox').style.display||document.getElementById('previewBox').style.display==='none'){if(f.hasPhoto){f.hasPhoto=false;removePhoto=true;}}
 updateFigureWithPhoto(f,newPhoto,removePhoto,function(){btn.disabled=false;editingId=null;resetForm();toast(name+' updated');triggerAutoBackup();switchPage('pg-gallery');});
 }else{
-var data={id:genId(),name:name,year:document.getElementById('fYear').value.trim(),code:document.getElementById('fCode').value.trim(),Price:docu	ment.getElementById('fPrice').value.trim(),folder:document.getElementById('fFolder').value,condition:document.getElementById('fCondition').value,notes:document.getElementById('fNotes').value.trim(),tags:tags.slice(),hasPhoto:!!photoBlob,addedAt:new Date().toISOString()};
+var data={id:genId(),name:name,year:document.getElementById('fYear').value.trim(),code:document.getElementById('fCode').value.trim(),Price:document.getElementById('fPrice').value.trim(),folder:document.getElementById('fFolder').value,condition:document.getElementById('fCondition').value,notes:document.getElementById('fNotes').value.trim(),tags:tags.slice(),hasPhoto:!!photoBlob,addedAt:new Date().toISOString()};
 saveFigure(data,photoBlob,function(){
 btn.disabled=false;toast(name+' added!');triggerAutoBackup();
 if(batchCurrentIdx>=0){markBatchItemSaved();}
