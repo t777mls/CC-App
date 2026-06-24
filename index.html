@@ -654,6 +654,7 @@ var detailFiltered=[],detailIndex=0,modalTouchStartX=0,modalTouchStartY=0,modalT
 	function openDetail(id){currentDetailId=id;detailFiltered=applyFilters();for(var di=0;di<detailFiltered.length;di++){if(detailFiltered[di].id===id){detailIndex=di;break;}}
 	currentDetailId=id;var f=null;for(var i=0;i<cached.length;i++){if(cached[i].id===id){f=cached[i];break;}}if(!f)return;
 	var modal=document.getElementById('modalBg'),panel=document.getElementById('modalPanel');
+panel.className='modal-panel';panel.style.transform='';panel.style.opacity='';panel.style.transition='';
 	function show(imgHtml){
 	var tagsHtml='';if(f.tags&&f.tags.length){tagsHtml='<div class="modal-tags">';for(var t=0;t<f.tags.length;t++)tagsHtml+='<button class="modal-tag" data-filter-type="tags" data-filter-val="'+esc(f.tags[t])+'">'+esc(f.tags[t])+'</button>';tagsHtml+='</div>';}
 	var folderOpts='<div class="modal-folder-opts"><span class="mfo'+(!f.folder?' selected':'')+'" data-folder="">Unfiled</span>';for(var fo=0;fo<folders.length;fo++){folderOpts+='<span class="mfo'+(f.folder===folders[fo].id?' selected':'')+'" data-folder="'+folders[fo].id+'">'+esc(folders[fo].name)+'</span>';}folderOpts+='</div>';
