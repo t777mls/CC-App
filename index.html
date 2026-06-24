@@ -679,13 +679,21 @@ swiping=true;
 var goLeft=swipeDX<0;
 if(goLeft){detailIndex=(detailIndex+1)%detailFiltered.length;}
 else{detailIndex=(detailIndex-1+detailFiltered.length)%detailFiltered.length;}
+panel.style.transition='transform 0.18s ease, opacity 0.18s ease';
+panel.style.transform='translateX('+(goLeft?'-40':'40')+'px)';
 panel.style.opacity='0';
-panel.style.transition='opacity 0.15s ease';
 setTimeout(function(){
+panel.style.transition='none';
+panel.style.transform='translateX('+(goLeft?'40':'-40')+'px)';
+panel.style.opacity='0';
 openDetail(detailFiltered[detailIndex].id);
+setTimeout(function(){
+panel.style.transition='transform 0.18s ease, opacity 0.18s ease';
+panel.style.transform='translateX(0)';
 panel.style.opacity='1';
-setTimeout(function(){panel.style.transition='';swiping=false;},160);
-},150);
+setTimeout(function(){panel.style.transition='';panel.style.transform='';swiping=false;},200);
+},20);
+},180);
 }
 swipeDir=null;swipeDX=0;
 },false);
