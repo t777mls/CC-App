@@ -661,7 +661,6 @@ var detailFiltered=[],detailIndex=0,modalTouchStartX=0,modalTouchStartY=0,modalT
 var panel=document.getElementById('modalPanel');
 var swipeStartX=0,swipeStartY=0,swipeDir=null,swipeDX=0,swiping=false;
 panel.addEventListener('touchstart',function(e){
-if(e.target.tagName==='IMG'&&!e.target.closest('.modal-body'))return;
 if(e.touches.length===1){swipeStartX=e.touches[0].clientX;swipeStartY=e.touches[0].clientY;swipeDir=null;swipeDX=0;}
 },{passive:true});
 panel.addEventListener('touchmove',function(e){
