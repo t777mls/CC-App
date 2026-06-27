@@ -665,13 +665,14 @@ var tempFilterState={tags:[],years:[],conditions:[],sortBy:'newest'};
 	function openDetail(id){currentDetailId=id;detailFiltered=applyFilters();for(var di=0;di<detailFiltered.length;di++){if(detailFiltered[di].id===id){detailIndex=di;break;}}
 	currentDetailId=id;var f=null;for(var i=0;i<cached.length;i++){if(cached[i].id===id){f=cached[i];break;}}if(!f)return;
 	modal=document.getElementById('modalBg'),panel=document.getElementById('modalPanel');
+	var modalAlreadyOpen=modal.className.indexOf('open')>-1;
 	function show(imgHtml){
 	var tagsHtml='';if(f.tags&&f.tags.length){tagsHtml='<div class="modal-tags">';for(var t=0;t<f.tags.length;t++)tagsHtml+='<button class="modal-tag" data-filter-type="tags" data-filter-val="'+esc(f.tags[t])+'">'+esc(f.tags[t])+'</button>';tagsHtml+='</div>';}
 	var folderOpts='<div class="modal-folder-opts"><span class="mfo'+(!f.folder?' selected':'')+'" data-folder="">Unfiled</span>';for(var fo=0;fo<folders.length;fo++){folderOpts+='<span class="mfo'+(f.folder===folders[fo].id?' selected':'')+'" data-folder="'+folders[fo].id+'">'+esc(folders[fo].name)+'</span>';}folderOpts+='</div>';
 	var PriceLink=f.Price?'<span class="detail-link" data-filter-type="Price" data-filter-val="'+esc(f.Price)+'">'+esc(f.Price)+'</span>':'';
 	var yearLink=f.year?'<span class="detail-link" data-filter-type="year" data-filter-val="'+esc(f.year)+'">'+esc(f.year)+'</span>':'';
 	panel.innerHTML=imgHtml+'<div class="modal-body"><h2>'+esc(f.name)+'</h2><div style="margin-top:16px;">'+(f.year?'<div class="detail-row"><span class="detail-label">Year</span><span class="detail-value">'+yearLink+'</span></div>':'')+(f.code?'<div class="detail-row"><span class="detail-label">Code</span><span class="detail-value">'+esc(f.code)+'</span></div>':'')+(f.Price?'<div class="detail-row"><span class="detail-label">Price</span><span class="detail-value">'+PriceLink+'</span></div>':'')+(f.condition?'<div class="detail-row"><span class="detail-label">Condition</span><span class="detail-value">'+esc(f.condition)+'</span></div>':'')+(f.notes?'<div class="detail-row"><span class="detail-label">Notes</span><span class="detail-value">'+linkify(f.notes)+'</span></div>':'')+'<div class="detail-row"><span class="detail-label">Added</span><span class="detail-value">'+new Date(f.addedAt).toLocaleDateString()+'</span></div></div>'+tagsHtml+'<div class="modal-folder-row"><div class="mfr-label">Folder</div>'+folderOpts+'</div><div class="modal-btns"><button class="btn-modal-close" id="mClose">Close</button><button class="btn-modal-edit" id="mEdit">Edit</button><button class="btn-modal-dup" id="mDup">Duplicate</button><button class="btn-modal-delete" id="mDelete">Delete</button></div></div>';
-	panel.scrollTop=0;modal.className='modal-bg open';document.body.style.overflow='hidden';document.body.style.position='fixed';document.body.style.width='100%';document.body.style.top='-'+window.scrollY+'px';
+	panel.scrollTop=0;if(!modalAlreadyOpen){modal.className='modal-bg open';document.body.style.overflow='hidden';document.body.style.position='fixed';document.body.style.width='100%';document.body.style.top='-'+window.scrollY+'px';}
 	}
 	if(f.hasPhoto){getPhoto(f.id,function(blob){if(blob){var url=URL.createObjectURL(blob);urls.push(url);show('<img src="'+url+'" alt="">');}else show('');});}else show('');
 	}
@@ -744,12 +745,12 @@ if(scale<=1&&didGesture&&ev.changedTouches.length){var sw=ev.changedTouches[0].c
 if(scale<=1){scale=1;posX=0;posY=0;applyTransform();}
 touching=ev.touches.length;
 },false);
-fs.querySelector('#fsCloseBtn').addEventListener('click',function(ev){ev.stopPropagation();fs.parentNode.removeChild(fs);},false);
+fs.querySelector('#fsCloseBtn').addEventListener('click',function(ev){ev.stopPropagation();fs.parentNode.removeChild(fs);openDetail(currentDetailId);},false);
 fs.addEventListener('click',function(ev){
 if(ev.target.id==='fsCloseBtn')return;
 if(didGesture){didGesture=false;return;}
 if(scale>1){scale=1;posX=0;posY=0;applyTransform();}
-else{fs.parentNode.removeChild(fs);}
+else{fs.parentNode.removeChild(fs);openDetail(currentDetailId);}
 },false);
 document.body.appendChild(fs);
 }},false);
