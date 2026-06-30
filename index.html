@@ -321,7 +321,30 @@
 .vs-none{padding:20px;text-align:center;font-size:12px;color:var(--text-muted)}.vs-none strong{color:var(--gold);display:block;margin-bottom:4px}
 .btn-identify{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1px solid rgba(251,225,34,0.3);border-radius:var(--radius-sm);background:rgba(251,225,34,0.08);font-size:13px;font-family:inherit;font-weight:700;color:var(--gold);cursor:pointer;-webkit-tap-highlight-color:transparent;margin-bottom:14px}.btn-identify:active{background:rgba(251,225,34,0.15)}.btn-identify svg{width:16px;height:16px;pointer-events:none}
 
+.btn-display{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1px solid rgba(251,225,34,0.3);border-radius:var(--radius-sm);background:rgba(251,225,34,0.08);font-size:13px;font-family:inherit;font-weight:700;color:var(--gold);cursor:pointer;-webkit-tap-highlight-color:transparent;margin-bottom:14px}.btn-display:active{background:rgba(251,225,34,0.15)}.btn-display svg{width:16px;height:16px;pointer-events:none}
+.display-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.display-card{position:relative;border-radius:var(--radius-md);overflow:hidden;background:var(--black);border:none;cursor:pointer;-webkit-tap-highlight-color:transparent}.display-card:active{opacity:0.9}
+.display-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:var(--radius-md)}
+.display-card .dc-remove{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,0.7);border:none;color:var(--white);font-size:16px;cursor:pointer;display:none;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;z-index:2}
+.display-grid.edit-mode .dc-remove{display:flex}
+.display-upload{border:2px dashed var(--border);border-radius:var(--radius-md);aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;gap:6px}.display-upload:active{border-color:var(--gold)}.display-upload svg{width:28px;height:28px;color:var(--text-muted);pointer-events:none}.display-upload span{font-size:11px;color:var(--text-muted);font-weight:600;pointer-events:none}
+.display-toolbar{display:flex;gap:10px;margin-bottom:16px}
+.display-toolbar button{flex:1;padding:12px;border-radius:var(--radius-sm);font-size:13px;font-family:inherit;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;border:none;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-display-slide{background:var(--red);color:var(--white)}.btn-display-slide:active{background:var(--red-dark)}
+.btn-display-edit{background:var(--surface);color:var(--text-secondary);border:1px solid var(--border) !important}.btn-display-edit.active{background:rgba(251,225,34,0.12);color:var(--gold);border-color:rgba(251,225,34,0.3) !important}
+.btn-display-slide svg,.btn-display-edit svg{width:16px;height:16px;pointer-events:none}
+.display-empty{text-align:center;padding:60px 24px}.display-empty h3{font-size:16px;font-weight:700;color:var(--text-secondary);margin-bottom:6px}.display-empty p{font-size:14px;color:var(--text-muted)}
+.display-ss{position:fixed;top:0;left:0;right:0;bottom:0;background:#000;z-index:700;display:none;flex-direction:column}.display-ss.open{display:flex}
+.display-ss-stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.display-ss-img{max-width:100%;max-height:100%;object-fit:contain;opacity:0;transition:opacity 0.6s ease}.display-ss-img.show{opacity:1}
+.display-ss-counter{position:absolute;top:calc(env(safe-area-inset-top,0px) + 16px);left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.5);color:#fff;font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;z-index:10}
+.display-ss-close{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);right:16px;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,0.5);border:none;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;z-index:10}
+.display-ss-controls{display:flex;align-items:center;justify-content:center;gap:24px;padding:18px 20px calc(env(safe-area-inset-bottom,0px) + 20px);background:#000}
+.display-ss-ctrl{width:48px;height:48px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent}.display-ss-ctrl svg{width:22px;height:22px;pointer-events:none}
+.display-ss-ctrl.play{width:60px;height:60px;background:var(--red);border-color:var(--red)}.display-ss-ctrl.play svg{width:26px;height:26px}
+.display-ss-tap{position:absolute;top:0;bottom:0;width:33%;z-index:2}.display-ss-tap.left{left:0}.display-ss-tap.right{right:0}
 	</style>
+
 	</head>
 	<body>
 	<div id="pg-gallery" class="page active">
@@ -347,7 +370,10 @@
 	<button class="btn-new-folder" id="btnNewFolder">+ New Folder</button>
 	</div>
 	<div class="folders-bar" id="foldersBar"></div>
-	<button class="btn-identify" id="btnIdentify"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 3.75H6A2.25 2.25 0 003.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0120.25 6v1.5m0 9V18A2.25 2.25 0 0118 20.25h-1.5m-9 0H6A2.25 2.25 0 013.75 18v-1.5M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>Identify Figure</span></button>
+<div style="display:flex;gap:10px;margin-bottom:14px;">
+	<button class="btn-identify" id="btnIdentify" style="margin-bottom:0;flex:1;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 3.75H6A2.25 2.25 0 003.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0120.25 6v1.5m0 9V18A2.25 2.25 0 0118 20.25h-1.5m-9 0H6A2.25 2.25 0 013.75 18v-1.5M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>Identify Figure</span></button>
+	<button class="btn-display" id="btnDisplay" style="flex:1;margin-bottom:0;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z"/></svg><span>Display</span></button>
+</div>
 <div class="gallery-toolbar">
 	<button class="btn-slideshow" id="btnSlideshow">
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/></svg>
@@ -606,6 +632,35 @@
 	</div>
 	<div class="fp-filter-chips" id="fpFilterChips"></div>
 	<div class="folders-page-grid" id="foldersPageGrid"></div>
+	</div>
+
+	<div id="pg-display" class="page">
+	<div class="page-header">
+	<h1>Display</h1>
+	<div class="accent-bar"></div>
+	<p>Your collection on display</p>
+	</div>
+	<div class="display-toolbar">
+	<button class="btn-display-slide" id="btnDisplaySlideshow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/></svg><span>Slideshow</span></button>
+	<button class="btn-display-edit" id="btnDisplayEdit"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487z"/></svg><span>Edit</span></button>
+	</div>
+	<div class="display-grid" id="displayGrid"></div>
+	<div class="display-empty" id="displayEmpty"><h3>No display photos yet</h3><p>Tap the + card to add photos of your collection displays</p></div>
+	<input type="file" id="displayFileInput" accept="image/*" multiple style="display:none">
+	</div>
+	<div class="display-ss" id="displaySS">
+	<span class="display-ss-counter" id="dsCounter">1 / 1</span>
+	<button class="display-ss-close" id="dsClose">&#10005;</button>
+	<div class="display-ss-stage" id="dsStage">
+	<div class="display-ss-tap left" id="dsTapLeft"></div>
+	<div class="display-ss-tap right" id="dsTapRight"></div>
+	<img class="display-ss-img" id="dsImg" src="" alt="">
+	</div>
+	<div class="display-ss-controls">
+	<button class="display-ss-ctrl" id="dsPrev"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg></button>
+	<button class="display-ss-ctrl play" id="dsPlay"><svg id="dsPlayIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5"/></svg></button>
+	<button class="display-ss-ctrl" id="dsNext"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></button>
+	</div>
 	</div>
 
 	<nav class="nav">
@@ -1223,6 +1278,218 @@ openDB(function(){
 	});
 	});
 	}catch(err){document.body.innerHTML='<div style="padding:20px;color:red;font-size:14px;">Error: '+err.message+'</div>';}
+	try {
+		// ========== DISPLAY PAGE ==========
+var displayPhotos=[];
+var dsItems=[],dsIndex=0,dsPlaying=false,dsTimer=null;
+var displaySaving=false,displayLoading=false;
+var DISPLAY_FILE='display-photos.json';
+
+function getDisplayGitHub(){
+var cfg=backupConfig;
+if(!cfg.token||!cfg.owner||!cfg.repo)return null;
+return{owner:cfg.owner,repo:cfg.repo,branch:cfg.branch||'main',token:cfg.token};
+}
+
+function loadDisplayPhotos(cb){
+var gh=getDisplayGitHub();
+if(!gh){
+try{var d=localStorage.getItem('cc_display_photos');if(d)displayPhotos=JSON.parse(d);else displayPhotos=[];}catch(e){displayPhotos=[];}
+if(cb)cb();
+return;
+}
+if(displayLoading)return;
+displayLoading=true;
+var url='https://api.github.com/repos/'+gh.owner+'/'+gh.repo+'/contents/'+DISPLAY_FILE+'?ref='+gh.branch+'&t='+Date.now();
+fetch(url,{headers:{'Authorization':'token '+gh.token,'Accept':'application/vnd.github.v3+json'}})
+.then(function(r){
+if(r.status===404){displayPhotos=[];displayLoading=false;if(cb)cb();return null;}
+if(!r.ok)throw new Error('GitHub fetch failed');
+return r.json();
+})
+.then(function(data){
+if(!data)return;
+var content=atob(data.content.replace(/\n/g,''));
+displayPhotos=JSON.parse(content);
+displayLoading=false;
+if(cb)cb();
+})
+.catch(function(e){
+console.error('Display load error:',e);
+try{var d=localStorage.getItem('cc_display_photos');if(d)displayPhotos=JSON.parse(d);else displayPhotos=[];}catch(ex){displayPhotos=[];}
+displayLoading=false;
+if(cb)cb();
+});
+}
+
+function saveDisplayPhotos(){
+localStorage.setItem('cc_display_photos',JSON.stringify(displayPhotos));
+var gh=getDisplayGitHub();
+if(!gh||displaySaving)return;
+displaySaving=true;
+var url='https://api.github.com/repos/'+gh.owner+'/'+gh.repo+'/contents/'+DISPLAY_FILE+'?ref='+gh.branch;
+fetch(url,{headers:{'Authorization':'token '+gh.token,'Accept':'application/vnd.github.v3+json'}})
+.then(function(r){
+if(r.status===404)return{sha:null};
+if(!r.ok)throw new Error('SHA fetch failed');
+return r.json();
+})
+.then(function(data){
+var body={message:'Update display photos',content:btoa(unescape(encodeURIComponent(JSON.stringify(displayPhotos)))),branch:gh.branch};
+if(data.sha)body.sha=data.sha;
+return fetch('https://api.github.com/repos/'+gh.owner+'/'+gh.repo+'/contents/'+DISPLAY_FILE,{
+method:'PUT',
+headers:{'Authorization':'token '+gh.token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
+body:JSON.stringify(body)
+});
+})
+.then(function(r){
+if(!r.ok)throw new Error('Display save failed');
+displaySaving=false;
+})
+.catch(function(e){
+console.error('Display save error:',e);
+displaySaving=false;
+});
+}
+
+function renderDisplayGrid(){
+var grid=document.getElementById('displayGrid');
+var empty=document.getElementById('displayEmpty');
+if(!displayPhotos.length){grid.innerHTML='<div class="display-upload" id="displayUploadCard"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg><span>Add Photos</span></div>';empty.style.display='block';bindUploadCard();return;}
+empty.style.display='none';
+var html='';
+for(var i=0;i<displayPhotos.length;i++){
+html+='<div class="display-card" data-di="'+i+'"><img src="'+displayPhotos[i]+'" alt="Display photo"><button class="dc-remove" data-di="'+i+'">&times;</button></div>';
+}
+html+='<div class="display-upload" id="displayUploadCard"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg><span>Add Photos</span></div>';
+grid.innerHTML=html;
+bindUploadCard();
+var cards=grid.querySelectorAll('.display-card');
+for(var c=0;c<cards.length;c++){
+cards[c].addEventListener('click',function(e){
+if(e.target.classList.contains('dc-remove'))return;
+var idx=parseInt(this.getAttribute('data-di'));
+openDisplayFullscreen(idx);
+});
+}
+var removeBtns=grid.querySelectorAll('.dc-remove');
+for(var r=0;r<removeBtns.length;r++){
+removeBtns[r].addEventListener('click',function(e){
+e.stopPropagation();
+var idx=parseInt(this.getAttribute('data-di'));
+displayPhotos.splice(idx,1);
+saveDisplayPhotos();
+renderDisplayGrid();
+toast('Photo removed');
+});
+}
+}
+
+function bindUploadCard(){
+var card=document.getElementById('displayUploadCard');
+if(card)card.addEventListener('click',function(){document.getElementById('displayFileInput').click();});
+}
+
+function openDisplayFullscreen(idx){
+var img=document.getElementById('dsImg');
+img.classList.remove('show');
+img.src=displayPhotos[idx];
+dsItems=displayPhotos.slice();
+dsIndex=idx;
+document.getElementById('displaySS').classList.add('open');
+document.getElementById('dsCounter').textContent=(dsIndex+1)+' / '+dsItems.length;
+setTimeout(function(){img.classList.add('show');},50);
+}
+
+function dsGoTo(idx){
+if(idx<0)idx=dsItems.length-1;
+if(idx>=dsItems.length)idx=0;
+dsIndex=idx;
+var img=document.getElementById('dsImg');
+img.classList.remove('show');
+setTimeout(function(){
+img.src=dsItems[dsIndex];
+document.getElementById('dsCounter').textContent=(dsIndex+1)+' / '+dsItems.length;
+setTimeout(function(){img.classList.add('show');},50);
+},200);
+}
+
+function dsTogglePlay(){
+if(dsPlaying){dsPlaying=false;clearInterval(dsTimer);dsTimer=null;
+document.getElementById('dsPlayIcon').innerHTML='<path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/>';
+}else{dsPlaying=true;
+document.getElementById('dsPlayIcon').innerHTML='<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5"/>';
+dsTimer=setInterval(function(){dsGoTo(dsIndex+1);},4000);
+}
+}
+
+function closeDisplaySS(){
+dsPlaying=false;if(dsTimer)clearInterval(dsTimer);dsTimer=null;
+document.getElementById('displaySS').classList.remove('open');
+document.getElementById('dsPlayIcon').innerHTML='<path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/>';
+}
+
+document.getElementById('btnDisplay').addEventListener('click',function(){
+switchPage('pg-display');
+loadDisplayPhotos(function(){renderDisplayGrid();});
+});
+
+document.getElementById('btnDisplaySlideshow').addEventListener('click',function(){
+if(!displayPhotos.length){toast('Add some display photos first');return;}
+openDisplayFullscreen(0);dsTogglePlay();
+});
+
+document.getElementById('btnDisplayEdit').addEventListener('click',function(){
+var grid=document.getElementById('displayGrid');
+this.classList.toggle('active');
+grid.classList.toggle('edit-mode');
+});
+
+document.getElementById('displayFileInput').addEventListener('change',function(e){
+var files=e.target.files;if(!files.length)return;
+var processed=0,total=files.length;
+for(var i=0;i<files.length;i++){
+(function(file){
+var reader=new FileReader();
+reader.onload=function(ev){
+var img=new Image();
+img.onload=function(){
+var canvas=document.createElement('canvas');
+var maxW=1200,maxH=900;
+var w=img.width,h=img.height;
+if(w>maxW){h=h*(maxW/w);w=maxW;}
+if(h>maxH){w=w*(maxH/h);h=maxH;}
+canvas.width=w;canvas.height=h;
+var ctx=canvas.getContext('2d');
+ctx.drawImage(img,0,0,w,h);
+var dataUrl=canvas.toDataURL('image/jpeg',0.85);
+displayPhotos.push(dataUrl);
+processed++;
+if(processed>=total){
+saveDisplayPhotos();
+renderDisplayGrid();
+toast(total>1?total+' photos added':'Photo added');
+}
+};
+img.src=ev.target.result;
+};
+reader.readAsDataURL(file);
+})(files[i]);
+}
+e.target.value='';
+});
+
+document.getElementById('dsClose').addEventListener('click',closeDisplaySS);
+document.getElementById('dsPlay').addEventListener('click',dsTogglePlay);
+document.getElementById('dsPrev').addEventListener('click',function(){dsGoTo(dsIndex-1);});
+document.getElementById('dsNext').addEventListener('click',function(){dsGoTo(dsIndex+1);});
+document.getElementById('dsTapLeft').addEventListener('click',function(){dsGoTo(dsIndex-1);});
+document.getElementById('dsTapRight').addEventListener('click',function(){dsGoTo(dsIndex+1);});
+
+loadDisplayPhotos(function(){});
+// ========== END DISPLAY PAGE ==========
+} catch(e){ console.error('Display error:', e); }
 	</script>
 	</body>
 	</html>
